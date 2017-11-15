@@ -7,10 +7,11 @@
 #include "ComponentSystem.h"
 #include "ComponentMessage.h"
 #include "MoveState.h"
+#include "IdleState.h"
 
 Character::Character(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFilename) : Component(name)
 {
-	_state = new MoveState();
+	_state = new IdleState();
 	_spriteList.clear();
 	_moveTime = 1.0f;
 	_pngName = textureFilename;
@@ -78,6 +79,7 @@ void Character::Init()
 
 		map->SetTileComponent(_tileX, _tileY, this, false);
 	}
+	_state->Init(this);
 	InitMove();
 }
 
@@ -95,8 +97,6 @@ void Character::Update(float deltaTime)
 {
 	_spriteList[(int)_currentDirection]->Update(deltaTime);
 
-	UpdateAI();
-	//UpdateMove(deltaTime);
 	_state->Update(deltaTime);
 }
 
@@ -131,45 +131,33 @@ void Character::MoveDeltaPosition(float deltaX, float deltaY)
 
 void Character::UpdateAI()
 {
-	if (false == _isLive)
-		return;
-
-	if (false == _state->IsMoving())
-	{
-		_currentDirection = (eDirection)(rand() % 4);
-		_state->Start();
-	}
+	_currentDirection = (eDirection)(rand() % 4);
+	ChangeState(eStateType::ET_MOVE);
 }
 
-void Character::UpdateMove(float deltaTime)
+void Character::ChangeState(eStateType stateType)
 {
-	if (_moveTime <= _state->GetMovingDuration())
-	{
-		_state->Stop();
+	/*
+	_state->Stop();
+	delete _state;
 
-		Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");
+	_state = new MoveState();
+	*/
 
-		_x = map->GetPositionX(_tileX, _tileY);
-		_y = map->GetPositionY(_tileX, _tileY);
+	/*
+	< 구현 알고리즘 >
+	_state가 null이 아니면 스톱, 제거
+	Switch문 (타입)
+	타입에 맞게 new
+	*/
 
-		_moveDistancePerTimeX = 0.0f;
-		_moveDistancePerTimeY = 0.0f;
-	}
-	else
-	{
-		_state->UpdateMove(deltaTime);
-
-		float moveDistanceX = _moveDistancePerTimeX * deltaTime;
-		float moveDistanceY = _moveDistancePerTimeY * deltaTime;
-
-		_x += moveDistanceX;
-		_y += moveDistanceY;
-	}
+	_state->Init(this);
+	_state->Start();
 }
 
 void Character::InitMove()
 {
-	_state->Init(this);
+	_isMoving = false;
 	_currentDirection = eDirection::DOWN;
 }
 
@@ -199,6 +187,7 @@ void Character::MoveStart(int newTileX, int newTileY)
 		_moveDistancePerTimeX = distanceX / _moveTime;
 		_moveDistancePerTimeY = distanceY / _moveTime;
 	}
+	_isMoving = true;
 }
 
 void Character::SetPosition(float PosX, float PosY)
@@ -260,4 +249,26 @@ void Character::Collision(std::list<Component*> &collisonList)
 			ComponentSystem::GetInstance()->SendMsg(msgParam);
 		}
 	}
+}
+
+void Character::MoveStop()
+{
+	Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");
+
+	_x = map->GetPositionX(_tileX, _tileY);
+	_y = map->GetPositionY(_tileX, _tileY);
+
+	_moveDistancePerTimeX = 0.0f;
+	_moveDistancePerTimeY = 0.0f;
+
+	_isMoving = false;
+}
+
+void Character::Moving(float deltaTime)
+{
+	float moveDistanceX = _moveDistancePerTimeX * deltaTime;
+	float moveDistanceY = _moveDistancePerTimeY * deltaTime;
+
+	_x += moveDistanceX;
+	_y += moveDistanceY;
 }

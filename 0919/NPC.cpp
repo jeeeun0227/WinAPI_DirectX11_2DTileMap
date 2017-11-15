@@ -19,59 +19,52 @@ NPC::~NPC()
 
 void NPC::UpdateAI()
 {
-	if (false == _isLive)
-		return;
+	Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");
 
-	if (false == _state->IsMoving())
+	std::vector<eComponentType> compareTypeList;
+	compareTypeList.push_back(eComponentType::CT_MONSTER);
+	Component *FindEnemy = ComponentSystem::GetInstance()->FindComponentInRange(this, 4, compareTypeList);
+
+	if (NULL != FindEnemy)
 	{
-		Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");
+		// 추격 방향 설정
+		eDirection direction = eDirection::NONE;
 
-		std::vector<eComponentType> compareTypeList;
-		compareTypeList.push_back(eComponentType::CT_MONSTER);
-		Component *FindEnemy = ComponentSystem::GetInstance()->FindComponentInRange(this, 4, compareTypeList);
-
-		if (NULL != FindEnemy)
+		for (int findDir = 0; findDir < 4; findDir++)
 		{
-			// 추격 방향 설정
-			eDirection direction = eDirection::NONE;
+			int newTileX = _tileX;
+			int newTileY = _tileY;
 
-			for (int findDir = 0; findDir < 4; findDir++)
+			switch (findDir)
 			{
-				int newTileX = _tileX;
-				int newTileY = _tileY;
+			case eDirection::LEFT:
+				newTileX--;
+				break;
 
-				switch (findDir)
-				{
-				case eDirection::LEFT:
-					newTileX--;
-					break;
+			case eDirection::RIGHT:
+				newTileX++;
+				break;
 
-				case eDirection::RIGHT:
-					newTileX++;
-					break;
+			case eDirection::UP:
+				newTileY--;
+				break;
 
-				case eDirection::UP:
-					newTileY--;
-					break;
-
-				case eDirection::DOWN:
-					newTileY++;
-					break;
-				}
-
-				if (map->CanMoveTileMap(newTileX, newTileY))
-				{
-					_currentDirection = (eDirection) findDir;
-					_state->Start();
-					break;
-				}
+			case eDirection::DOWN:
+				newTileY++;
+				break;
 			}
-			_state->Start();
-		}
 
-		else
-		{
-			Character::UpdateAI();
+			if (map->CanMoveTileMap(newTileX, newTileY))
+			{
+				_currentDirection = (eDirection)findDir;
+				ChangeState();
+				break;
+			}
 		}
+	}
+
+	else
+	{
+		Character::UpdateAI();
 	}
 }

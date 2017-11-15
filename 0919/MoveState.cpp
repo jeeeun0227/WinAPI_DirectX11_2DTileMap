@@ -13,19 +13,42 @@ MoveState::~MoveState()
 
 }
 
-bool MoveState::IsMoving()
+void MoveState::Init(Character *character)
 {
-	return _isMoving;
+	_character = character;
+	_movingDuration = 0.0f;
 }
 
-float MoveState::GetMovingDuration()
+void MoveState::Update(float deltaTime)
 {
-	return _movimgDuration;
+	if (false == _character->isLive())
+		return;
+
+	if (false == _character->IsMoving())
+		return;
+
+	if (_character->GetMoveTime() <= _movingDuration)
+	{
+		_movingDuration = 0.0f;
+
+		_character->MoveStop();
+		_character->ChangeState(eStateType::ET_IDLE);
+	}
+	else
+	{
+		_movingDuration += deltaTime;
+		_character->Moving(deltaTime);
+	}
+}
+
+void MoveState::Stop()
+{
+
 }
 
 void MoveState::Start()
 {
-	if (true == IsMoving())
+	if (true == _character->IsMoving())
 		return;
 
 	Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");
@@ -57,44 +80,10 @@ void MoveState::Start()
 	if (false == canMove)
 	{
 		_character->Collision(collisonList);
+		_character->ChangeState(eStateType::ET_IDLE);
 	}
 	else
 	{
 		_character->MoveStart(newTileX, newTileY);
 	}
-	_isMoving = true;
-}
-
-void MoveState::Stop()
-{
-	_movimgDuration = 0.0f;
-	_isMoving = false;
-}
-
-void MoveState::UpdateMove(float deltaTime)
-{
-	_movimgDuration += deltaTime;
-}
-
-void MoveState::Update(float deltaTime)
-{
-	if (false == _character->isLive())
-		return;
-
-	if (false == IsMoving())
-		return;
-
-	_character->UpdateMove(deltaTime);
-}
-
-void MoveState::Init(Character *character)
-{
-	_character = character;
-	_isMoving = false;
-	_movimgDuration = 0.0f;
-}
-
-void MoveState::SetMoving(bool isMoving)
-{
-	_isMoving = isMoving;
 }

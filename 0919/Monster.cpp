@@ -20,49 +20,46 @@ Monster::~Monster()
 
 void Monster::UpdateAI()
 {
-	if (false == _state->IsMoving())
+	std::vector<eComponentType> compareTypeList;
+	compareTypeList.push_back(eComponentType::CT_NPC);
+	compareTypeList.push_back(eComponentType::CT_PLAYER);
+	Component *FindEnemy = ComponentSystem::GetInstance()->FindComponentInRange(this, 4, compareTypeList);
+
+	if (NULL != FindEnemy)
 	{
-		std::vector<eComponentType> compareTypeList;
-		compareTypeList.push_back(eComponentType::CT_NPC);
-		compareTypeList.push_back(eComponentType::CT_PLAYER);
-		Component *FindEnemy = ComponentSystem::GetInstance()->FindComponentInRange(this, 4, compareTypeList);
+		// 추격 방향 설정
+		eDirection direction = eDirection::NONE;
 
-		if (NULL != FindEnemy)
+		if (FindEnemy->GetTileX() < _tileX)
 		{
-			// 추격 방향 설정
-			eDirection direction = eDirection::NONE;
-
-			if (FindEnemy->GetTileX() < _tileX)
-			{
-				direction = eDirection::LEFT;
-			}
-
-			else if (_tileX < FindEnemy->GetTileX())
-			{
-				direction = eDirection::RIGHT;
-			}
-
-			else if (FindEnemy->GetTileY() < _tileY)
-			{
-				direction = eDirection::UP;
-			}
-
-			else if (_tileY < FindEnemy->GetTileY())
-			{
-				direction = eDirection::DOWN;
-			}
-
-			if (eDirection::NONE != direction)
-			{
-				_currentDirection = direction;
-				_state->Start();
-			}
+			direction = eDirection::LEFT;
 		}
 
-		else
+		else if (_tileX < FindEnemy->GetTileX())
 		{
-			Character::UpdateAI();
+			direction = eDirection::RIGHT;
 		}
+
+		else if (FindEnemy->GetTileY() < _tileY)
+		{
+			direction = eDirection::UP;
+		}
+
+		else if (_tileY < FindEnemy->GetTileY())
+		{
+			direction = eDirection::DOWN;
+		}
+
+		if (eDirection::NONE != direction)
+		{
+			_currentDirection = direction;
+			ChangeState();
+		}
+	}
+
+	else
+	{
+		Character::UpdateAI();
 	}
 }
 

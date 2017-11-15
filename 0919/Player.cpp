@@ -20,34 +20,31 @@ Player::~Player()
 
 void Player::UpdateAI()
 {
-	if (false == _state->IsMoving())
+	eDirection direction = eDirection::NONE;
+
+	if (GameSystem::GetInstance()->IsKeyDown(VK_UP))
 	{
-		eDirection direction = eDirection::NONE;
+		direction = eDirection::UP;
+	}
 
-		if (GameSystem::GetInstance()->IsKeyDown(VK_UP))
-		{
-			direction = eDirection::UP;
-		}
+	if (GameSystem::GetInstance()->IsKeyDown(VK_DOWN))
+	{
+		direction = eDirection::DOWN;
+	}
 
-		if (GameSystem::GetInstance()->IsKeyDown(VK_DOWN))
-		{
-			direction = eDirection::DOWN;
-		}
+	if (GameSystem::GetInstance()->IsKeyDown(VK_LEFT))
+	{
+		direction = eDirection::LEFT;
+	}
 
-		if (GameSystem::GetInstance()->IsKeyDown(VK_LEFT))
-		{
-			direction = eDirection::LEFT;
-		}
+	if (GameSystem::GetInstance()->IsKeyDown(VK_RIGHT))
+	{
+		direction = eDirection::RIGHT;
+	}
 
-		if (GameSystem::GetInstance()->IsKeyDown(VK_RIGHT))
-		{
-			direction = eDirection::RIGHT;
-		}
-
-		if (eDirection::NONE != direction)
-		{
-			_currentDirection = direction;
-			_state->Start();
-		}
+	if (eDirection::NONE != direction)
+	{
+		_currentDirection = direction;
+		ChangeState();
 	}
 }

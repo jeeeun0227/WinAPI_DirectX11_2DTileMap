@@ -4,14 +4,11 @@
 
 class Character;
 
-class MoveState : public State
+class IdleState : public State
 {
 public:
-	MoveState();
-	~MoveState();
-
-private:
-	float _movingDuration;
+	IdleState();
+	~IdleState();
 
 public:
 	void Init(Character *character);
