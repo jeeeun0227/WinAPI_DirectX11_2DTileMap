@@ -59,13 +59,6 @@ Component *ComponentSystem::FindComponent(std::wstring name)
 
 Component *ComponentSystem::FindComponentInRange(Component *chaser, int range, std::vector<eComponentType> compareTypeList)
 {
-	/*
-	< 구현 알고리즘 >
-	1. 'Player'를 기준으로 주변 타일 검사 범위(+, -)를 정한다.
-	2. 범위 내 모든 타일을 검사하여 'Npc / Player'가 있으면 적을 찾았다.
-	3. 찾지 못하였으면 평소 캐릭터 움직임대로 움직인다.
-	*/
-
 	Map *map = (Map*)FindComponent(L"tileMap");
 
 	int minTileX = chaser->GetTileX() - range;
@@ -112,6 +105,7 @@ Component *ComponentSystem::FindComponentInRange(Component *chaser, int range, s
 			}
 		}
 	}
+	return NULL;
 }
 
 void ComponentSystem::SendMsg(const sComponentMsgParam msgParam)

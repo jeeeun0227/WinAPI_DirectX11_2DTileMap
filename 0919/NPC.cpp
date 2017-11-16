@@ -57,7 +57,7 @@ void NPC::UpdateAI()
 			if (map->CanMoveTileMap(newTileX, newTileY))
 			{
 				_currentDirection = (eDirection)findDir;
-				ChangeState();
+				ChangeState(ET_MOVE);
 				break;
 			}
 		}

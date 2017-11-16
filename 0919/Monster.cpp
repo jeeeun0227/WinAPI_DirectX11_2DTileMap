@@ -53,7 +53,7 @@ void Monster::UpdateAI()
 		if (eDirection::NONE != direction)
 		{
 			_currentDirection = direction;
-			ChangeState();
+			ChangeState(ET_MOVE);
 		}
 	}
 
@@ -73,6 +73,7 @@ void Monster::Collision(std::list<Component*> &collisonList)
 		if (com->GetType() == eComponentType::CT_NPC ||
 			com->GetType() == eComponentType::CT_PLAYER)
 		{
+			/**
 			// Attack Effect ±¸Çö
 			sComponentMsgParam msgParam;
 			msgParam.sender = this;
@@ -80,6 +81,12 @@ void Monster::Collision(std::list<Component*> &collisonList)
 			msgParam.recevier = (*it);
 			msgParam.message = L"Attack";
 			ComponentSystem::GetInstance()->SendMsg(msgParam);
+			*/
+			
+			_target = (*it);
+			ChangeState(eStateType::ET_ATTACK);
+			return;
 		}
 	}
+	ChangeState(eStateType::ET_IDLE);
 }

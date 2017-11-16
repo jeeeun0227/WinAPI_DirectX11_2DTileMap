@@ -4,6 +4,7 @@
 #include <D3DX9.h>
 #include <vector>
 #include <list>
+#include <map>
 
 #include "Component.h"
 
@@ -20,10 +21,12 @@ enum eStateType
 {
 	ET_MOVE,
 	ET_IDLE,
+	ET_ATTACK,
 };
 
 class Sprite;
 class State;
+class AttackState;
 
 class Character : public Component
 {
@@ -60,17 +63,17 @@ protected:
 	float _x;
 	float _y;
 
-	std::vector<Sprite*> _spriteList;
 	std::wstring _pngName;
 	std::wstring _scriptFileName;
 
-	// attack
-	int _attackPoint;
-	int _hp;
+	// state
+private:
+	std::map<eStateType, State*> _stateMap;
 
 public:
 	void ChangeState(eStateType stateType);
 
+public:
 	void InitMove();
 
 	void MoveStart(int newTileX, int newTileY);
@@ -90,4 +93,20 @@ public:
 	void Moving(float deltaTime);
 
 	bool IsMoving() { return _isMoving; }
+
+	std::wstring GetTextureFileName() { return _pngName; }
+	std::wstring GetScriptFileName() { return _scriptFileName; }
+
+	float GetX() { return _x; }
+	float GetY() { return _y; }
+
+	// attack
+protected:
+	int _attackPoint;
+	int _hp;
+	Component *_target;
+public:
+	int GetAttackPoint() { return _attackPoint; }
+	Component *GetTarget() { return _target; }
+	void ResetTarget() { _target = NULL; }
 };

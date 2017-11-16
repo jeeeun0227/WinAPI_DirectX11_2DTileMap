@@ -45,6 +45,6 @@ void Player::UpdateAI()
 	if (eDirection::NONE != direction)
 	{
 		_currentDirection = direction;
-		ChangeState();
+		ChangeState(ET_MOVE);
 	}
 }

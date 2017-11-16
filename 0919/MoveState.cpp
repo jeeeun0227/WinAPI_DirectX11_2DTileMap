@@ -15,8 +15,9 @@ MoveState::~MoveState()
 
 void MoveState::Init(Character *character)
 {
-	_character = character;
 	_movingDuration = 0.0f;
+	
+	State::Init(character);
 }
 
 void MoveState::Update(float deltaTime)
@@ -43,7 +44,7 @@ void MoveState::Update(float deltaTime)
 
 void MoveState::Stop()
 {
-
+	State::Stop();
 }
 
 void MoveState::Start()
@@ -86,4 +87,6 @@ void MoveState::Start()
 	{
 		_character->MoveStart(newTileX, newTileY);
 	}
+
+	State::Start();
 }
