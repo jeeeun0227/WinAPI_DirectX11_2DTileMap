@@ -1,18 +1,14 @@
 #pragma once
 
-#include <vector>
-#include <Windows.h>
-
 #include "State.h"
 
-class Character;
 class Sprite;
 
-class AttackState : public State
+class DeadState : public State
 {
 public:
-	AttackState();
-	~AttackState();
+	DeadState();
+	~DeadState();
 
 public:
 	void Init(Character *character);
@@ -25,4 +21,6 @@ public:
 	void Relese();
 	void Reset();
 	void Deinit();
+
+	void CreateSprite();
 };

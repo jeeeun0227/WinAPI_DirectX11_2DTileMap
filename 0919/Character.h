@@ -22,6 +22,9 @@ enum eStateType
 	ET_MOVE,
 	ET_IDLE,
 	ET_ATTACK,
+	EF_DEFENSE,
+	ET_DEAD,
+	ET_NONE,
 };
 
 class Sprite;
@@ -82,7 +85,7 @@ public:
 
 	void RaceiveMessage(const sComponentMsgParam msgParam);
 
-	virtual void Collision(std::list<Component*> &collisonList);
+	virtual Component *Collision(std::list<Component*> &collisonList);
 
 	eDirection GetDirection() { return _currentDirection; }
 
@@ -102,11 +105,19 @@ public:
 
 	// attack
 protected:
-	int _attackPoint;
 	int _hp;
 	Component *_target;
+	int _attackedPoint;
 public:
 	int GetAttackPoint() { return _attackPoint; }
 	Component *GetTarget() { return _target; }
 	void ResetTarget() { _target = NULL; }
+	void SetTarget(Component *target) { _target = target; }
+	int GetAttackedPoint() { return _attackedPoint; }
+
+	// defense
+protected:
+	int _attackPoint;
+public:
+	void DecreaseHP(int decreaseHP);
 };

@@ -9,6 +9,8 @@
 #include "MoveState.h"
 #include "IdleState.h"
 #include "AttackState.h"
+#include "DefenseState.h"
+#include "DeadState.h"
 
 Character::Character(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFilename) : Component(name)
 {
@@ -26,7 +28,7 @@ Character::Character(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFilename) 
 
 Character::~Character()
 {
-	delete _state;
+
 }
 
 void Character::Init()
@@ -48,6 +50,7 @@ void Character::Init()
 		_y = map->GetPositionY(_tileX, _tileY);
 		map->SetTileComponent(_tileX, _tileY, this, true);
 	}
+
 	InitMove();
 
 	{
@@ -66,6 +69,18 @@ void Character::Init()
 		State *state = new AttackState();
 		state->Init(this);
 		_stateMap[eStateType::ET_ATTACK] = state;
+	}
+
+	{
+		State *state = new DefenseState();
+		state->Init(this);
+		_stateMap[eStateType::EF_DEFENSE] = state;
+	}
+
+	{
+		State *state = new DeadState();
+		state->Init(this);
+		_stateMap[eStateType::ET_DEAD] = state;
 	}
 
 	ChangeState(eStateType::ET_IDLE);
@@ -174,24 +189,14 @@ void Character::RaceiveMessage(const sComponentMsgParam msgParam)
 {
 	if (L"Attack" == msgParam.message)
 	{
-		int attackPoint = msgParam.attackPoint;
-		_hp -= attackPoint;
-
-		if (_hp < 0)
-		{
-			// Dead
-			_isLive = false;
-			SetCanMove(true);
-
-			// Stop
-			_moveDistancePerTimeX = 0.0f;
-			_moveDistancePerTimeY = 0.0f;
-		}
+		_attackedPoint = msgParam.attackPoint;
+		ChangeState(eStateType::EF_DEFENSE);
 	}
 }
 
-void Character::Collision(std::list<Component*> &collisonList)
+Component * Character::Collision(std::list<Component*> &collisonList)
 {
+	/*
 	if (eComponentType::CT_MONSTER == _type)
 	{
 		//collisonList ¼øÈ¯
@@ -223,7 +228,10 @@ void Character::Collision(std::list<Component*> &collisonList)
 			ComponentSystem::GetInstance()->SendMsg(msgParam);
 		}
 	}
+	*/
+	return NULL;
 }
+
 
 void Character::MoveStop()
 {
@@ -245,4 +253,13 @@ void Character::Moving(float deltaTime)
 
 	_x += moveDistanceX;
 	_y += moveDistanceY;
+}
+
+void Character::DecreaseHP(int decreaseHP)
+{
+	_hp -= decreaseHP;
+	if (_hp < 0)
+	{
+		_isLive = false;
+	}
 }

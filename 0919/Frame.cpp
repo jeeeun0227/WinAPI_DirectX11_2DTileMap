@@ -13,15 +13,16 @@ Frame::~Frame()
 
 }
 
-void Frame::Init(Texture *texture, int x, int y, int width, int height, float frameDelay)
+void Frame::Init(Texture *texture, int x, int y, int width, int height, float rotate, float frameDelay)
 {
 	_sprite = GameSystem::GetInstance()->GetSprite();
 	_texture = texture;
 
 	_width = width;
 	_height = height;
+	
+	_rotate = rotate;
 
-	// 소스 이미지에서 출력에 사용될 영역을 지정한다.
 	_srcTextureRect.left = x;
 	_srcTextureRect.top = y;
 	_srcTextureRect.right = x + width;
@@ -39,21 +40,19 @@ void Frame::Deinit()
 
 void Frame::Render()
 {
-	//  Sprite가 출력 되기 전에 모양을 조정하고자 함
-	D3DXVECTOR2 spriteCenter = D3DXVECTOR2((float)_width / 2.0f, (float)_height / 2.0f);		// 스프라이트 백터의 가운데 값
-	D3DXVECTOR2 translate = D3DXVECTOR2(_x - (float)_width / 2.0f, _y - (float)_height / 2.0f / 2.0f);		// translate는 게임 툴에서 위치를 나타내는 용어로 주로 사용된다.
-	D3DXVECTOR2 scaling = D3DXVECTOR2(1.0f, 1.0f);		// 크기
+	D3DXVECTOR2 spriteCenter = D3DXVECTOR2((float)_width / 2.0f, (float)_height / 2.0f);
+	D3DXVECTOR2 translate = D3DXVECTOR2(_x - (float)_width / 2.0f, _y - (float)_height / 2.0f / 2.0f);
+	D3DXVECTOR2 scaling = D3DXVECTOR2(1.0f, 1.0f);
 
-	// 변환 행렬 생성
 	D3DXMATRIX matrix;
 	D3DXMatrixTransformation2D(
-		&matrix,		// 행렬
-		NULL,		// 크기를 조절할 떄, 기준을 왼쪽 상단으로 유지
-		0.0f,		// 회전값 ( 없음 )
-		&scaling,		// 크기 조정 값
-		&spriteCenter,		// 회전 중심
+		&matrix,
+		NULL,
 		0.0f,
-		&translate		// 위치
+		&scaling,
+		&spriteCenter,
+		_rotate,
+		&translate
 	);
 
 	_sprite->SetTransform(&matrix);

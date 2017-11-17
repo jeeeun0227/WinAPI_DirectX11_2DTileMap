@@ -22,12 +22,6 @@ Map::~Map()
 
 void Map::Init()
 {
-	// 맵용 스트라이트 리스트 작업
-	// 32 * 32 크기의 타일
-	// 16 * 16 = 256 개의 타일 생성
-	// 찍을 인덱스 순서대로 리스트에 푸쉬
-	// 512 * 512
-
 	int srcX = 0;
 	int srcY = 0;
 
@@ -76,7 +70,6 @@ void Map::Init()
 				break;
 
 			default:
-				// map data
 				if (NULL != token)
 				{
 					std::vector<TileCell*> rowList;
@@ -136,7 +129,6 @@ void Map::Init()
 							WCHAR componentName[256];
 							wsprintf(componentName, L"map_layer02_%d_%d", line, x);
 							TileObject *tileObject = new TileObject(componentName, _spriteList[index]);
-							// tileObject->SetCanMove(false);
 							tileCell->AddComponent(tileObject, true);
 						}
 						token = strtok(NULL, ",");
@@ -280,54 +272,15 @@ bool Map::CanMoveTileMap(int tileX, int tileY)
 
 void Map::InitViewer(Component *viewer)
 {
-	// viewer Setting
 	_viewer = viewer;
 
-	// 뷰어를 중심으로 랜더링 할 영역을 구한다.
 	int midX = GameSystem::GetInstance()->GetClientWidth() / 2;
 	int midY = GameSystem::GetInstance()->GetClientHeight() / 2;
 
-	/*
-	// Render() 함수로 위치를 이동
 
-	// 구해야 할 것 : 영역, 최소 x, 최대 x, 최소 y, 최대 y
-
-	// 최소 x : 뷰어의 현재 타일 x의 위치 - (중심축 / 타일사이즈) - 1
-	int minX = _viewer->GetTileX() - (midX / _tileSize) - 1;
-
-	// 최대 x : 뷰어의 현재 타일 x의 위치 + (중심축 / 타일사이즈) + 1
-	int maxX = _viewer->GetTileX() + (midX / _tileSize) + 1;
-
-	// 최소 y : 뷰어의 현재 타일 y의 위치 - (중심축 / 타일사이즈) - 1
-	int minY = _viewer->GetTileY() - (midX / _tileSize) - 1;
-
-	// 최대 y : 뷰어의 현재 타일 y의 위치 + (중심축 / 타일사이즈) + 1
-	int maxY = _viewer->GetTileY() + (midX / _tileSize) + 1;
-
-	// 중심축 -> 전체 가로 사이즈 (1280) / 2 , 전체 세로 사이즈 (800) / 2
-	// 타일 사이즈 : 32
-
-	// - 예외처리 -
-
-	// 범위가 벗어났을 경우 -> 보정
-	if (minX < 0)
-		minX = 0;
-
-	if (_width <= maxX)
-		maxX = _width - 1;
-
-	if (minY < 0)
-		minY = 0;
-
-	if (_height <= maxY)
-		maxY = _height - 1;
-		*/
-
-	// 뷰어의 위치를 기준으로 시작 픽셀 위치를 계산
 	_startX = (-_viewer->GetTileX() * _tileSize) + midX - _tileSize / 2;
 	_startY = (-_viewer->GetTileY() * _tileSize) + midY - _tileSize / 2;
 
-	// 해당 위치에 맞게 타일을 그린다.
 	float posX = _startX;
 	float posY = _startY;
 

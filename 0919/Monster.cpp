@@ -63,7 +63,7 @@ void Monster::UpdateAI()
 	}
 }
 
-void Monster::Collision(std::list<Component*> &collisonList)
+Component *Monster::Collision(std::list<Component*> &collisonList)
 {
 	// collisonList 순환
 	for (std::list<Component*>::iterator it = collisonList.begin(); it != collisonList.end(); it++)
@@ -73,20 +73,14 @@ void Monster::Collision(std::list<Component*> &collisonList)
 		if (com->GetType() == eComponentType::CT_NPC ||
 			com->GetType() == eComponentType::CT_PLAYER)
 		{
-			/**
-			// Attack Effect 구현
-			sComponentMsgParam msgParam;
-			msgParam.sender = this;
-			msgParam.attackPoint = _attackPoint;
-			msgParam.recevier = (*it);
-			msgParam.message = L"Attack";
-			ComponentSystem::GetInstance()->SendMsg(msgParam);
-			*/
-			
+			/*
 			_target = (*it);
 			ChangeState(eStateType::ET_ATTACK);
 			return;
+			*/
+			return (*it);
 		}
 	}
-	ChangeState(eStateType::ET_IDLE);
+	// ChangeState(eStateType::ET_IDLE);
+	return NULL;
 }

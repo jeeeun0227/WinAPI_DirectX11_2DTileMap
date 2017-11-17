@@ -21,7 +21,7 @@ private:
 	LPCWSTR _scriptFileName;
 
 public:
-	Sprite(LPCWSTR textureFileName, LPCWSTR scriptFileName);
+	Sprite(LPCWSTR textureFileName, LPCWSTR scriptFileName, float rotate = 0.0f);
 	~Sprite();
 
 	void Init();
@@ -44,4 +44,6 @@ private:
 
 	float _x;
 	float _y;
+
+	float _rotate;
 };

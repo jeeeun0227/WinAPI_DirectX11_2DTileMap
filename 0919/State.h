@@ -5,6 +5,7 @@
 
 class Character;
 class Sprite;
+enum eStateType;
 
 class State
 {
@@ -15,6 +16,7 @@ public:
 protected:
 	Character *_character;
 	std::vector<Sprite*> _spriteList;
+	eStateType _nextState;
 
 public:
 	virtual void Init(Character *character);
@@ -27,4 +29,6 @@ public:
 	virtual void Relese();
 	virtual void Reset();
 	virtual void Deinit();
+
+	virtual void CreateSprite();
 };

@@ -10,7 +10,7 @@ public:
 	Frame();
 	~Frame();
 
-	void Init(Texture *texture, int x, int y, int width, int height, float frameDelay);
+	void Init(Texture *texture, int x, int y, int width, int height, float rotate, float frameDelay);
 	void Deinit();
 	void Render();
 	void Relese();
@@ -37,4 +37,6 @@ private:
 
 	float _x;
 	float _y;
+
+	float _rotate;
 };
