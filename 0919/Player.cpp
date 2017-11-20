@@ -48,3 +48,18 @@ void Player::UpdateAI()
 		ChangeState(ET_MOVE);
 	}
 }
+
+Component *Player::Collision(std::list<Component*> &collisonList)
+{
+	for (std::list<Component*>::iterator it = collisonList.begin(); it != collisonList.end(); it++)
+	{
+		Component *com = (*it);
+
+		if (com->GetType() == eComponentType::CT_MONSTER ||
+			com->GetType() == eComponentType::CT_PLAYER)
+		{
+			return (*it);
+		}
+	}
+	return NULL;
+}

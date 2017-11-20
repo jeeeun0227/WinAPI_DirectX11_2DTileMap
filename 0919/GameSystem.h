@@ -27,7 +27,6 @@ public:
 	static GameSystem *GetInstance();
 
 private:
-	// 다른 곳에서 실수로 생성하지 않도록, 생성자를 private로 만든다.
 	GameSystem();
 
 public:

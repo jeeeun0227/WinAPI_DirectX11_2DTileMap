@@ -14,4 +14,7 @@ public:
 	// AI
 public:
 	void UpdateAI();
+
+public:
+	Component *Collision(std::list<Component*> &collisonList);
 };

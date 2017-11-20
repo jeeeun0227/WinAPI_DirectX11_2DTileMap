@@ -13,19 +13,17 @@
 #include "Component.h"
 #include "Monster.h"
 
-LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)		// 윈도우 프로시저를 실행시키기 위해 만든다. 
-																				// 인자 4개 -> ( 윈도우 핸들, 메세지타입, 메세지당 부가별 정보, 메세지당 부가별 정보 )
-																				// 윈도우 핸들에는 메인 윈도우 핸들이 넘어온다.
+LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)	
 {
-	switch (msg)		// ESC를 누르면 윈도우 창이 종료된다. + 마우스 클릭 시에 Hello World! 출력
+	switch (msg)
 	{
 	case WM_KEYDOWN:
 		GameSystem::GetInstance()->KeyDown(wParam);
 
-		if (VK_ESCAPE == wParam)	// VK_ESCAPE = ESC
+		if (VK_ESCAPE == wParam)
 		{
 			ComponentSystem::GetInstance()->RemoveAllComponents();
-			DestroyWindow(hWnd);		// 현재창을 파괴
+			DestroyWindow(hWnd);
 		}
 		return 0;
 
@@ -37,34 +35,30 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)		// 
 		PostQuitMessage(0);
 		return 0;
 
-	case WM_LBUTTONDOWN:		// 마우스 클릭 시에 Hello World! 출력
+	case WM_LBUTTONDOWN:
 		MessageBox(0, L"Hello World!", L"Hello", MB_OK);
 		return 0;
 	}
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
-// 정적변수 vs 전역변수 : 메모리를 하나만 사용하는 것은 같으나, 접근이 가능한 범위가 다르다. 
-// 전역변수 -> 어디에서나 접근 가능, 정적변수 & 지역변수 -> 해당 함수에 들어왔을때만 변수를 사용 가능하다.
+GameSystem *GameSystem::_instance = NULL;
 
-// 헤더에서 선언한 정적 멤버들을 다시 선언해줘야만, 일반 멤버 변수처럼 사용할 수 있다.
-GameSystem *GameSystem::_instance = NULL;		// 정적 변수 -> 메모리를 하나만 잡는다.
-
-GameSystem *GameSystem::GetInstance()		// 정적 함수 -> 메모리를 하나만 잡는다.
+GameSystem *GameSystem::GetInstance()
 {
 	if (_instance == NULL)
 		_instance = new GameSystem();
 	return _instance;
 }
 
-GameSystem::GameSystem()		// 생성자
+GameSystem::GameSystem()
 {
 	_isFULLScreen = false;
 
 	_componentList.clear();
 }
 
-GameSystem::~GameSystem()		// 해지자
+GameSystem::~GameSystem()
 {
 	for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
 	{
@@ -147,26 +141,23 @@ bool GameSystem::InitDirect3D()
 
 bool GameSystem::InitSystem(HINSTANCE hInstance, int nCmdShow)
 {
-	// 1. 윈도우 창의 특징을 기술
-	WNDCLASS wc;		// 구조체 처럼 쓰이는 것 ( 구조체는 public )
-	wc.style = CS_HREDRAW | CS_VREDRAW;		// window 창의 스타일을 결정한다.
-	wc.lpfnWndProc = WndProc;		// 윈도우 프로시저 ( WndProc ) : 윈도우를 통해 메세지를 받아서 각자의 방식대로 메세지를 처리하는 것 / 윈도우 프로시저 세팅
-	wc.cbClsExtra = 0;		// 잘 사용되지 않는다.
-	wc.cbWndExtra = 0;		// 잘 사용되지 않는다.
-	wc.hInstance = hInstance; // 윈도우( wc.hInstance )와 현재 어플리케이션의 핸들( hInstance )을 연결 / 윈도우는 핸들을 통해 관리한다.
-	wc.hIcon = LoadIcon(0, IDI_APPLICATION);		// 화살표 세팅
-	wc.hCursor = LoadCursor(0, IDC_ARROW);		// 커서 세팅
-	wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);		// 배경을 흰색으로 세팅
-	wc.lpszMenuName = 0;		// 메뉴 세팅 하지 않음
-	wc.lpszClassName = L"Base";		// 이 윈도우의 이름 / 이 윈도우를 사용하고 싶다면 이 이름을 통해 사용할 수 있도록 한다.
+	WNDCLASS wc;
+	wc.style = CS_HREDRAW | CS_VREDRAW;
+	wc.lpfnWndProc = WndProc;
+	wc.cbClsExtra = 0;
+	wc.cbWndExtra = 0;
+	wc.hInstance = hInstance;
+	wc.hIcon = LoadIcon(0, IDI_APPLICATION);
+	wc.hCursor = LoadCursor(0, IDC_ARROW);
+	wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+	wc.lpszMenuName = 0;
+	wc.lpszClassName = L"Base";
 
-	// 2. 윈도우에다가 등록 -> 나중에 쓸 수 있도록 준비한다.
 	if (!RegisterClass(&wc))
 	{
 		return 0;
 	}
 
-	// 3. 윈도우 생성 ( * 윈도우 등록 != 생성 )
 	DWORD style;
 
 	if (_isFULLScreen)
@@ -179,7 +170,6 @@ bool GameSystem::InitSystem(HINSTANCE hInstance, int nCmdShow)
 	}
 
 	_hWnd = CreateWindow(L"Base", L"Title", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, 0, 0, hInstance, 0);
-	// CreateWindow( 윈도우 이름, 윈도우 제목, 윈도우 스타일, x, y, 너비, 높이, 부모 윈도우, 윈도우 메뉴, 윈도우 프로시저, 윈도우 플래그 );
 
 	if (false == _isFULLScreen)
 	{
@@ -194,10 +184,8 @@ bool GameSystem::InitSystem(HINSTANCE hInstance, int nCmdShow)
 		MoveWindow(_hWnd, 0, 0, finalWidth, finalHeight, TRUE);
 	}
 
-	// 4. 윈도우 출력
 	ShowWindow(_hWnd, nCmdShow);
 
-	// 5. 윈도우 업데이트 -> 메세지를 받을 준비가 되었다.
 	UpdateWindow(_hWnd);
 
 	if (false == InitDirect3D())
@@ -218,7 +206,7 @@ bool GameSystem::InitSystem(HINSTANCE hInstance, int nCmdShow)
 
 	// npc 생성
 	NPC *_npc;
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		WCHAR name[256];
 		wsprintf(name, L"npc_%d", i);
@@ -227,7 +215,7 @@ bool GameSystem::InitSystem(HINSTANCE hInstance, int nCmdShow)
 	}
 
 	// monster 생성
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		WCHAR name[256];
 		wsprintf(name, L"npc_%d", i);
@@ -248,7 +236,7 @@ bool GameSystem::InitSystem(HINSTANCE hInstance, int nCmdShow)
 int GameSystem::Update()
 {
 	int ret = 1;
-	MSG msg = { 0 };		// 초기화
+	MSG msg = { 0 };
 
 	GameTimer _gameTime;
 	_gameTime.Reset();
@@ -258,7 +246,7 @@ int GameSystem::Update()
 
 	while (WM_QUIT != msg.message)
 	{
-		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE))		// 윈도우 처리 / PM_REMOVE -> 메세지에 들어간 이벤트를 사용한 후 지운다.
+		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
@@ -308,17 +296,14 @@ int GameSystem::Update()
 
 		}
 	}
-	return (int)msg.wParam;		// 윈도우가 정상 종료를 하기 위해서는 WM_QUIT 함수를 불러들어야 한다.
+	return (int)msg.wParam;
 }
 
 void GameSystem::CheckDeviceLost()
 {
 	HRESULT hr = _device3d->TestCooperativeLevel();
-	// D3DERR_DEVICELOST :  디바이스 로스트 상태가 되어서 현재 복구할 수 없다.
-	// D3DERR_DEVICENOTRESET : 디바이스를 다시 작동할 수 있다.
-	// D3DERR_DRIVERINTERNALERROR : 디바이스 내부 에러가 있다. 할 수 있는 방법은 없다.
 
-	if (FAILED(hr))		// 유효한 상태가 아니라면
+	if (FAILED(hr))
 	{
 		if (D3DERR_DEVICELOST == hr)
 		{
@@ -326,7 +311,7 @@ void GameSystem::CheckDeviceLost()
 			return;
 		}
 
-		else if (D3DERR_DEVICENOTRESET == hr)		// 복구
+		else if (D3DERR_DEVICENOTRESET == hr)
 		{
 			for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
 			{

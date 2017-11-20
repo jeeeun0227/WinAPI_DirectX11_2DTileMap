@@ -56,6 +56,8 @@ void MoveState::Stop()
 
 void MoveState::Start()
 {
+	State::Start();
+
 	if (true == _character->IsMoving())
 		return;
 
@@ -87,15 +89,11 @@ void MoveState::Start()
 	bool canMove = map->GetTileCollisonList(newTileX, newTileY, collisonList);
 	if (false == canMove)
 	{
-		/*
-		_character->Collision(collisonList);
-		_character->ChangeState(eStateType::ET_IDLE);
-		*/
-
 		Component *target = _character->Collision(collisonList);
 
-		if (NULL != target)
+		if (NULL != target && _character->IsAttackCoolTime())
 		{
+			_character->ResetAttackCoolTime();
 			_character->SetTarget(target);
 			_nextState = eStateType::ET_ATTACK;
 		}
@@ -108,6 +106,4 @@ void MoveState::Start()
 	{
 		_character->MoveStart(newTileX, newTileY);
 	}
-
-	State::Start();
 }

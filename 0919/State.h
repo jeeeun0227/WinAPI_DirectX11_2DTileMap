@@ -31,4 +31,6 @@ public:
 	virtual void Deinit();
 
 	virtual void CreateSprite();
+
+	void NextState(eStateType nextStateType);
 };

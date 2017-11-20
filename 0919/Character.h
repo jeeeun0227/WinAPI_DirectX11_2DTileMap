@@ -69,6 +69,8 @@ protected:
 	std::wstring _pngName;
 	std::wstring _scriptFileName;
 
+
+
 	// state
 private:
 	std::map<eStateType, State*> _stateMap;
@@ -108,12 +110,17 @@ protected:
 	int _hp;
 	Component *_target;
 	int _attackedPoint;
+	float _attackCoolTime;
+	float _attackCoolTimeDuration;
 public:
 	int GetAttackPoint() { return _attackPoint; }
 	Component *GetTarget() { return _target; }
 	void ResetTarget() { _target = NULL; }
 	void SetTarget(Component *target) { _target = target; }
 	int GetAttackedPoint() { return _attackedPoint; }
+	void UpdateAttackCoolTime(float deltaTime);
+	bool IsAttackCoolTime();
+	void ResetAttackCoolTime();
 
 	// defense
 protected:

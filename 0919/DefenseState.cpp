@@ -43,13 +43,11 @@ void DefenseState::Start()
 	{
 		_character->SetCanMove(true);
 		_character->MoveStop();
-		// _character->ChangeState(eStateType::ET_DEAD);
 		_nextState = eStateType::ET_DEAD;
 	}
 	else
 	{
-		//_character->ChangeState(eStateType::ET_IDLE);
-		_nextState = eStateType::ET_IDLE;
+		_nextState = eStateType::ET_MOVE;
 	}
 }
 

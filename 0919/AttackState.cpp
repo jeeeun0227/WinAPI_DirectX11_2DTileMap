@@ -23,6 +23,12 @@ void AttackState::Update(float deltaTime)
 
 	_character->ResetTarget();
 	_character->ChangeState(eStateType::ET_IDLE);
+
+	if (eStateType::ET_NONE != _nextState)
+	{
+		_character->ChangeState(_nextState);
+		return;
+	}
 }
 
 void AttackState::Stop()
@@ -35,7 +41,7 @@ void AttackState::Start()
 	State::Start();
 
 	sComponentMsgParam msgParam;
-	msgParam.sender = (Component*) _character;
+	msgParam.sender = (Component*)_character;
 	msgParam.attackPoint = _character->GetAttackPoint();
 	msgParam.recevier = _character->GetTarget();
 	msgParam.message = L"Attack";

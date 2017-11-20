@@ -7,7 +7,7 @@ ComponentSystem *ComponentSystem::_instance = NULL;
 
 ComponentSystem::ComponentSystem()
 {
-	_componentMap.clear();		// 초기화 중요
+	_componentMap.clear();
 }
 
 ComponentSystem::~ComponentSystem()

@@ -24,7 +24,6 @@ void Texture::Init(LPCWSTR fileName)
 			return;
 		}
 
-		// 이미지 파일로부터 텍스쳐 생성
 		hr = D3DXCreateTextureFromFileEx(
 			GameSystem::GetInstance()->GetDevice(),
 			fileName,

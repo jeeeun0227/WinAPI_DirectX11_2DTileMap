@@ -38,7 +38,7 @@ void State::Stop()
 
 void State::Start()
 {
-
+	_nextState = eStateType::ET_NONE;
 }
 
 void State::Render()
@@ -107,4 +107,9 @@ void State::CreateSprite()
 		_sprite->Init();
 		_spriteList.push_back(_sprite);
 	}
+}
+
+void State::NextState(eStateType nextStateType)
+{
+	_nextState = nextStateType;
 }

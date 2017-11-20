@@ -9,7 +9,7 @@ NPC::NPC(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFilename)
 {
 	_type = eComponentType::CT_NPC;
 
-	_hp = 100;
+	_hp = 50;
 }
 
 NPC::~NPC()
@@ -56,8 +56,9 @@ void NPC::UpdateAI()
 
 			if (map->CanMoveTileMap(newTileX, newTileY))
 			{
-				_currentDirection = (eDirection)findDir;
-				ChangeState(ET_MOVE);
+				direction = (eDirection)findDir;
+				_currentDirection = direction;
+				_state->NextState(eStateType::ET_MOVE);
 				break;
 			}
 		}

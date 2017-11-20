@@ -10,7 +10,7 @@ Monster::Monster(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFilename)
 	int speed = (rand() % 1500) + 200;		// 기호에 따라 수정
 	_moveTime = (float)speed / 1000.0f;		// 고정
 
-	_attackPoint = 10;		// 재정의
+	_attackPoint = 10;		// 공격력 재정의
 }
 
 Monster::~Monster()
@@ -73,14 +73,8 @@ Component *Monster::Collision(std::list<Component*> &collisonList)
 		if (com->GetType() == eComponentType::CT_NPC ||
 			com->GetType() == eComponentType::CT_PLAYER)
 		{
-			/*
-			_target = (*it);
-			ChangeState(eStateType::ET_ATTACK);
-			return;
-			*/
 			return (*it);
 		}
 	}
-	// ChangeState(eStateType::ET_IDLE);
 	return NULL;
 }

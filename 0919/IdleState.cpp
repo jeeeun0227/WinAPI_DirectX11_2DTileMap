@@ -18,11 +18,19 @@ void IdleState::Init(Character *character)
 
 void IdleState::Update(float deltaTime)
 {
+	State::Update(deltaTime);
+
 	if (false == _character->isLive())
 		return;
 
 	if (false == _character->IsMoving())
 		_character->UpdateAI();
+
+	if (eStateType::ET_NONE != _nextState)
+	{
+		_character->ChangeState(_nextState);
+		return;
+	}
 }
 
 void IdleState::Stop()

@@ -18,9 +18,11 @@ Character::Character(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFilename) 
 	_moveTime = 1.0f;
 	_pngName = textureFilename;
 	_scriptFileName = scriptName;
+	_attackCoolTime = 1.0f;
+	_attackCoolTimeDuration = 0.0f;
 
 	// 공격력 수치 설정
-	_attackPoint = 10;
+	_attackPoint = 30;
 
 	// HP 수치 설정
 	_hp = 100;
@@ -103,6 +105,7 @@ void Character::Deinit()
 
 void Character::Update(float deltaTime)
 {
+	UpdateAttackCoolTime(deltaTime);
 	_state->Update(deltaTime);
 }
 
@@ -130,7 +133,7 @@ void Character::MoveDeltaPosition(float deltaX, float deltaY)
 void Character::UpdateAI()
 {
 	_currentDirection = (eDirection)(rand() % 4);
-	ChangeState(eStateType::ET_MOVE);
+	_state->NextState(eStateType::ET_MOVE);
 }
 
 void Character::ChangeState(eStateType stateType)
@@ -194,44 +197,18 @@ void Character::RaceiveMessage(const sComponentMsgParam msgParam)
 	}
 }
 
-Component * Character::Collision(std::list<Component*> &collisonList)
+Component *Character::Collision(std::list<Component*> &collisonList)
 {
-	/*
-	if (eComponentType::CT_MONSTER == _type)
+	for (std::list<Component*>::iterator it = collisonList.begin(); it != collisonList.end(); it++)
 	{
-		//collisonList 순환
-		for (std::list<Component*>::iterator it = collisonList.begin(); it != collisonList.end(); it++)
-		{
-			Component *com = (*it);
-
-			if (com->GetType() == eComponentType::CT_NPC ||
-				com->GetType() == eComponentType::CT_PLAYER)
-			{
-				// Attack Effect 구현
-				sComponentMsgParam msgParam;
-				msgParam.sender = this;
-				msgParam.recevier = (*it);
-				msgParam.message = L"Attack";
-				ComponentSystem::GetInstance()->SendMsg(msgParam);
-			}
-		}
+		sComponentMsgParam msgParam;
+		msgParam.sender = this;
+		msgParam.recevier = (*it);
+		msgParam.message = L"Collision";
+		ComponentSystem::GetInstance()->SendMsg(msgParam);
 	}
-
-	else
-	{
-		for (std::list<Component*>::iterator it = collisonList.begin(); it != collisonList.end(); it++)
-		{
-			sComponentMsgParam msgParam;
-			msgParam.sender = this;
-			msgParam.recevier = (*it);
-			msgParam.message = L"Collision";
-			ComponentSystem::GetInstance()->SendMsg(msgParam);
-		}
-	}
-	*/
 	return NULL;
 }
-
 
 void Character::MoveStop()
 {
@@ -258,8 +235,29 @@ void Character::Moving(float deltaTime)
 void Character::DecreaseHP(int decreaseHP)
 {
 	_hp -= decreaseHP;
+
 	if (_hp < 0)
 	{
 		_isLive = false;
 	}
+}
+
+void Character::UpdateAttackCoolTime(float deltaTime)
+{
+	if (_attackCoolTimeDuration < _attackCoolTime)
+	{
+		_attackCoolTimeDuration += deltaTime;
+	}
+}
+
+bool Character::IsAttackCoolTime()
+{
+	if (_attackCoolTime <= _attackCoolTimeDuration)
+		return true;
+	return false;
+}
+
+void Character::ResetAttackCoolTime()
+{
+	_attackCoolTimeDuration = 0.0f;
 }
