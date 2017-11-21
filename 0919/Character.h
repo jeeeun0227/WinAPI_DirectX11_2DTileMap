@@ -30,6 +30,7 @@ enum eStateType
 class Sprite;
 class State;
 class AttackState;
+class Font;
 
 class Character : public Component
 {
@@ -68,8 +69,6 @@ protected:
 
 	std::wstring _pngName;
 	std::wstring _scriptFileName;
-
-
 
 	// state
 private:
@@ -127,4 +126,11 @@ protected:
 	int _attackPoint;
 public:
 	void DecreaseHP(int decreaseHP);
+
+	// Font
+protected:
+	Font *_font;
+public:
+	void UpdateText();
+	
 };

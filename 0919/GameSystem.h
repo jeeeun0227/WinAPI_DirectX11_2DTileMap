@@ -16,6 +16,7 @@ class Character;
 class ComponentSystem;
 class Component;
 class ComponentMessage;
+class Font;
 
 class GameSystem
 {
@@ -77,4 +78,8 @@ private:
 
 private:
 	std::list<Component*> _componentList;
+
+	// Font Test
+private:
+	Font *_testFont;
 };

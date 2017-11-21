@@ -9,7 +9,9 @@ NPC::NPC(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFilename)
 {
 	_type = eComponentType::CT_NPC;
 
-	_hp = 50;
+	// _hp = 50;
+
+	_attackPoint = 10;
 }
 
 NPC::~NPC()

@@ -11,6 +11,8 @@ Player::Player(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFilename)
 	_moveTime = 0.1f;
 
 	_type = eComponentType::CT_PLAYER;
+
+	_attackPoint = 50;
 }
 
 Player::~Player()

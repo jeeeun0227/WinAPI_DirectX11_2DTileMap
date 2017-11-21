@@ -13,7 +13,7 @@
 #include "Component.h"
 #include "Monster.h"
 
-LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)	
+LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
@@ -67,6 +67,8 @@ GameSystem::~GameSystem()
 
 	RELEASE_COM(_sprite);
 	RELEASE_COM(_device3d);
+
+	delete _testFont;
 }
 
 bool GameSystem::InitDirect3D()
@@ -279,6 +281,7 @@ int GameSystem::Update()
 
 			_device3d->BeginScene();
 
+			// Sprite를 화면에 그린다.
 			_sprite->Begin(D3DXSPRITE_ALPHABLEND);
 
 			for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)

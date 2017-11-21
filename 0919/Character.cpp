@@ -11,6 +11,7 @@
 #include "AttackState.h"
 #include "DefenseState.h"
 #include "DeadState.h"
+#include "Font.h"
 
 Character::Character(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFilename) : Component(name)
 {
@@ -30,7 +31,7 @@ Character::Character(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFilename) 
 
 Character::~Character()
 {
-
+	delete _font;
 }
 
 void Character::Init()
@@ -86,6 +87,16 @@ void Character::Init()
 	}
 
 	ChangeState(eStateType::ET_IDLE);
+
+	// Font
+	{
+		D3DCOLOR color = D3DCOLOR_ARGB(255, 0, 0, 0);
+		_font = new Font(L"Arial", 20, color);
+
+		_font->SetRect(100, 100, 400, 100);
+		// _font->SetText(L"Hello");
+		UpdateText();
+	}
 }
 
 void Character::Deinit()
@@ -107,11 +118,19 @@ void Character::Update(float deltaTime)
 {
 	UpdateAttackCoolTime(deltaTime);
 	_state->Update(deltaTime);
+
+	UpdateText();
 }
 
 void Character::Render()
 {
 	_state->Render();
+
+	// Font Test
+	{
+		_font->SetPosition(_x-200, _y-65);
+		_font->Render();
+	}
 }
 
 void Character::Relese()
@@ -248,6 +267,10 @@ void Character::UpdateAttackCoolTime(float deltaTime)
 	{
 		_attackCoolTimeDuration += deltaTime;
 	}
+	else
+	{
+		_attackCoolTimeDuration = _attackCoolTime;
+	}
 }
 
 bool Character::IsAttackCoolTime()
@@ -260,4 +283,31 @@ bool Character::IsAttackCoolTime()
 void Character::ResetAttackCoolTime()
 {
 	_attackCoolTimeDuration = 0.0f;
+}
+
+void Character::UpdateText()
+{
+	// int coolTime = (int)(_attackCoolTimeDuration * 60.0f);
+
+	WCHAR text[256];
+	switch (GetType())
+	{
+	case CT_PLAYER:
+		wsprintf(text, L"<Player>\nHP %d\nAttackPoint %d",_hp , _attackPoint);
+		_font->SetText(text);
+		break;
+
+	case CT_MONSTER:
+		wsprintf(text, L"<Monster>\nHP %d\nAttackPoint %d", _hp, _attackPoint);
+		_font->SetText(text);
+		break;
+
+	case CT_NPC:
+		wsprintf(text, L"<NPC>\nHP %d\nAttackPoint %d", _hp, _attackPoint);
+		_font->SetText(text);
+		break;
+
+	default:
+		break;
+	}
 }
