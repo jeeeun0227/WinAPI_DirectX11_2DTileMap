@@ -5,6 +5,8 @@
 
 class ComponentSystem;
 struct sComponentMsgParam;
+class Character;
+enum eStateType;
 
 enum eComponentType
 {
@@ -70,7 +72,12 @@ public:
 	// GetType
 public:
 	eComponentType GetType() { return _type; }
-
 protected:
 	eComponentType _type;
+
+	// Attack
+public:
+	eStateType GetState() { return _nowState; }
+private:
+	eStateType _nowState;
 };

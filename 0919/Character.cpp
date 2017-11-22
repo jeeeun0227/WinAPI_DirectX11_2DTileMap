@@ -17,8 +17,10 @@ Character::Character(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFilename) 
 {
 	_state = NULL;
 	_moveTime = 1.0f;
+
 	_pngName = textureFilename;
 	_scriptFileName = scriptName;
+
 	_attackCoolTime = 1.0f;
 	_attackCoolTimeDuration = 0.0f;
 
@@ -94,7 +96,6 @@ void Character::Init()
 		_font = new Font(L"Arial", 20, color);
 
 		_font->SetRect(100, 100, 400, 100);
-		// _font->SetText(L"Hello");
 		UpdateText();
 	}
 }
@@ -314,15 +315,29 @@ void Character::UpdateText()
 
 int Character::GetCriticalAttack()
 {
-	if (_state->GetState() == eStateType::ET_ATTACK)
+	if (_state->eGetState() == eStateType::ET_ATTACK)
 	{
 		_criticalAttackPoint = _attackPoint + (rand() % 21);
 		_attackPoint = _criticalAttackPoint;
-		GetAttackPoint();
 	}
-	else
-	{
+	return _attackPoint;
+}
 
-	}
+int Character::SetAttackPoint()
+{
+		switch (_type)
+		{
+		case CT_PLAYER:
+			_attackPoint = 50;
+			break;
+
+		case CT_NPC:
+			_attackPoint = 10;
+			break;
+
+		case CT_MONSTER:
+			_attackPoint = 20;
+			break;
+		}
 	return _attackPoint;
 }

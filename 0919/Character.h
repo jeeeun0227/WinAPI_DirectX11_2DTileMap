@@ -115,13 +115,14 @@ protected:
 public:
 	int GetAttackPoint() { return _attackPoint; }
 	Component *GetTarget() { return _target; }
-	void ResetTarget() { _target = NULL; }
-	void SetTarget(Component *target) { _target = target; }
+	void ResetTarget() {_target = NULL; }
+	void SetTarget(Component *target) { _target = target;}
 	int GetAttackedPoint() { return _attackedPoint; }
 	void UpdateAttackCoolTime(float deltaTime);
 	bool IsAttackCoolTime();
 	void ResetAttackCoolTime();
 	int GetCriticalAttack();
+	int SetAttackPoint();
 
 	// defense
 protected:

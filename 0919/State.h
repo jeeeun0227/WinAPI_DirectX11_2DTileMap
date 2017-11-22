@@ -35,5 +35,5 @@ public:
 
 	void NextState(eStateType nextStateType);
 
-	eStateType GetState() { return _nowState; }
+	eStateType eGetState() { return _nowState; }
 };

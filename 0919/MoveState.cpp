@@ -95,6 +95,12 @@ void MoveState::Start()
 		{
 			_character->ResetAttackCoolTime();
 			_character->SetTarget(target);
+
+			if (target->CanMove() == false)
+			{
+				_character->SetAttackPoint();
+			}
+
 			_nextState = eStateType::ET_ATTACK;
 		}
 		else

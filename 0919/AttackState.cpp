@@ -56,8 +56,6 @@ void AttackState::Start()
 		msgParam.attackPoint = _character->GetAttackPoint();
 		break;
 	}
-	
-	// msgParam.attackPoint = _character->GetAttackPoint();
 
 	msgParam.recevier = _character->GetTarget();
 	msgParam.message = L"Attack";
