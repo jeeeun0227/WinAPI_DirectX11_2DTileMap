@@ -111,6 +111,7 @@ protected:
 	int _attackedPoint;
 	float _attackCoolTime;
 	float _attackCoolTimeDuration;
+	int _criticalAttackPoint;
 public:
 	int GetAttackPoint() { return _attackPoint; }
 	Component *GetTarget() { return _target; }
@@ -120,6 +121,7 @@ public:
 	void UpdateAttackCoolTime(float deltaTime);
 	bool IsAttackCoolTime();
 	void ResetAttackCoolTime();
+	int GetCriticalAttack();
 
 	// defense
 protected:

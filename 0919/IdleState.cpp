@@ -3,7 +3,7 @@
 
 IdleState::IdleState()
 {
-
+	_nowState = eStateType::ET_IDLE;
 }
 
 IdleState::~IdleState()

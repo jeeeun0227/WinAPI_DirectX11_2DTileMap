@@ -1,10 +1,11 @@
 #include "AttackState.h"
 #include "ComponentSystem.h"
 #include "Character.h"
+#include "Component.h"
 
 AttackState::AttackState()
 {
-
+	_nowState = eStateType::ET_ATTACK;
 }
 
 AttackState::~AttackState()
@@ -42,7 +43,22 @@ void AttackState::Start()
 
 	sComponentMsgParam msgParam;
 	msgParam.sender = (Component*)_character;
-	msgParam.attackPoint = _character->GetAttackPoint();
+
+	switch (_character->GetType())
+	{
+	case CT_PLAYER:
+		msgParam.attackPoint = _character->GetCriticalAttack();
+		break;
+	case CT_NPC:
+		msgParam.attackPoint = _character->GetAttackPoint();
+		break;
+	case CT_MONSTER:
+		msgParam.attackPoint = _character->GetAttackPoint();
+		break;
+	}
+	
+	// msgParam.attackPoint = _character->GetAttackPoint();
+
 	msgParam.recevier = _character->GetTarget();
 	msgParam.message = L"Attack";
 	ComponentSystem::GetInstance()->SendMsg(msgParam);

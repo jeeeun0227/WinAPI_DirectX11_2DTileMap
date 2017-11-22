@@ -7,6 +7,7 @@
 State::State()
 {
 	_nextState = eStateType::ET_NONE;
+	_nowState = eStateType::ET_NONE;
 }
 
 State::~State()

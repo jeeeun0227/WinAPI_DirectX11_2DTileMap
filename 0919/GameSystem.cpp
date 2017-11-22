@@ -12,6 +12,7 @@
 #include "ComponentSystem.h"
 #include "Component.h"
 #include "Monster.h"
+#include "RecoveryItem.h"
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -208,7 +209,7 @@ bool GameSystem::InitSystem(HINSTANCE hInstance, int nCmdShow)
 
 	// npc 생성
 	NPC *_npc;
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		WCHAR name[256];
 		wsprintf(name, L"npc_%d", i);
@@ -217,12 +218,21 @@ bool GameSystem::InitSystem(HINSTANCE hInstance, int nCmdShow)
 	}
 
 	// monster 생성
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		WCHAR name[256];
 		wsprintf(name, L"npc_%d", i);
 		Monster *_monster = new Monster(name, L"monster", L"monster");
 		_componentList.push_back(_monster);
+	}
+
+	// 회복 item 생성
+	for (int i = 0; i < 10; i++)
+	{
+		WCHAR name[256];
+		wsprintf(name, L"recover_item_%d", i);
+		RecoveryItem *_item = new RecoveryItem(name, L"recovery_item", L"item_sprites");
+		_componentList.push_back(_item);
 	}
 
 	for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)

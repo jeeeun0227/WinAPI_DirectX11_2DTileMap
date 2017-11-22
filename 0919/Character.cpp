@@ -255,7 +255,7 @@ void Character::DecreaseHP(int decreaseHP)
 {
 	_hp -= decreaseHP;
 
-	if (_hp < 0)
+	if (_hp <= 0)
 	{
 		_isLive = false;
 	}
@@ -310,4 +310,19 @@ void Character::UpdateText()
 	default:
 		break;
 	}
+}
+
+int Character::GetCriticalAttack()
+{
+	if (_state->GetState() == eStateType::ET_ATTACK)
+	{
+		_criticalAttackPoint = _attackPoint + (rand() % 21);
+		_attackPoint = _criticalAttackPoint;
+		GetAttackPoint();
+	}
+	else
+	{
+
+	}
+	return _attackPoint;
 }

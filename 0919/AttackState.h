@@ -7,6 +7,8 @@
 
 class Character;
 class Sprite;
+class Player;
+class Component;
 
 class AttackState : public State
 {
@@ -25,4 +27,7 @@ public:
 	void Relese();
 	void Reset();
 	void Deinit();
+
+private:
+	Player *_player;
 };

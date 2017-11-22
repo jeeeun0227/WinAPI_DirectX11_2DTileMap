@@ -37,6 +37,9 @@
     <Filter Include="소스 파일\Game\Character\State">
       <UniqueIdentifier>{e3729ce3-e330-4b95-a147-3191b19b2e7f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Item">
+      <UniqueIdentifier>{d2b6d4a3-3a99-48f0-a2e7-229bbdecee4a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -108,6 +111,9 @@
     <ClCompile Include="Font.cpp">
       <Filter>소스 파일\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="RecoveryItemcpp.cpp">
+      <Filter>소스 파일\Game\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameSystem.h">
@@ -178,6 +184,9 @@
     </ClInclude>
     <ClInclude Include="Font.h">
       <Filter>소스 파일\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="RecoveryItem.h">
+      <Filter>소스 파일\Game\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -5,7 +5,7 @@
 
 MoveState::MoveState()
 {
-
+	_nowState = eStateType::ET_MOVE;
 }
 
 MoveState::~MoveState()

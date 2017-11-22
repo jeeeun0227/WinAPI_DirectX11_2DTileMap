@@ -17,6 +17,7 @@ protected:
 	Character *_character;
 	std::vector<Sprite*> _spriteList;
 	eStateType _nextState;
+	eStateType _nowState;
 
 public:
 	virtual void Init(Character *character);
@@ -33,4 +34,6 @@ public:
 	virtual void CreateSprite();
 
 	void NextState(eStateType nextStateType);
+
+	eStateType GetState() { return _nowState; }
 };

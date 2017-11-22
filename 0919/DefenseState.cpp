@@ -3,7 +3,7 @@
 
 DefenseState::DefenseState()
 {
-
+	_nowState = eStateType::EF_DEFENSE;
 }
 
 DefenseState::~DefenseState()
