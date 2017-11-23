@@ -52,6 +52,7 @@ public:
 	float GetMoveDeltaY() { return _moveDistancePerTimeY; }
 
 	bool isLive() { return _isLive; }
+	void SetLive(bool isLive) { _isLive = isLive; }
 
 protected:
 	LPCWSTR _name;

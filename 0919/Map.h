@@ -58,4 +58,6 @@ public:
 
 	int GetWidth();
 	int GetHeight();
+
+	std::list<Component*> GetTileComponentList(int tileX, int tileY);
 };

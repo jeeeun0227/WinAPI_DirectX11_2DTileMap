@@ -30,6 +30,8 @@ public:
 
 	bool GetTileCollisonList(std::list<Component*> &collisonList);
 
+	std::list<Component*> GetComponentList() { return _componentList; }
+
 private:
 	float _posX;
 	float _posY;

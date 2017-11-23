@@ -319,3 +319,8 @@ int Map::GetHeight()
 {
 	return _height;
 }
+
+std::list<Component*> Map::GetTileComponentList(int tileX, int tileY)
+{
+	return _tileMap[tileY][tileX]->GetComponentList();
+}

@@ -25,6 +25,8 @@ public:
 	void MoveDeltaPosition(float _deltaX, float _deltaY);
 	void SetPosition(float PosX, float PosY);
 
+	void RecoveryItem::RaceiveMessage(const sComponentMsgParam msgParam);
+
 private:
 	Sprite *_sprite;
 	float _posX;

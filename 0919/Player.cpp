@@ -50,6 +50,48 @@ void Player::UpdateAI()
 		_currentDirection = direction;
 		ChangeState(ET_MOVE);
 	}
+
+	// 스페이스바를 누르면 아이템을 먹자
+
+	/* 
+	1. 스페이스바가 눌려졌을 때
+	2. 현재 내가 있는 타일에 아이템이 있는지 검사
+	3. 아이템이 있으면 체력을 회복하고
+	4. 아이템을 맵에서 제거한다.
+	*/
+
+	if (GameSystem::GetInstance()->IsKeyDown(VK_SPACE))
+	{
+		Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");
+
+		std::list<Component*> componentlist = map->GetTileComponentList(_tileX, _tileY);
+
+		for (std::list<Component*>::iterator it = componentlist.begin(); it != componentlist.end(); it++)
+		{
+			Component *component = (*it);
+			
+			if (eComponentType::CT_ITEM == component->GetType())
+			{
+				/*
+				_hp = 100;
+				map->ResetTileComponent(_tileX, _tileY, component);
+				component->SetLive(false);
+				*/
+
+				sComponentMsgParam msgParam;
+				msgParam.sender = (Component*)this;
+				msgParam.recevier = component;
+				msgParam.message = L"Use";
+				ComponentSystem::GetInstance()->SendMsg(msgParam);
+			}
+		}
+	}
+
+	/*
+	1. 스페이스바가 눌려졌을 때
+	2. 내가 있는 타일에 아이템이 있는지 검사
+	3. 아이템 사용 메세지를 아이템으로 보낸다.
+	*/
 }
 
 Component *Player::Collision(std::list<Component*> &collisonList)

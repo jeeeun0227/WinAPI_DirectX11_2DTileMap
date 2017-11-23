@@ -108,6 +108,7 @@ public:
 protected:
 	int _hp;
 	Component *_target;
+	int _attackPoint;
 	int _attackedPoint;
 	float _attackCoolTime;
 	float _attackCoolTimeDuration;
@@ -122,13 +123,10 @@ public:
 	bool IsAttackCoolTime();
 	void ResetAttackCoolTime();
 	int GetCriticalAttack();
-	int SetAttackPoint();
+	int ReSetAttackPoint();
 
-	// defense
-protected:
-	int _attackPoint;
-public:
 	void DecreaseHP(int decreaseHP);
+	void IncreaseHP(int increaseHP);
 
 	// Font
 protected:

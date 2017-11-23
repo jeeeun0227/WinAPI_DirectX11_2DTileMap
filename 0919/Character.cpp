@@ -320,10 +320,11 @@ int Character::GetCriticalAttack()
 		_criticalAttackPoint = _attackPoint + (rand() % 21);
 		_attackPoint = _criticalAttackPoint;
 	}
+
 	return _attackPoint;
 }
 
-int Character::SetAttackPoint()
+int Character::ReSetAttackPoint()
 {
 		switch (_type)
 		{
@@ -340,4 +341,14 @@ int Character::SetAttackPoint()
 			break;
 		}
 	return _attackPoint;
+}
+
+void Character::IncreaseHP(int increaseHP)
+{
+	_hp += increaseHP;
+
+	if (500 < _hp)
+	{
+		_hp = 500;
+	}
 }
