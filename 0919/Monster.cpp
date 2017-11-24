@@ -1,6 +1,9 @@
 #include "Monster.h"
 #include "ComponentMessage.h"
 #include "MoveState.h"
+#include "GameSystem.h"
+#include "map.h"
+#include "Stage.h"
 
 Monster::Monster(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFilename)
 	: Character(name, scriptName, textureFilename)
@@ -9,8 +12,9 @@ Monster::Monster(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFilename)
 
 	int speed = (rand() % 1500) + 200;		// 기호에 따라 수정
 	_moveTime = (float)speed / 1000.0f;		// 고정
-
+	
 	_attackPoint = 20;		// 공격력 재정의
+	_hp = 150;		// 체력 재정의
 }
 
 Monster::~Monster()
@@ -20,10 +24,11 @@ Monster::~Monster()
 
 void Monster::UpdateAI()
 {
+	Map *map = GameSystem::GetInstance()->GetStage()->GetMap();
 	std::vector<eComponentType> compareTypeList;
 	compareTypeList.push_back(eComponentType::CT_NPC);
 	compareTypeList.push_back(eComponentType::CT_PLAYER);
-	Component *FindEnemy = ComponentSystem::GetInstance()->FindComponentInRange(this, 4, compareTypeList);
+	Component *FindEnemy = ComponentSystem::GetInstance()->FindComponentInRange(map, this, 4, compareTypeList);
 
 	if (NULL != FindEnemy)
 	{

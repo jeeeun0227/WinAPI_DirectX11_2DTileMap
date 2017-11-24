@@ -114,7 +114,7 @@ protected:
 	float _attackCoolTimeDuration;
 	int _criticalAttackPoint;
 public:
-	int GetAttackPoint() { return _attackPoint; }
+	int GetAttackPoint() {	return _attackPoint;  }
 	Component *GetTarget() { return _target; }
 	void ResetTarget() {_target = NULL; }
 	void SetTarget(Component *target) { _target = target;}
@@ -127,6 +127,8 @@ public:
 
 	void DecreaseHP(int decreaseHP);
 	void IncreaseHP(int increaseHP);
+
+	void SetAttackPoint(int FinalAttackPoint) { _attackPoint = FinalAttackPoint; };
 
 	// Font
 protected:

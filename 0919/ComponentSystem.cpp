@@ -57,9 +57,10 @@ Component *ComponentSystem::FindComponent(std::wstring name)
 	return 0;
 }
 
-Component *ComponentSystem::FindComponentInRange(Component *chaser, int range, std::vector<eComponentType> compareTypeList)
+Component *ComponentSystem::FindComponentInRange(Component *MapComponent, Component *chaser, int range, std::vector<eComponentType> compareTypeList)
 {
-	Map *map = (Map*)FindComponent(L"tileMap");
+	// Map *map = (Map*)FindComponent(L"tileMap");
+	Map *map = (Map*)MapComponent;
 
 	int minTileX = chaser->GetTileX() - range;
 	int maxTileX = chaser->GetTileX() + range;
@@ -126,4 +127,12 @@ void ComponentSystem::ProcessMessageQueue()
 void ComponentSystem::Update(float deltaTime)
 {
 	ProcessMessageQueue();
+}
+
+void ComponentSystem::ClearMessageQueue()
+{
+	while (0 < _msgQueue.size())
+	{
+		_msgQueue.pop();
+	}
 }

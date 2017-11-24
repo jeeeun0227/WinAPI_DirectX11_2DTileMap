@@ -44,22 +44,28 @@ void AttackState::Start()
 	sComponentMsgParam msgParam;
 	msgParam.sender = (Component*)_character;
 
-	switch (_character->GetType())
-	{
-	case CT_PLAYER:
-		msgParam.attackPoint = _character->GetCriticalAttack();
-		break;
-	case CT_NPC:
-		msgParam.attackPoint = _character->GetAttackPoint();
-		break;
-	case CT_MONSTER:
-		msgParam.attackPoint = _character->GetAttackPoint();
-		break;
-	}
+	msgParam.attackPoint = _character->GetAttackPoint();
 
-	msgParam.recevier = _character->GetTarget();
-	msgParam.message = L"Attack";
-	ComponentSystem::GetInstance()->SendMsg(msgParam);
+	if (_character->GetAttackPoint() == 50)
+	{
+		msgParam.recevier = _character->GetTarget();
+		msgParam.message = L"Attack";
+		ComponentSystem::GetInstance()->SendMsg(msgParam);
+
+		int FinalAttackPoint = _character->GetCriticalAttack();
+		_character->SetAttackPoint(FinalAttackPoint);
+	}
+	else
+	{
+		msgParam.recevier = _character->GetTarget();
+		msgParam.message = L"Attack";
+		ComponentSystem::GetInstance()->SendMsg(msgParam);
+
+		if (_character->CanMove() == false)
+		{
+			_character->ReSetAttackPoint();
+		}
+	}
 }
 
 void AttackState::Render()

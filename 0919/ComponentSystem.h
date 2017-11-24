@@ -41,8 +41,7 @@ public:
 
 	// FindComponent
 public:
-	Component *ComponentSystem::FindComponentInRange(Component *chaser, int range, std::vector<eComponentType> compareTypeList);
-
+	Component *ComponentSystem::FindComponentInRange(Component *MapComponent, Component *chaser, int range, std::vector<eComponentType> compareTypeList);
 
 private:
 	std::queue<sComponentMsgParam> _msgQueue;
@@ -50,4 +49,6 @@ private:
 public:
 	void ProcessMessageQueue();
 	void Update(float deltaTime);
+
+	void ClearMessageQueue();
 };

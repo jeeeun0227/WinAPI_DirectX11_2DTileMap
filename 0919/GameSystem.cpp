@@ -13,6 +13,7 @@
 #include "Component.h"
 #include "Monster.h"
 #include "RecoveryItem.h"
+#include "Stage.h"
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -55,16 +56,12 @@ GameSystem *GameSystem::GetInstance()
 GameSystem::GameSystem()
 {
 	_isFULLScreen = false;
-
-	_componentList.clear();
 }
 
 GameSystem::~GameSystem()
 {
-	for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
-	{
-		(*it)->Deinit();
-	}
+	// _stage->Deinit();
+	delete _stage;
 
 	RELEASE_COM(_sprite);
 	RELEASE_COM(_device3d);
@@ -196,51 +193,9 @@ bool GameSystem::InitSystem(HINSTANCE hInstance, int nCmdShow)
 		return false;
 	}
 
-	_componentList.clear();
-
-	// map 생성
-	Map *_map = new Map(L"tileMap");
-	_componentList.push_back(_map);
-
-	// player 생성
-	Player *_player = new Player(L"player", L"npc", L"Player_Sprite_00");
-	// 생성자 (컴포넌트 이름(고유 이름), json 파일 이름.json, 이미지 이름.png);
-	_componentList.push_back(_player);
-
-	// npc 생성
-	NPC *_npc;
-	for (int i = 0; i < 10; i++)
-	{
-		WCHAR name[256];
-		wsprintf(name, L"npc_%d", i);
-		_npc = new NPC(L"npc", L"npc", L"Npc_Sprite_01");
-		_componentList.push_back(_npc);
-	}
-
-	// monster 생성
-	for (int i = 0; i < 10; i++)
-	{
-		WCHAR name[256];
-		wsprintf(name, L"npc_%d", i);
-		Monster *_monster = new Monster(name, L"monster", L"monster");
-		_componentList.push_back(_monster);
-	}
-
-	// 회복 item 생성
-	for (int i = 0; i < 10; i++)
-	{
-		WCHAR name[256];
-		wsprintf(name, L"recover_item_%d", i);
-		RecoveryItem *_item = new RecoveryItem(name, L"recovery_item", L"item_sprites");
-		_componentList.push_back(_item);
-	}
-
-	for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
-	{
-		(*it)->Init();
-	}
-
-	_map->InitViewer(_player);
+	// Stage Map1 생성
+	_stage = new Stage();
+	_stage->Init(L"Map1");
 
 	return true;
 }
@@ -273,16 +228,15 @@ int GameSystem::Update()
 
 			ComponentSystem::GetInstance()->Update(_deltaTime);
 
-			for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
-			{
-				(*it)->Update(_deltaTime);
-			}
+			_stage->Update(_deltaTime);
 
 			if (SecondPerFrame <= _frameDuration)
 			{
+				/*
 				wchar_t timeCheck[256];
 				swprintf(timeCheck, L"delta time : %f\n", _deltaTime);
 				OutputDebugString(timeCheck);
+				*/
 
 				_frameDuration = 0.0f;
 			}
@@ -294,10 +248,7 @@ int GameSystem::Update()
 			// Sprite를 화면에 그린다.
 			_sprite->Begin(D3DXSPRITE_ALPHABLEND);
 
-			for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
-			{
-				(*it)->Render();
-			}
+			_stage->Render();
 
 			_sprite->End();
 
@@ -306,7 +257,18 @@ int GameSystem::Update()
 			CheckDeviceLost();
 
 			_device3d->Present(NULL, NULL, NULL, NULL);
+		}
 
+		// Stage 교체 테스트
+		{
+			// Stage Map1 생성
+			if (IsKeyDown(VK_F1))
+			{
+				ComponentSystem::GetInstance()->ClearMessageQueue();
+				delete _stage;
+				_stage = new Stage();
+				_stage->Init(L"Map2");
+			}
 		}
 	}
 	return (int)msg.wParam;
@@ -326,18 +288,12 @@ void GameSystem::CheckDeviceLost()
 
 		else if (D3DERR_DEVICENOTRESET == hr)
 		{
-			for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
-			{
-				(*it)->Relese();
-			}
+			_stage->Relese();
 
 			hr = _device3d->Reset(&_d3dpp);
 			InitDirect3D();
 
-			for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
-			{
-				(*it)->Reset();
-			}
+			_stage->Reset();
 		}
 	}
 }

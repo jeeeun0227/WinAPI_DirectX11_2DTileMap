@@ -17,6 +17,7 @@ class ComponentSystem;
 class Component;
 class ComponentMessage;
 class Font;
+class Stage;
 
 class GameSystem
 {
@@ -76,10 +77,13 @@ private:
 
 	D3DPRESENT_PARAMETERS _d3dpp;
 
-private:
-	std::list<Component*> _componentList;
-
 	// Font Test
 private:
 	Font *_testFont;
+
+	// Load Map
+private:
+	Stage *_stage;
+public:
+	Stage *GetStage() { return _stage; }
 };

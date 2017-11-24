@@ -2,6 +2,8 @@
 #include "Map.h"
 #include "MoveState.h"
 #include "Character.h"
+#include "GameSystem.h"
+#include "Stage.h"
 
 MoveState::MoveState()
 {
@@ -61,7 +63,8 @@ void MoveState::Start()
 	if (true == _character->IsMoving())
 		return;
 
-	Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");
+	// Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");
+	Map *map = GameSystem::GetInstance()->GetStage()->GetMap();
 
 	int newTileX = _character->GetTileX();
 	int newTileY = _character->GetTileY();
@@ -97,15 +100,6 @@ void MoveState::Start()
 			_character->SetTarget(target);
 
 			_nextState = eStateType::ET_ATTACK;
-			
-			if (target->GetType() == CT_MONSTER)
-			{
-				if (target->CanMove() == false)
-				{
-					_character->ReSetAttackPoint();
-					_character->UpdateText();
-				}
-			}
 		}
 		else
 		{

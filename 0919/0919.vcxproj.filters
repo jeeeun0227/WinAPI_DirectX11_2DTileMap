@@ -40,6 +40,9 @@
     <Filter Include="소스 파일\Game\Item">
       <UniqueIdentifier>{d2b6d4a3-3a99-48f0-a2e7-229bbdecee4a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Stage">
+      <UniqueIdentifier>{b55fd472-4d19-4202-aeaf-b0e8facaaf87}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -114,6 +117,9 @@
     <ClCompile Include="RecoveryItemcpp.cpp">
       <Filter>소스 파일\Game\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>소스 파일\Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameSystem.h">
@@ -187,6 +193,9 @@
     </ClInclude>
     <ClInclude Include="RecoveryItem.h">
       <Filter>소스 파일\Game\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>소스 파일\Stage</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

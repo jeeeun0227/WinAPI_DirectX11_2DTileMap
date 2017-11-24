@@ -2,6 +2,9 @@
 #include "Sprite.h"
 #include "ComponentSystem.h"
 #include "Character.h"
+#include "GameSystem.h"
+#include "Map.h"
+#include "Stage.h"
 
 RecoveryItem::RecoveryItem(LPCWSTR name, LPCWSTR scriptFileName, LPCWSTR textureFileName) : Component(name)
 {
@@ -20,32 +23,33 @@ RecoveryItem::~RecoveryItem()
 
 void RecoveryItem::Init()
 {
-		Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");		// L"tileMap"
+	// Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");		// L"tileMap"
+	Map *map = GameSystem::GetInstance()->GetStage()->GetMap();
 
-		_tileX = rand() % (map->GetWidth() - 1) + 1;
-		_tileY = rand() % (map->GetHeight() - 1) + 1;
+	_tileX = rand() % (map->GetWidth() - 1) + 1;
+	_tileY = rand() % (map->GetHeight() - 1) + 1;
 
-		while (!map->CanMoveTileMap(_tileX, _tileY))
-		{
-			_tileX = rand() % map->GetWidth();
-			_tileY = rand() % map->GetHeight();
-		}
+	while (!map->CanMoveTileMap(_tileX, _tileY))
+	{
+		_tileX = rand() % map->GetWidth();
+		_tileY = rand() % map->GetHeight();
+	}
 
-		_posX = map->GetPositionX(_tileX, _tileY);
-		_posY = map->GetPositionY(_tileX, _tileY);
-		map->SetTileComponent(_tileX, _tileY, this, true);
+	_posX = map->GetPositionX(_tileX, _tileY);
+	_posY = map->GetPositionY(_tileX, _tileY);
+	map->SetTileComponent(_tileX, _tileY, this, true);
 
-		WCHAR textureFileName[256];
-		WCHAR scriptFileName[256];
-		wsprintf(textureFileName, L"%s.png", _textureFileName.c_str());
+	WCHAR textureFileName[256];
+	WCHAR scriptFileName[256];
+	wsprintf(textureFileName, L"%s.png", _textureFileName.c_str());
 
-		{
-			wsprintf(scriptFileName, L"%s.json", _scriptFileName.c_str());
-			_sprite = new Sprite(textureFileName, scriptFileName);
-			_sprite->Init();
-		}
+	{
+		wsprintf(scriptFileName, L"%s.json", _scriptFileName.c_str());
+		_sprite = new Sprite(textureFileName, scriptFileName);
+		_sprite->Init();
+	}
 
-		_canMove = true;
+	_canMove = true;
 }
 
 void RecoveryItem::Deinit()
@@ -104,7 +108,8 @@ void RecoveryItem::RaceiveMessage(const sComponentMsgParam msgParam)
 		case eComponentType::CT_MONSTER:
 		case eComponentType::CT_PLAYER:
 			((Character*)sender)->IncreaseHP(500);
-			Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");
+			// Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");
+			Map *map = GameSystem::GetInstance()->GetStage()->GetMap();
 			map->ResetTileComponent(_tileX, _tileY, this);
 			_isLive = false;
 			break;

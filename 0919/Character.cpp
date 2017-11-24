@@ -12,6 +12,8 @@
 #include "DefenseState.h"
 #include "DeadState.h"
 #include "Font.h"
+#include "GameSystem.h"
+#include "Stage.h"
 
 Character::Character(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFilename) : Component(name)
 {
@@ -29,6 +31,7 @@ Character::Character(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFilename) 
 
 	// HP 수치 설정
 	_hp = 100;
+
 }
 
 Character::~Character()
@@ -39,7 +42,8 @@ Character::~Character()
 void Character::Init()
 {
 	{
-		Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");		// L"tileMap"
+		// Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");		// L"tileMap"
+		Map *map = GameSystem::GetInstance()->GetStage()->GetMap();
 
 		// 캐릭터 이동 시작 지점
 		_tileX = rand() % (map->GetWidth() - 1) + 1;
@@ -175,7 +179,8 @@ void Character::InitMove()
 
 void Character::MoveStart(int newTileX, int newTileY)
 {
-	Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");
+	// Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");
+	Map *map = GameSystem::GetInstance()->GetStage()->GetMap();
 
 	map->ResetTileComponent(_tileX, _tileY, this);
 	_x = map->GetPositionX(_tileX, _tileY);
@@ -232,7 +237,8 @@ Component *Character::Collision(std::list<Component*> &collisonList)
 
 void Character::MoveStop()
 {
-	Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");
+	// Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");
+	Map *map = GameSystem::GetInstance()->GetStage()->GetMap();
 
 	_x = map->GetPositionX(_tileX, _tileY);
 	_y = map->GetPositionY(_tileX, _tileY);

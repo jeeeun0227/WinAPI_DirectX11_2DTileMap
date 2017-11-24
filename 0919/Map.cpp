@@ -41,12 +41,22 @@ void Map::Init()
 	_width = 32;
 	_height = 32;
 
+	std::wstring wname = _name;
+	std::string name = "";
+	name.assign(wname.begin(), wname.end());
+
+	char layer01Name[256];
+	sprintf(layer01Name, "%s_MapData_layer1.csv", name.c_str());
+
+	char layer02Name[256];
+	sprintf(layer02Name, "%s_MapData_layer2.csv", name.c_str());
+
 	// Load Map Script (first floor)
 	{
 		int line = 0;
 		char record[1024 * 8];
 
-		std::ifstream infile("MapData_layer1.csv");
+		std::ifstream infile(layer01Name);
 
 		while (!infile.eof())
 		{
@@ -100,7 +110,7 @@ void Map::Init()
 		int index = 0;
 		char record[1024 * 8];
 
-		std::ifstream infile("MapData_layer2.csv");
+		std::ifstream infile(layer02Name);
 
 		while (!infile.eof())
 		{

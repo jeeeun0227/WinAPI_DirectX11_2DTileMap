@@ -3,6 +3,8 @@
 #include "Map.h"
 #include "ComponentMessage.h"
 #include "MoveState.h"
+#include "GameSystem.h"
+#include "Stage.h"
 
 NPC::NPC(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFilename)
 	: Character(name, scriptName, textureFilename)
@@ -21,11 +23,12 @@ NPC::~NPC()
 
 void NPC::UpdateAI()
 {
-	Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");
+	// Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");
+	Map *map = GameSystem::GetInstance()->GetStage()->GetMap();
 
 	std::vector<eComponentType> compareTypeList;
 	compareTypeList.push_back(eComponentType::CT_MONSTER);
-	Component *FindEnemy = ComponentSystem::GetInstance()->FindComponentInRange(this, 4, compareTypeList);
+	Component *FindEnemy = ComponentSystem::GetInstance()->FindComponentInRange(map, this, 4, compareTypeList);
 
 	if (NULL != FindEnemy)
 	{

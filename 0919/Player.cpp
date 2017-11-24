@@ -3,6 +3,8 @@
 #include "ComponentSystem.h"
 #include "Component.h"
 #include "MoveState.h"
+#include "Map.h"
+#include "Stage.h"
 
 Player::Player(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFilename)
 	: Character(name, scriptName, textureFilename)
@@ -62,7 +64,8 @@ void Player::UpdateAI()
 
 	if (GameSystem::GetInstance()->IsKeyDown(VK_SPACE))
 	{
-		Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");
+		// Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");
+		Map *map = GameSystem::GetInstance()->GetStage()->GetMap();
 
 		std::list<Component*> componentlist = map->GetTileComponentList(_tileX, _tileY);
 
