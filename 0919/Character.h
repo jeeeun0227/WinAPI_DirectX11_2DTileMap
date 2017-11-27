@@ -36,7 +36,7 @@ class Character : public Component
 {
 public:
 	Character(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFilename);
-	~Character();
+	virtual ~Character();
 
 	void Init();
 	void Deinit();
@@ -134,6 +134,5 @@ public:
 protected:
 	Font *_font;
 public:
-	void UpdateText();
-	
+	virtual void UpdateText();
 };

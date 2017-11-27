@@ -6,7 +6,7 @@
 #include "TileCell.h"
 #include "TileObject.h"
 #include "GameSystem.h"
-
+#include "LifeTileObject.h"
 
 Map::Map(LPCWSTR name) : Component(name)
 {
@@ -29,7 +29,7 @@ void Map::Init()
 	{
 		for (int x = 0; x < 32; x++)
 		{
-			Sprite *sprite = new Sprite(L"terrain_atlas.png", L"MapSprite.json");
+			Sprite *sprite = new Sprite(L"Map_Sprite_00.png", L"MapSprite.json");
 			sprite->Init(srcX, srcY, 32, 32, 1.0f);
 			_spriteList.push_back(sprite);
 			srcX += 32;
@@ -133,13 +133,22 @@ void Map::Init()
 					{
 						index = atoi(token);
 
+						TileCell *tileCell = rowList[x];
+						WCHAR componentName[256];
+						wsprintf(componentName, L"map_layer02_%d_%d", line, x);
 						if (0 <= index)
 						{
-							TileCell *tileCell = rowList[x];
-							WCHAR componentName[256];
-							wsprintf(componentName, L"map_layer02_%d_%d", line, x);
-							TileObject *tileObject = new TileObject(componentName, _spriteList[index]);
-							tileCell->AddComponent(tileObject, true);
+							if (100100 == index)
+							{
+								LifeTileObject *tileObject = new LifeTileObject(componentName, _spriteList[298]);
+								tileObject->SetCanMove(true);
+								tileCell->AddComponent(tileObject, true);
+							}
+							else
+							{
+								TileObject *tileObject = new TileObject(componentName, _spriteList[index]);
+								tileCell->AddComponent(tileObject, true);
+							}
 						}
 						token = strtok(NULL, ",");
 					}

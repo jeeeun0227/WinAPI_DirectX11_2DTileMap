@@ -261,13 +261,20 @@ int GameSystem::Update()
 
 		// Stage 교체 테스트
 		{
-			// Stage Map1 생성
 			if (IsKeyDown(VK_F1))
 			{
 				ComponentSystem::GetInstance()->ClearMessageQueue();
 				delete _stage;
 				_stage = new Stage();
 				_stage->Init(L"Map2");
+			}
+
+			if (IsKeyDown(VK_F2))
+			{
+				ComponentSystem::GetInstance()->ClearMessageQueue();
+				delete _stage;
+				_stage = new Stage();
+				_stage->Init(L"Map3");
 			}
 		}
 	}
