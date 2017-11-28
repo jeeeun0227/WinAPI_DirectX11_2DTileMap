@@ -13,15 +13,20 @@ public:
 	~Stage();
 
 public:
-	void Init(std::wstring StageName);
+	void Init(std::wstring  StageName);
 	void Deinit();
 	void Update(float deltaTime);
 	void Render();
 	void Relese();
 	void Reset();
 
+	void CreateLifeNPC(int tileX, int tileY);
+	void DestoryLifeNPC(int tileX, int tileY, Component *tileCharacter);
+
 private:
 	std::list<Component*> _componentList;
+
+	int _lifeNpcCount;
 
 	// Load Map
 private:

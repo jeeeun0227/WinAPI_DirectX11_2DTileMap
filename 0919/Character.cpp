@@ -14,8 +14,9 @@
 #include "Font.h"
 #include "GameSystem.h"
 #include "Stage.h"
+#include "LifeTileObject.h"
 
-Character::Character(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFilename) : Component(name)
+Character::Character(std::wstring name, LPCWSTR scriptName, LPCWSTR textureFilename) : Component(name)
 {
 	_state = NULL;
 	_moveTime = 1.0f;
@@ -37,6 +38,71 @@ Character::Character(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFilename) 
 Character::~Character()
 {
 	delete _font;
+}
+
+void Character::Init(int tileX, int tileY)
+{
+	{
+		// Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");		// L"tileMap"
+		Map *map = GameSystem::GetInstance()->GetStage()->GetMap();
+
+		// 캐릭터 이동 시작 지점
+		_tileX = tileX;
+		_tileY = tileY;
+
+		while (!map->CanMoveTileMap(_tileX, _tileY))
+		{
+			_tileX = rand() % map->GetWidth();
+			_tileY = rand() % map->GetHeight();
+		}
+
+		_x = map->GetPositionX(_tileX, _tileY);
+		_y = map->GetPositionY(_tileX, _tileY);
+		map->SetTileComponent(_tileX, _tileY, this, true);
+	}
+
+	InitMove();
+
+	{
+		State *state = new IdleState();
+		state->Init(this);
+		_stateMap[eStateType::ET_IDLE] = state;
+	}
+
+	{
+		State *state = new MoveState();
+		state->Init(this);
+		_stateMap[eStateType::ET_MOVE] = state;
+	}
+
+	{
+		State *state = new AttackState();
+		state->Init(this);
+		_stateMap[eStateType::ET_ATTACK] = state;
+	}
+
+	{
+		State *state = new DefenseState();
+		state->Init(this);
+		_stateMap[eStateType::EF_DEFENSE] = state;
+	}
+
+	{
+		State *state = new DeadState();
+		state->Init(this);
+		_stateMap[eStateType::ET_DEAD] = state;
+	}
+
+	ChangeState(eStateType::ET_IDLE);
+
+	// Font
+	{
+		D3DCOLOR color = D3DCOLOR_ARGB(255, 0, 0, 0);
+		_font = new Font(L"Arial", 20, color);
+
+		_font->SetRect(100, 100, 400, 100);
+		UpdateText();
+	}
 }
 
 void Character::Init()
@@ -121,6 +187,9 @@ void Character::Deinit()
 
 void Character::Update(float deltaTime)
 {
+	if (false == _isLive)
+		return;
+
 	UpdateAttackCoolTime(deltaTime);
 	_state->Update(deltaTime);
 
@@ -129,6 +198,9 @@ void Character::Update(float deltaTime)
 
 void Character::Render()
 {
+	if (false == _isLive)
+		return;
+
 	_state->Render();
 
 	// Font Test
@@ -297,6 +369,8 @@ void Character::UpdateText()
 	// int coolTime = (int)(_attackCoolTimeDuration * 60.0f);
 
 	WCHAR text[256];
+
+
 	switch (GetType())
 	{
 	case CT_PLAYER:

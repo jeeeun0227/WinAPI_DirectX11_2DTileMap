@@ -1,7 +1,7 @@
 #include "Font.h"
 #include "GameSystem.h"
 
-Font::Font(std::wstring FontName, int FontSize, D3DCOLOR color)
+Font::Font(std::wstring  FontName, int FontSize, D3DCOLOR color)
 {
 	_color = color;
 
@@ -40,7 +40,7 @@ void Font::SetRect(int x, int y, int width, int height)
 	_height = height;
 }
 
-void Font::SetText(std::wstring text)
+void Font::SetText(std::wstring  text)
 {
 	_text = text;
 }

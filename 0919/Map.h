@@ -12,7 +12,7 @@ class TileCell;
 class Map : public Component
 {
 public:
-	Map(LPCWSTR name);
+	Map(std::wstring name);
 	~Map();
 
 	void Init();

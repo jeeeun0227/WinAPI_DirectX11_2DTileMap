@@ -6,7 +6,7 @@
 #include "Map.h"
 #include "Stage.h"
 
-Player::Player(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFilename)
+Player::Player(std::wstring name, LPCWSTR scriptName, LPCWSTR textureFilename)
 	: Character(name, scriptName, textureFilename)
 {
 	// player 속도 조절

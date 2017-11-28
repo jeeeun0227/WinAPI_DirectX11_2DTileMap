@@ -5,7 +5,7 @@
 #include "map.h"
 #include "Stage.h"
 
-Monster::Monster(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFilename)
+Monster::Monster(std::wstring name, LPCWSTR scriptName, LPCWSTR textureFilename)
 	: Character(name, scriptName, textureFilename)
 {
 	_type = eComponentType::CT_MONSTER;

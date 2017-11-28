@@ -35,8 +35,10 @@ class Font;
 class Character : public Component
 {
 public:
-	Character(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFilename);
+	Character(std::wstring name, LPCWSTR scriptName, LPCWSTR textureFilename);
 	virtual ~Character();
+
+	void Init(int tileX, int tileY);
 
 	void Init();
 	void Deinit();
@@ -67,8 +69,8 @@ protected:
 	float _x;
 	float _y;
 
-	std::wstring _pngName;
-	std::wstring _scriptFileName;
+	std::wstring  _pngName;
+	std::wstring  _scriptFileName;
 
 	// state
 private:
@@ -98,8 +100,8 @@ public:
 
 	bool IsMoving() { return _isMoving; }
 
-	std::wstring GetTextureFileName() { return _pngName; }
-	std::wstring GetScriptFileName() { return _scriptFileName; }
+	std::wstring  GetTextureFileName() { return _pngName; }
+	std::wstring  GetScriptFileName() { return _scriptFileName; }
 
 	float GetX() { return _x; }
 	float GetY() { return _y; }

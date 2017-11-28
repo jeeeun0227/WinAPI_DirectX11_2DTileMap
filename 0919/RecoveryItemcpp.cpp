@@ -6,7 +6,7 @@
 #include "Map.h"
 #include "Stage.h"
 
-RecoveryItem::RecoveryItem(LPCWSTR name, LPCWSTR scriptFileName, LPCWSTR textureFileName) : Component(name)
+RecoveryItem::RecoveryItem(std::wstring name, LPCWSTR scriptFileName, LPCWSTR textureFileName) : Component(name)
 {
 	// _posX = _posY = 0.0f;
 	_type = eComponentType::CT_ITEM;

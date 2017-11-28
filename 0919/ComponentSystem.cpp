@@ -22,11 +22,11 @@ ComponentSystem *ComponentSystem::GetInstance()
 	return _instance;
 }
 
-void ComponentSystem::AddComponent(std::wstring name, Component *component)
+void ComponentSystem::AddComponent(std::wstring  name, Component *component)
 {
 	if (NULL != component)
 	{
-		std::map<std::wstring, Component*>::iterator it = _componentMap.find(name);
+		std::map<std::wstring , Component*>::iterator it = _componentMap.find(name);
 
 		if (it == _componentMap.end())
 		{
@@ -37,7 +37,7 @@ void ComponentSystem::AddComponent(std::wstring name, Component *component)
 
 void ComponentSystem::RemoveAllComponents()
 {
-	for (std::map<std::wstring, Component*>::iterator it = _componentMap.begin();
+	for (std::map<std::wstring , Component*>::iterator it = _componentMap.begin();
 		it != _componentMap.end();
 		it++)
 	{
@@ -46,9 +46,9 @@ void ComponentSystem::RemoveAllComponents()
 	_componentMap.clear();
 }
 
-Component *ComponentSystem::FindComponent(std::wstring name)
+Component *ComponentSystem::FindComponent(std::wstring  name)
 {
-	std::map<std::wstring, Component*>::iterator it = _componentMap.find(name);
+	std::map<std::wstring , Component*>::iterator it = _componentMap.find(name);
 
 	if (it != _componentMap.end())
 	{

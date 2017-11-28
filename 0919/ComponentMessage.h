@@ -10,5 +10,5 @@ struct sComponentMsgParam
 	int attackPoint;
 
 	Component *recevier;
-	std::wstring message;
+	std::wstring  message;
 };

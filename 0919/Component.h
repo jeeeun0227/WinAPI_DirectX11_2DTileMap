@@ -26,7 +26,7 @@ public:
 		_canMove = false;
 	}
 
-	Component(LPCWSTR name);
+	Component(std::wstring name);
 	virtual ~Component();
 
 	virtual void Init() = 0;
@@ -55,7 +55,7 @@ public:
 	void SetLive(bool isLive) { _isLive = isLive; }
 
 protected:
-	LPCWSTR _name;
+	std::wstring  _name;
 	bool _canMove;
 
 	int _tileX;

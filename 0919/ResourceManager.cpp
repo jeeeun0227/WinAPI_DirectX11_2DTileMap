@@ -24,9 +24,9 @@ ResourceManager *ResourceManager::GetInstance()
 	return _instance;
 }
 
-Texture* ResourceManager::LoadTexture(std::wstring textureFileName)
+Texture* ResourceManager::LoadTexture(std::wstring  textureFileName)
 {
-	std::map<std::wstring, Texture*>::iterator it = _textureMap.find(textureFileName);
+	std::map<std::wstring , Texture*>::iterator it = _textureMap.find(textureFileName);
 
 	if (it != _textureMap.end())
 	{
@@ -42,9 +42,9 @@ Texture* ResourceManager::LoadTexture(std::wstring textureFileName)
 	return texture;
 }
 
-vector<string> ResourceManager::LoadScript(std::wstring scriptFileName)
+vector<string> ResourceManager::LoadScript(std::wstring  scriptFileName)
 {
-	map <std::wstring, vector<string>>::iterator it = _scriptMap.find(scriptFileName);
+	map <std::wstring , vector<string>>::iterator it = _scriptMap.find(scriptFileName);
 
 	if (it != _scriptMap.end())
 	{

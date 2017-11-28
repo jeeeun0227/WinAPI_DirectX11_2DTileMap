@@ -6,7 +6,7 @@ class Sprite;
 class LifeTileObject : public TileObject
 {
 public:
-	LifeTileObject(LPCWSTR name, Sprite *sprite);
+	LifeTileObject(int tileX, int tileY, std::wstring name, Sprite *sprite);
 	~LifeTileObject();
 
 public:

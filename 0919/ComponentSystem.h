@@ -26,16 +26,16 @@ private:
 
 	// Component Map
 private:
-	std::map<std::wstring, Component*> _componentMap;
+	std::map<std::wstring , Component*> _componentMap;
 
 public:
 	~ComponentSystem();
 
 public:
-	void AddComponent(std::wstring name, Component *component);
+	void AddComponent(std::wstring  name, Component *component);
 	void RemoveAllComponents();
 
-	Component *FindComponent(std::wstring name);
+	Component *FindComponent(std::wstring  name);
 
 	void SendMsg(const sComponentMsgParam msgParam);
 

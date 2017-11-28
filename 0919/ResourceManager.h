@@ -24,14 +24,14 @@ public:
 
 	// Texture
 private:
-	std::map<std::wstring, Texture*> _textureMap;
+	std::map<std::wstring , Texture*> _textureMap;
 
 public:
-	Texture *LoadTexture(std::wstring textureFileName);
+	Texture *LoadTexture(std::wstring  textureFileName);
 
 	// Script
 private:
-	std::map<std::wstring, std::vector<std::string>> _scriptMap;
+	std::map<std::wstring , std::vector<std::string>> _scriptMap;
 public:
-	std::vector<std::string> LoadScript(std::wstring scriptFileName);
+	std::vector<std::string> LoadScript(std::wstring  scriptFileName);
 };

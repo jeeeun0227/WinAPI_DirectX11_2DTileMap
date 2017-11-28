@@ -8,7 +8,7 @@
 #include "GameSystem.h"
 #include "LifeTileObject.h"
 
-Map::Map(LPCWSTR name) : Component(name)
+Map::Map(std::wstring name) : Component(name)
 {
 	_startX = _startY = _deltaX = _deltaY = 0.0f;
 	_spriteList.clear();
@@ -41,7 +41,7 @@ void Map::Init()
 	_width = 32;
 	_height = 32;
 
-	std::wstring wname = _name;
+	std::wstring  wname = _name;
 	std::string name = "";
 	name.assign(wname.begin(), wname.end());
 
@@ -140,7 +140,7 @@ void Map::Init()
 						{
 							if (100100 == index)
 							{
-								LifeTileObject *tileObject = new LifeTileObject(componentName, _spriteList[298]);
+								LifeTileObject *tileObject = new LifeTileObject(x, row, componentName, _spriteList[235]);
 								tileObject->SetCanMove(true);
 								tileCell->AddComponent(tileObject, true);
 							}
