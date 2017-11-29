@@ -55,7 +55,6 @@ public:
 	void SetLive(bool isLive) { _isLive = isLive; }
 
 protected:
-	std::wstring  _name;
 	bool _canMove;
 
 	int _tileX;
@@ -81,4 +80,10 @@ public:
 	eStateType GetState() { return _nowState; }
 private:
 	eStateType _nowState;
+
+	// GetName
+public:
+	std::wstring GetName();
+protected:
+	std::wstring _name;
 };

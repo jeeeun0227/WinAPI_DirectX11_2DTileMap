@@ -38,8 +38,8 @@ void Map::Init()
 		srcY += 32;
 	}
 
-	_width = 32;
-	_height = 32;
+	_width = 41;		// 맵의 가로 수치 ( 스크립트와 일치해야 한다. )
+	_height = 26;		// 맵의 세로 수치 ( 스크립트와 일치해야 한다. )
 
 	std::wstring  wname = _name;
 	std::string name = "";

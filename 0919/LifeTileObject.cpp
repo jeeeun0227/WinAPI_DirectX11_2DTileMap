@@ -10,8 +10,8 @@
 LifeTileObject::LifeTileObject(int tileX, int tileY, std::wstring name, Sprite *sprite) :
 	TileObject(name, sprite)
 {
-	tileX = _tileX;
-	tileY = _tileY;
+	_tileX = tileX;
+	_tileY = tileY;
 }
 
 LifeTileObject::~LifeTileObject()
@@ -49,7 +49,7 @@ void LifeTileObject::Update(float deltaTime)
 
 	int surroundedCharacter = 0;
 	// bool isTileCharacter = false;
-	std::vector<eComponentType> compareTypeList;
+	// std::vector<eComponentType> compareTypeList;
 	Component *tileCharacter = NULL;
 
 	for (int y = minTileY; y <= maxTileY; y++)
@@ -70,36 +70,37 @@ void LifeTileObject::Update(float deltaTime)
 						switch (component->GetType())
 						{
 						case eComponentType::CT_NPC:
-						case eComponentType::CT_MONSTER:
+						case eComponentType::CT_PLAYER:
 							surroundedCharacter++;
 							// isTileCharacter = true;
+							break;
+						default:
 							break;
 						}
 					}
 				}
-				else
+			}
+			else
+			{
+				std::list<Component*> componentList;
+
+				if (false == map->GetTileCollisonList(x, y, componentList))
 				{
-					if (x != _tileX || y != _tileY)
+					for (std::list<Component*>::iterator it = componentList.begin();
+						it != componentList.end(); it++)
 					{
-						std::list<Component*> componentList;
+						Component *component = (*it);
 
-						if (false == map->GetTileCollisonList(x, y, componentList))
+						switch (component->GetType())
 						{
-							for (std::list<Component*>::iterator it = componentList.begin();
-								it != componentList.end(); it++)
-							{
-								Component *component = (*it);
-
-								switch (component->GetType())
-								{
-								case eComponentType::CT_NPC:
-								case eComponentType::CT_MONSTER:
-									// surroundedCharacter++;
-									// isTileCharacter = true;
-									tileCharacter = component;
-									break;
-								}
-							}
+						case eComponentType::CT_NPC:
+						case eComponentType::CT_PLAYER:
+							// surroundedCharacter++;
+							// isTileCharacter = true;
+							tileCharacter = component;
+							break;
+						default:
+							break;
 						}
 					}
 				}

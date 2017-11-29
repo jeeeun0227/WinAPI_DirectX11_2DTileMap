@@ -16,11 +16,6 @@ Stage::~Stage()
 {
 	// _componentList.clear();
 
-	for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
-	{
-		(*it)->Deinit();
-	}
-	
 	ComponentSystem::GetInstance()->RemoveAllComponents();
 }
 
@@ -34,18 +29,16 @@ void Stage::Init(std::wstring  StageName)
 
 	if (L"Map3" == StageName)
 	{
-		for (int i = 0; i < 30; i++)
+		for (int i = 0; i < 100; i++)
 		{
 			// CreateLifeNPC();
 			_lifeNpcCount = 0;
-			
+
 			WCHAR name[256];
 			wsprintf(name, L"Lifenpc_%d", _lifeNpcCount);
 			_lifeNpcCount++;
-
 			LifeNpc *npc = new LifeNpc(L"npc", L"npc", L"Npc_Sprite_01");
 			_componentList.push_back(npc);
-			
 		}
 	}
 	else
@@ -79,19 +72,19 @@ void Stage::Init(std::wstring  StageName)
 		}
 	}
 
-		// player 생성
-		WCHAR PlayerName[256];
-		wsprintf(PlayerName, L"player");
-		Player *_player = new Player(PlayerName, L"player", L"Player_Sprite_00");
-		// 생성자 (컴포넌트 이름(고유 이름), json 파일 이름.json, 이미지 이름.png);
-		_componentList.push_back(_player);
+	// player 생성
+	WCHAR PlayerName[256];
+	wsprintf(PlayerName, L"player");
+	Player *_player = new Player(PlayerName, L"player", L"Player_Sprite_00");
+	// 생성자 (컴포넌트 이름(고유 이름), json 파일 이름.json, 이미지 이름.png);
+	_componentList.push_back(_player);
 
-		for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
-		{
-			(*it)->Init();
-		}
+	for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
+	{
+		(*it)->Init();
+	}
 
-		_map->InitViewer(_player);
+	_map->InitViewer(_player);
 }
 
 void Stage::Deinit()
@@ -135,7 +128,8 @@ void Stage::CreateLifeNPC(int tileX, int tileY)
 {
 	WCHAR name[256];
 	wsprintf(name, L"Lifenpc_%d", _lifeNpcCount);
-	LifeNpc *npc = new LifeNpc(L"npc", L"npc", L"Npc_Sprite_01");
+	_lifeNpcCount++;
+	LifeNpc *npc = new LifeNpc(name, L"npc", L"Npc_Sprite_01");
 	npc->Init(tileX, tileY);
 	_componentList.push_back(npc);
 }
@@ -145,4 +139,7 @@ void Stage::DestoryLifeNPC(int tileX, int tileY, Component *tileCharacter)
 	_map->ResetTileComponent(tileX, tileY, tileCharacter);
 	tileCharacter->SetCanMove(true);
 	tileCharacter->SetLive(false);
+
+	_componentList.remove(tileCharacter);
+	ComponentSystem::GetInstance()->RemoveComponent(tileCharacter);
 }

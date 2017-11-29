@@ -27,3 +27,8 @@ void Component::RaceiveMessage(const sComponentMsgParam msgParam)
 
 	}
 }
+
+std::wstring Component::GetName()
+{
+	return _name;
+}

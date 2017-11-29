@@ -136,3 +136,9 @@ void ComponentSystem::ClearMessageQueue()
 		_msgQueue.pop();
 	}
 }
+
+void ComponentSystem::RemoveComponent(Component *component)
+{
+	_componentMap.erase(component->GetName());
+	delete component;
+}

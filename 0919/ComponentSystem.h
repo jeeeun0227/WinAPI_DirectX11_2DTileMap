@@ -51,4 +51,6 @@ public:
 	void Update(float deltaTime);
 
 	void ClearMessageQueue();
+
+	void RemoveComponent(Component *component);
 };

@@ -58,7 +58,7 @@ void Character::Init(int tileX, int tileY)
 
 		_x = map->GetPositionX(_tileX, _tileY);
 		_y = map->GetPositionY(_tileX, _tileY);
-		map->SetTileComponent(_tileX, _tileY, this, true);
+		map->SetTileComponent(_tileX, _tileY, this, false);
 	}
 
 	InitMove();
@@ -123,7 +123,7 @@ void Character::Init()
 
 		_x = map->GetPositionX(_tileX, _tileY);
 		_y = map->GetPositionY(_tileX, _tileY);
-		map->SetTileComponent(_tileX, _tileY, this, true);
+		map->SetTileComponent(_tileX, _tileY, this, false);
 	}
 
 	InitMove();
