@@ -67,15 +67,18 @@ void LifeTileObject::Update(float deltaTime)
 					{
 						Component *component = (*it);
 
-						switch (component->GetType())
+						if (component->isLive())
 						{
-						case eComponentType::CT_NPC:
-						case eComponentType::CT_PLAYER:
-							surroundedCharacter++;
-							// isTileCharacter = true;
-							break;
-						default:
-							break;
+							switch (component->GetType())
+							{
+							case eComponentType::CT_NPC:
+							case eComponentType::CT_PLAYER:
+								surroundedCharacter++;
+								// isTileCharacter = true;
+								break;
+							default:
+								break;
+							}
 						}
 					}
 				}
@@ -91,16 +94,19 @@ void LifeTileObject::Update(float deltaTime)
 					{
 						Component *component = (*it);
 
-						switch (component->GetType())
+						if (component->isLive())
 						{
-						case eComponentType::CT_NPC:
-						case eComponentType::CT_PLAYER:
-							// surroundedCharacter++;
-							// isTileCharacter = true;
-							tileCharacter = component;
-							break;
-						default:
-							break;
+							switch (component->GetType())
+							{
+							case eComponentType::CT_NPC:
+							case eComponentType::CT_PLAYER:
+								// surroundedCharacter++;
+								// isTileCharacter = true;
+								tileCharacter = component;
+								break;
+							default:
+								break;
+							}
 						}
 					}
 				}
@@ -112,7 +118,8 @@ void LifeTileObject::Update(float deltaTime)
 	{
 		if (NULL == tileCharacter)
 		{
-			GameSystem::GetInstance()->GetStage()->CreateLifeNPC(_tileX, _tileY);
+			// GameSystem::GetInstance()->GetStage()->CreateLifeNPC(_tileX, _tileY);
+			GameSystem::GetInstance()->GetStage()->CreateLifeNPC(this);
 		}
 	}
 	else if (2 == surroundedCharacter)
@@ -126,7 +133,8 @@ void LifeTileObject::Update(float deltaTime)
 		{
 			if (eComponentType::CT_PLAYER != tileCharacter->GetType())
 			{
-				GameSystem::GetInstance()->GetStage()->DestoryLifeNPC(_tileX, _tileY, tileCharacter);
+				// GameSystem::GetInstance()->GetStage()->DestoryLifeNPC(_tileX, _tileY, tileCharacter);
+				GameSystem::GetInstance()->GetStage()->CheckDestroyLifeNPC(tileCharacter);
 				tileCharacter = NULL;
 			}
 		}

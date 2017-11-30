@@ -8,7 +8,7 @@ class TileCell
 {
 public:
 	TileCell();
-	~TileCell();
+	~TileCell(); 
 
 	void Deinit();
 	void Update(float deltaTime);

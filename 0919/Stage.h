@@ -20,11 +20,16 @@ public:
 	void Relese();
 	void Reset();
 
-	void CreateLifeNPC(int tileX, int tileY);
+	void CreateLifeNPC(Component *component);
 	void DestoryLifeNPC(int tileX, int tileY, Component *tileCharacter);
+	void CheckDestroyLifeNPC(Component *component);
+	void UpdateRemoveComponentList();
+	void UpdateBaseComponentList();
 
 private:
 	std::list<Component*> _componentList;
+	std::list<Component*> _removeComponentList;
+	std::list<Component*> _createBaseComponentList;
 
 	int _lifeNpcCount;
 

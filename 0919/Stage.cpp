@@ -98,6 +98,9 @@ void Stage::Update(float deltaTime)
 	{
 		(*it)->Update(deltaTime);
 	}
+
+	UpdateBaseComponentList();
+	UpdateRemoveComponentList();
 }
 
 void Stage::Render()
@@ -124,14 +127,9 @@ void Stage::Reset()
 	}
 }
 
-void Stage::CreateLifeNPC(int tileX, int tileY)
+void Stage::CreateLifeNPC(Component *component)
 {
-	WCHAR name[256];
-	wsprintf(name, L"Lifenpc_%d", _lifeNpcCount);
-	_lifeNpcCount++;
-	LifeNpc *npc = new LifeNpc(name, L"npc", L"Npc_Sprite_01");
-	npc->Init(tileX, tileY);
-	_componentList.push_back(npc);
+	_createBaseComponentList.push_back(component);
 }
 
 void Stage::DestoryLifeNPC(int tileX, int tileY, Component *tileCharacter)
@@ -142,4 +140,35 @@ void Stage::DestoryLifeNPC(int tileX, int tileY, Component *tileCharacter)
 
 	_componentList.remove(tileCharacter);
 	ComponentSystem::GetInstance()->RemoveComponent(tileCharacter);
+}
+
+void Stage::CheckDestroyLifeNPC(Component *component)
+{
+	_removeComponentList.push_back(component);
+}
+
+void Stage::UpdateRemoveComponentList()
+{
+	for (std::list<Component*>::iterator it = _removeComponentList.begin(); it != _removeComponentList.end(); it++)
+	{
+		Component *com = (*it);
+		DestoryLifeNPC(com->GetTileX(), com->GetTileY(), com);
+	}
+	_removeComponentList.clear();
+}
+
+void Stage::UpdateBaseComponentList()
+{
+	for (std::list<Component*>::iterator it = _createBaseComponentList.begin(); it != _createBaseComponentList.end(); it++)
+	{
+		Component *baseComponent = (*it);
+
+		WCHAR name[256];
+		wsprintf(name, L"Lifenpc_%d", _lifeNpcCount);
+		_lifeNpcCount++;
+		LifeNpc *npc = new LifeNpc(name, L"npc", L"Npc_Sprite_01");
+		npc->Init(baseComponent->GetTileX(), baseComponent->GetTileY());
+		_componentList.push_back(npc);
+	}
+	_createBaseComponentList.clear();
 }

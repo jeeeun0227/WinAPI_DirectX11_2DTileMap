@@ -10,7 +10,7 @@ Monster::Monster(std::wstring name, LPCWSTR scriptName, LPCWSTR textureFilename)
 {
 	_type = eComponentType::CT_MONSTER;
 
-	int speed = (rand() % 1500) + 200;		// 기호에 따라 수정
+	int speed = (rand() % 1500) + 1000;		// 기호에 따라 수정
 	_moveTime = (float)speed / 1000.0f;		// 고정
 	
 	_attackPoint = 20;		// 공격력 재정의

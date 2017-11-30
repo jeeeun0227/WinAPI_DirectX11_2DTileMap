@@ -50,7 +50,7 @@ void AttackState::Start()
 	{
 		msgParam.recevier = _character->GetTarget();
 		msgParam.message = L"Attack";
-		ComponentSystem::GetInstance()->SendMsg(msgParam);
+		// ComponentSystem::GetInstance()->SendMsg(msgParam);
 
 		int FinalAttackPoint = _character->GetCriticalAttack();
 		_character->SetAttackPoint(FinalAttackPoint);
@@ -59,7 +59,7 @@ void AttackState::Start()
 	{
 		msgParam.recevier = _character->GetTarget();
 		msgParam.message = L"Attack";
-		ComponentSystem::GetInstance()->SendMsg(msgParam);
+		// ComponentSystem::GetInstance()->SendMsg(msgParam);
 
 		if (_character->CanMove() == false)
 		{

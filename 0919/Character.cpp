@@ -187,8 +187,10 @@ void Character::Deinit()
 
 void Character::Update(float deltaTime)
 {
+	/*
 	if (false == _isLive)
 		return;
+		*/
 
 	UpdateAttackCoolTime(deltaTime);
 	_state->Update(deltaTime);
@@ -198,14 +200,16 @@ void Character::Update(float deltaTime)
 
 void Character::Render()
 {
+	/*
 	if (false == _isLive)
 		return;
+		*/
 
 	_state->Render();
 
 	// Font Test
 	{
-		_font->SetPosition(_x-200, _y-65);
+		_font->SetPosition(_x - 200, _y - 65);
 		_font->Render();
 	}
 }
@@ -374,7 +378,7 @@ void Character::UpdateText()
 	switch (GetType())
 	{
 	case CT_PLAYER:
-		wsprintf(text, L"<Player>\nHP %d\nAttackPoint %d",_hp , _attackPoint);
+		wsprintf(text, L"<Player>\nHP %d\nAttackPoint %d", _hp, _attackPoint);
 		_font->SetText(text);
 		break;
 
@@ -406,20 +410,20 @@ int Character::GetCriticalAttack()
 
 int Character::ReSetAttackPoint()
 {
-		switch (_type)
-		{
-		case CT_PLAYER:
-			_attackPoint = 50;
-			break;
+	switch (_type)
+	{
+	case CT_PLAYER:
+		_attackPoint = 50;
+		break;
 
-		case CT_NPC:
-			_attackPoint = 10;
-			break;
+	case CT_NPC:
+		_attackPoint = 10;
+		break;
 
-		case CT_MONSTER:
-			_attackPoint = 20;
-			break;
-		}
+	case CT_MONSTER:
+		_attackPoint = 20;
+		break;
+	}
 	return _attackPoint;
 }
 
