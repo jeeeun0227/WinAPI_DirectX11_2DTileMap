@@ -6,7 +6,7 @@
 #include "GameSystem.h"
 #include "Stage.h"
 
-NPC::NPC(std::wstring name, LPCWSTR scriptName, LPCWSTR textureFilename)
+NPC::NPC(std::wstring name, std::wstring scriptName, std::wstring textureFilename)
 	: Character(name, scriptName, textureFilename)
 {
 	_type = eComponentType::CT_NPC;

@@ -9,7 +9,7 @@ class Sprite;
 class RecoveryItem : public Component
 {
 public:
-	RecoveryItem(std::wstring name, LPCWSTR scriptFileName, LPCWSTR textureFileName);
+	RecoveryItem(std::wstring name, std::wstring scriptFileName, std::wstring textureFileName);
 	~RecoveryItem();
 
 public:

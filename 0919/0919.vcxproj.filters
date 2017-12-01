@@ -126,6 +126,9 @@
     <ClCompile Include="LifeNpc.cpp">
       <Filter>소스 파일\Game\Character</Filter>
     </ClCompile>
+    <ClCompile Include="LifePlayer.cpp">
+      <Filter>소스 파일\Game\Character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameSystem.h">
@@ -207,6 +210,9 @@
       <Filter>소스 파일\Game\Map</Filter>
     </ClInclude>
     <ClInclude Include="LifeNpc.h">
+      <Filter>소스 파일\Game\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="LifePlayer.h">
       <Filter>소스 파일\Game\Character</Filter>
     </ClInclude>
   </ItemGroup>

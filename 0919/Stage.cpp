@@ -6,6 +6,7 @@
 #include "Monster.h"
 #include "RecoveryItem.h"
 #include "LifeNpc.h"
+#include "LifePlayer.h"
 
 Stage::Stage()
 {
@@ -15,6 +16,11 @@ Stage::Stage()
 Stage::~Stage()
 {
 	// _componentList.clear();
+
+	for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
+	{
+		(*it)->Deinit();
+	}
 
 	ComponentSystem::GetInstance()->RemoveAllComponents();
 }
@@ -26,6 +32,8 @@ void Stage::Init(std::wstring  StageName)
 	// map 생성
 	_map = new Map(StageName.c_str());
 	_componentList.push_back(_map);
+
+	Player *player = NULL;
 
 	if (L"Map3" == StageName)
 	{
@@ -40,6 +48,7 @@ void Stage::Init(std::wstring  StageName)
 			LifeNpc *npc = new LifeNpc(L"npc", L"npc", L"Npc_Sprite_01");
 			_componentList.push_back(npc);
 		}
+		player = new LifePlayer(L"player", L"player", L"Player_Sprite_00");
 	}
 	else
 	{
@@ -70,21 +79,26 @@ void Stage::Init(std::wstring  StageName)
 			RecoveryItem *_item = new RecoveryItem(name, L"recovery_item", L"item_sprites");
 			_componentList.push_back(_item);
 		}
+		player = new LifePlayer(L"player", L"player", L"Player_Sprite_00");
 	}
 
+	// 생성자 (컴포넌트 이름(고유 이름), json 파일 이름.json, 이미지 이름.png);
+
+	/*
 	// player 생성
 	WCHAR PlayerName[256];
 	wsprintf(PlayerName, L"player");
 	Player *_player = new Player(PlayerName, L"player", L"Player_Sprite_00");
-	// 생성자 (컴포넌트 이름(고유 이름), json 파일 이름.json, 이미지 이름.png);
-	_componentList.push_back(_player);
+	*/
+
+	_componentList.push_back(player);
 
 	for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
 	{
 		(*it)->Init();
 	}
 
-	_map->InitViewer(_player);
+	_map->InitViewer(player);
 }
 
 void Stage::Deinit()

@@ -8,7 +8,7 @@ class MoveState;
 class Player : public Character
 {
 public:
-	Player(std::wstring name, LPCWSTR scriptName, LPCWSTR textureFilename);
+	Player(std::wstring name, std::wstring scriptName, std::wstring textureFilename);
 	~Player();
 
 	// AI

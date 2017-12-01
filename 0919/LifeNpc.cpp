@@ -1,6 +1,6 @@
 #include "LifeNpc.h"
 
-LifeNpc::LifeNpc(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFilename) :
+LifeNpc::LifeNpc(std::wstring name, std::wstring scriptName, std::wstring textureFilename) :
 	Character(name, scriptName, textureFilename)
 {
 	_type = eComponentType::CT_NPC;

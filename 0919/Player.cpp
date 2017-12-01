@@ -6,7 +6,7 @@
 #include "Map.h"
 #include "Stage.h"
 
-Player::Player(std::wstring name, LPCWSTR scriptName, LPCWSTR textureFilename)
+Player::Player(std::wstring name, std::wstring scriptName, std::wstring textureFilename)
 	: Character(name, scriptName, textureFilename)
 {
 	// player 속도 조절
@@ -55,7 +55,7 @@ void Player::UpdateAI()
 
 	// 스페이스바를 누르면 아이템을 먹자
 
-	/* 
+	/*
 	1. 스페이스바가 눌려졌을 때
 	2. 현재 내가 있는 타일에 아이템이 있는지 검사
 	3. 아이템이 있으면 체력을 회복하고
@@ -72,7 +72,7 @@ void Player::UpdateAI()
 		for (std::list<Component*>::iterator it = componentlist.begin(); it != componentlist.end(); it++)
 		{
 			Component *component = (*it);
-			
+
 			if (eComponentType::CT_ITEM == component->GetType())
 			{
 				/*

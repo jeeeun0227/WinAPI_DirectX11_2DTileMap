@@ -14,7 +14,13 @@ ResourceManager::ResourceManager()
 
 ResourceManager::~ResourceManager()
 {
-
+	for (std::map<wstring, Texture*>::iterator it = _textureMap.begin(); it != _textureMap.end(); it++)
+	{
+		_textureMap.erase((*it).first);
+		(*it).second->Deinit();
+		delete (*it).second;
+	}
+	_textureMap.clear();
 }
 
 ResourceManager *ResourceManager::GetInstance()
@@ -24,9 +30,9 @@ ResourceManager *ResourceManager::GetInstance()
 	return _instance;
 }
 
-Texture* ResourceManager::LoadTexture(std::wstring  textureFileName)
+Texture* ResourceManager::LoadTexture(const std::wstring textureFileName)
 {
-	std::map<std::wstring , Texture*>::iterator it = _textureMap.find(textureFileName);
+	std::map<std::wstring, Texture*>::iterator it = _textureMap.find(textureFileName);
 
 	if (it != _textureMap.end())
 	{

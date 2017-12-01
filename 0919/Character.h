@@ -31,18 +31,18 @@ class Sprite;
 class State;
 class AttackState;
 class Font;
+class Map;
 
 class Character : public Component
 {
 public:
-	Character(std::wstring name, LPCWSTR scriptName, LPCWSTR textureFilename);
+	Character(std::wstring name, std::wstring scriptName, std::wstring textureFilename);
 	virtual ~Character();
 
 	void Init(int tileX, int tileY);
 
 	void Init();
 	void Deinit();
-
 	void Update(float deltaTime);
 	void Render();
 	void Relese();
@@ -79,25 +79,17 @@ private:
 public:
 	void ChangeState(eStateType stateType);
 
+	// Moving
 public:
 	void InitMove();
-
 	void MoveStart(int newTileX, int newTileY);
-
 	void SetPosition(float PosX, float PosY);
-
 	void RaceiveMessage(const sComponentMsgParam msgParam);
-
 	virtual Component *Collision(std::list<Component*> &collisonList);
-
 	eDirection GetDirection() { return _currentDirection; }
-
 	float GetMoveTime() { return _moveTime; }
-
 	void MoveStop();
-
 	void Moving(float deltaTime);
-
 	bool IsMoving() { return _isMoving; }
 
 	std::wstring  GetTextureFileName() { return _pngName; }
@@ -106,7 +98,7 @@ public:
 	float GetX() { return _x; }
 	float GetY() { return _y; }
 
-	// attack
+	// Attack
 protected:
 	int _hp;
 	Component *_target;
@@ -115,6 +107,7 @@ protected:
 	float _attackCoolTime;
 	float _attackCoolTimeDuration;
 	int _criticalAttackPoint;
+
 public:
 	int GetAttackPoint() {	return _attackPoint;  }
 	Component *GetTarget() { return _target; }
@@ -126,10 +119,8 @@ public:
 	void ResetAttackCoolTime();
 	int GetCriticalAttack();
 	int ReSetAttackPoint();
-
 	void DecreaseHP(int decreaseHP);
 	void IncreaseHP(int increaseHP);
-
 	void SetAttackPoint(int FinalAttackPoint) { _attackPoint = FinalAttackPoint; };
 
 	// Font
@@ -137,4 +128,8 @@ protected:
 	Font *_font;
 public:
 	virtual void UpdateText();
+
+public:
+	void InitState();
+	void ReplaceState(eStateType changeType, State* replaceState);
 };

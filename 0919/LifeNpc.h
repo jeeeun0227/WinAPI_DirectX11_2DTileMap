@@ -5,7 +5,7 @@
 class LifeNpc : public Character
 {
 public:
-	LifeNpc(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFilename);
+	LifeNpc(std::wstring name, std::wstring scriptName, std::wstring textureFilename);
 	~LifeNpc();
 
 public:

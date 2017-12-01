@@ -13,7 +13,7 @@ class MoveState;
 class Monster : public Character
 {
 public:
-	Monster(std::wstring name, LPCWSTR scriptName, LPCWSTR textureFilename);
+	Monster(std::wstring name, std::wstring scriptName, std::wstring textureFilename);
 	~Monster();
 
 	void UpdateAI();

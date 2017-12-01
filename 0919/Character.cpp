@@ -16,7 +16,7 @@
 #include "Stage.h"
 #include "LifeTileObject.h"
 
-Character::Character(std::wstring name, LPCWSTR scriptName, LPCWSTR textureFilename) : Component(name)
+Character::Character(std::wstring name, std::wstring scriptName, std::wstring textureFilename) : Component(name)
 {
 	_state = NULL;
 	_moveTime = 1.0f;
@@ -63,6 +63,7 @@ void Character::Init(int tileX, int tileY)
 
 	InitMove();
 
+	/*
 	{
 		State *state = new IdleState();
 		state->Init(this);
@@ -92,6 +93,9 @@ void Character::Init(int tileX, int tileY)
 		state->Init(this);
 		_stateMap[eStateType::ET_DEAD] = state;
 	}
+	*/
+
+	InitState();
 
 	ChangeState(eStateType::ET_IDLE);
 
@@ -128,6 +132,7 @@ void Character::Init()
 
 	InitMove();
 
+	/*
 	{
 		State *state = new IdleState();
 		state->Init(this);
@@ -157,6 +162,9 @@ void Character::Init()
 		state->Init(this);
 		_stateMap[eStateType::ET_DEAD] = state;
 	}
+	*/
+
+	InitState();
 
 	ChangeState(eStateType::ET_IDLE);
 
@@ -182,7 +190,7 @@ void Character::Deinit()
 	}
 	_stateMap.clear();
 
-	_state->Deinit();
+	// _state->Deinit();
 }
 
 void Character::Update(float deltaTime)
@@ -435,4 +443,28 @@ void Character::IncreaseHP(int increaseHP)
 	{
 		_hp = 500;
 	}
+}
+
+void Character::InitState()
+{
+	ReplaceState(eStateType::ET_IDLE, new IdleState());
+	ReplaceState(eStateType::ET_MOVE, new MoveState());
+	ReplaceState(eStateType::ET_ATTACK, new AttackState());
+	ReplaceState(eStateType::EF_DEFENSE, new DefenseState());
+	ReplaceState(eStateType::ET_DEAD, new DeadState());
+}
+
+void Character::ReplaceState(eStateType changeType, State* replaceState)
+{
+	std::map<eStateType, State*>::iterator it = _stateMap.find(changeType);
+
+	if (it != _stateMap.end())
+	{
+		delete it->second;
+		_stateMap.erase(changeType);
+	}
+
+	State* state = replaceState;
+	state->Init(this);
+	_stateMap[changeType] = state;
 }

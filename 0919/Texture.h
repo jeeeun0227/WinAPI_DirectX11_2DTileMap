@@ -1,6 +1,7 @@
 #pragma once
 
 #include <D3DX9.h>
+#include <string>
 
 class Texture
 {

@@ -3,7 +3,7 @@
 
 Texture::Texture()
 {
-
+	_texture = NULL;
 }
 
 Texture::~Texture()

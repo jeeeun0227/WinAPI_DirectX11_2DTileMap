@@ -17,19 +17,21 @@ Sprite::Sprite(LPCWSTR textureFileName, LPCWSTR scriptFileName, float rotate)
 
 Sprite::~Sprite()
 {
+	/*
 	if (NULL != _srcTexture)
 	{
 		_srcTexture->Deinit();
 		delete _srcTexture;
 		_srcTexture = NULL;
 	}
+	*/
 }
 
 void Sprite::Init()
 {
 	_device3d = GameSystem::GetInstance()->GetDevice();
 	_sprite = GameSystem::GetInstance()->GetSprite();
-	
+
 
 	_srcTexture = new Texture();
 	_srcTexture->Init(_textureFileName);
@@ -38,7 +40,7 @@ void Sprite::Init()
 
 	{
 		std::vector<std::string> scriptTextList = ResourceManager::GetInstance()->LoadScript(_scriptFileName);
-		for(int i=0; i<scriptTextList.size(); i++)
+		for (int i = 0; i < scriptTextList.size(); i++)
 		{
 			std::string record = scriptTextList[i];
 
@@ -68,15 +70,14 @@ void Sprite::Init()
 
 void Sprite::Init(int srcX, int srcY, int width, int height, float framaDelay)
 {
-	
 	_device3d = GameSystem::GetInstance()->GetDevice();
 	_sprite = GameSystem::GetInstance()->GetSprite();
-	
+
 	_srcTexture = ResourceManager::GetInstance()->LoadTexture(_textureFileName);
 
 	{
 		Frame *frame = new Frame();
-		frame->Init(_srcTexture, srcX, srcY, width, height, _rotate,framaDelay);
+		frame->Init(_srcTexture, srcX, srcY, width, height, _rotate, framaDelay);
 		_frameList.push_back(frame);
 	}
 
@@ -95,7 +96,8 @@ void Sprite::Deinit()
 
 	_frameList.clear();
 
-	_srcTexture->Deinit();
+	// _srcTexture->Deinit();
+	_srcTexture = NULL;
 }
 
 void Sprite::Update(float deltaTime)
