@@ -67,7 +67,7 @@ void LifeTileObject::Update(float deltaTime)
 					{
 						Component *component = (*it);
 
-						if (component->isLive())
+						// if (component->isLive())
 						{
 							switch (component->GetType())
 							{
@@ -94,7 +94,7 @@ void LifeTileObject::Update(float deltaTime)
 					{
 						Component *component = (*it);
 
-						if (component->isLive())
+						// if (component->isLive())
 						{
 							switch (component->GetType())
 							{

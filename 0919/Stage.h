@@ -5,6 +5,7 @@
 
 class Component;
 class Map;
+class Part;
 
 class Stage
 {
@@ -26,12 +27,14 @@ public:
 	void UpdateRemoveComponentList();
 	void UpdateBaseComponentList();
 
+	void AddStageComponent(Component *component);
+
 private:
 	std::list<Component*> _componentList;
 	std::list<Component*> _removeComponentList;
 	std::list<Component*> _createBaseComponentList;
 
-	int _lifeNpcCount;
+	Part *_part;
 
 	// Load Map
 private:

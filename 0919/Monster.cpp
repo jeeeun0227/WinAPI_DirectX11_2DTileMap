@@ -78,6 +78,7 @@ Component *Monster::Collision(std::list<Component*> &collisonList)
 		if (com->GetType() == eComponentType::CT_NPC ||
 			com->GetType() == eComponentType::CT_PLAYER)
 		{
+			_target = (*it);
 			return (*it);
 		}
 	}

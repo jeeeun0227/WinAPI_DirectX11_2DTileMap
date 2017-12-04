@@ -7,15 +7,22 @@
 #include "RecoveryItem.h"
 #include "LifeNpc.h"
 #include "LifePlayer.h"
+#include "Part.h"
 
 Stage::Stage()
 {
-
+	_part = NULL;
 }
 
 Stage::~Stage()
 {
 	// _componentList.clear();
+
+	if (NULL != _part)
+	{
+		delete _part;
+		_part = NULL;
+	}
 
 	for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
 	{
@@ -23,6 +30,8 @@ Stage::~Stage()
 	}
 
 	ComponentSystem::GetInstance()->RemoveAllComponents();
+
+	delete _part;
 }
 
 void Stage::Init(std::wstring  StageName)
@@ -33,28 +42,22 @@ void Stage::Init(std::wstring  StageName)
 	_map = new Map(StageName.c_str());
 	_componentList.push_back(_map);
 
+	// _part->_lifeNpcCount = 0;
+
 	Player *player = NULL;
 
 	if (L"Map3" == StageName)
 	{
-		for (int i = 0; i < 100; i++)
-		{
-			// CreateLifeNPC();
-			_lifeNpcCount = 0;
-
-			WCHAR name[256];
-			wsprintf(name, L"Lifenpc_%d", _lifeNpcCount);
-			_lifeNpcCount++;
-			LifeNpc *npc = new LifeNpc(L"npc", L"npc", L"Npc_Sprite_01");
-			_componentList.push_back(npc);
-		}
-		player = new LifePlayer(L"player", L"player", L"Player_Sprite_00");
+		_part = new Part(this);
+		_part->CreateComponents(100);
 	}
+
 	else
 	{
 		// npc 생성
 		NPC *_npc;
-		for (int i = 0; i < 0; i++)
+
+		for (int i = 0; i < 10; i++)
 		{
 			WCHAR name[256];
 			wsprintf(name, L"npc_%d", i);
@@ -63,7 +66,7 @@ void Stage::Init(std::wstring  StageName)
 		}
 
 		// monster 생성
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < 20; i++)
 		{
 			WCHAR name[256];
 			wsprintf(name, L"npc_%d", i);
@@ -79,19 +82,32 @@ void Stage::Init(std::wstring  StageName)
 			RecoveryItem *_item = new RecoveryItem(name, L"recovery_item", L"item_sprites");
 			_componentList.push_back(_item);
 		}
-		player = new LifePlayer(L"player", L"player", L"Player_Sprite_00");
+		player = new Player(L"player", L"player", L"Player_Sprite_00");
+		// 생성자 (컴포넌트 이름(고유 이름), json 파일 이름.json, 이미지 이름.png);
 	}
 
-	// 생성자 (컴포넌트 이름(고유 이름), json 파일 이름.json, 이미지 이름.png);
+	_componentList.push_back(player);
 
 	/*
-	// player 생성
-	WCHAR PlayerName[256];
-	wsprintf(PlayerName, L"player");
-	Player *_player = new Player(PlayerName, L"player", L"Player_Sprite_00");
+	if(L"Map3" == mapNmae)
+	{
+		_part = new LifePart(this);
+	}
+
+	else
+	{
+		_part = new DefaultPart(this);
+	}
 	*/
 
-	_componentList.push_back(player);
+	/*
+	< 최종적인 리팩토링의 결과 모습 >
+
+	if(find(mapName) == true)
+		_partMap[mapName]->CreateComponents();
+	else
+		_partMap["default"]->CreateComponents();
+	*/
 
 	for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
 	{
@@ -149,8 +165,8 @@ void Stage::CreateLifeNPC(Component *component)
 void Stage::DestoryLifeNPC(int tileX, int tileY, Component *tileCharacter)
 {
 	_map->ResetTileComponent(tileX, tileY, tileCharacter);
-	tileCharacter->SetCanMove(true);
-	tileCharacter->SetLive(false);
+	// tileCharacter->SetCanMove(true);
+	// tileCharacter->SetLive(false);
 
 	_componentList.remove(tileCharacter);
 	ComponentSystem::GetInstance()->RemoveComponent(tileCharacter);
@@ -176,13 +192,16 @@ void Stage::UpdateBaseComponentList()
 	for (std::list<Component*>::iterator it = _createBaseComponentList.begin(); it != _createBaseComponentList.end(); it++)
 	{
 		Component *baseComponent = (*it);
+		
+		LifeNpc *npc = (LifeNpc*)(_part->CreateLifeNPC(L"npc", L"Npc_Sprite_01"));
+		// _componentList.push_back(npc);
 
-		WCHAR name[256];
-		wsprintf(name, L"Lifenpc_%d", _lifeNpcCount);
-		_lifeNpcCount++;
-		LifeNpc *npc = new LifeNpc(name, L"npc", L"Npc_Sprite_01");
 		npc->Init(baseComponent->GetTileX(), baseComponent->GetTileY());
-		_componentList.push_back(npc);
 	}
 	_createBaseComponentList.clear();
+}
+
+void Stage::AddStageComponent(Component *component)
+{
+	_componentList.push_back(component);
 }

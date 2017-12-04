@@ -12,7 +12,7 @@ Map::Map(std::wstring name) : Component(name)
 {
 	_startX = _startY = _deltaX = _deltaY = 0.0f;
 	_spriteList.clear();
-	_tileSize = 32;		// +2 를 붙이면 타일 간격이 생성
+	_tileSize = 32 - 2;		// +2 를 붙이면 타일 간격이 생성
 }
 
 Map::~Map()

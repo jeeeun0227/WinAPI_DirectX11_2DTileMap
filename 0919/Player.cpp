@@ -104,8 +104,10 @@ Component *Player::Collision(std::list<Component*> &collisonList)
 		Component *com = (*it);
 
 		if (com->GetType() == eComponentType::CT_MONSTER ||
-			com->GetType() == eComponentType::CT_PLAYER)
+			com->GetType() == eComponentType::CT_NPC)
 		{
+			_target = (*it);
+			_state->NextState(eStateType::ET_ATTACK);
 			return (*it);
 		}
 	}
