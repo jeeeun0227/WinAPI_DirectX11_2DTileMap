@@ -17,14 +17,7 @@ Sprite::Sprite(LPCWSTR textureFileName, LPCWSTR scriptFileName, float rotate)
 
 Sprite::~Sprite()
 {
-	/*
-	if (NULL != _srcTexture)
-	{
-		_srcTexture->Deinit();
-		delete _srcTexture;
-		_srcTexture = NULL;
-	}
-	*/
+	
 }
 
 void Sprite::Init()
@@ -96,7 +89,6 @@ void Sprite::Deinit()
 
 	_frameList.clear();
 
-	// _srcTexture->Deinit();
 	_srcTexture = NULL;
 }
 

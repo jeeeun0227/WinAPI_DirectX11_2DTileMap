@@ -129,7 +129,13 @@
     <ClCompile Include="LifePlayer.cpp">
       <Filter>소스 파일\Game\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Part.cpp">
+    <ClCompile Include="StageLoader.cpp">
+      <Filter>소스 파일\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeStageLoader.cpp">
+      <Filter>소스 파일\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultStageLoader.cpp">
       <Filter>소스 파일\Stage</Filter>
     </ClCompile>
   </ItemGroup>
@@ -218,7 +224,13 @@
     <ClInclude Include="LifePlayer.h">
       <Filter>소스 파일\Game\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Part.h">
+    <ClInclude Include="StageLoader.h">
+      <Filter>소스 파일\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultStageLoader.h">
+      <Filter>소스 파일\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeStageLoader.h">
       <Filter>소스 파일\Stage</Filter>
     </ClInclude>
   </ItemGroup>

@@ -21,7 +21,7 @@ private:
 	ID3DXFont *_dxFont;
 
 	D3DCOLOR _color;
-	// RECT _rect;
+
 	std::wstring  _text;
 
 	int _x;

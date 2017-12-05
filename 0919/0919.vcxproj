@@ -24,7 +24,7 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>My0919</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
-    <ProjectName>1204</ProjectName>
+    <ProjectName>1205</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -162,6 +162,7 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentSystem.cpp" />
     <ClCompile Include="DeadState.cpp" />
+    <ClCompile Include="DefaultStageLoader.cpp" />
     <ClCompile Include="DefenseState.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="Frame.cpp" />
@@ -170,13 +171,14 @@
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="LifeNpc.cpp" />
     <ClCompile Include="LifePlayer.cpp" />
+    <ClCompile Include="LifeStageLoader.cpp" />
     <ClCompile Include="LifeTileObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MoveState.cpp" />
     <ClCompile Include="NPC.cpp" />
-    <ClCompile Include="Part.cpp" />
+    <ClCompile Include="StageLoader.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RecoveryItemcpp.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
@@ -194,6 +196,7 @@
     <ClInclude Include="ComponentMessage.h" />
     <ClInclude Include="ComponentSystem.h" />
     <ClInclude Include="DeadState.h" />
+    <ClInclude Include="DefaultStageLoader.h" />
     <ClInclude Include="DefenseState.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="Frame.h" />
@@ -202,12 +205,13 @@
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="LifeNpc.h" />
     <ClInclude Include="LifePlayer.h" />
+    <ClInclude Include="LifeStageLoader.h" />
     <ClInclude Include="LifeTileObject.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MoveState.h" />
     <ClInclude Include="NPC.h" />
-    <ClInclude Include="Part.h" />
+    <ClInclude Include="StageLoader.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RecoveryItem.h" />
     <ClInclude Include="ResourceManager.h" />

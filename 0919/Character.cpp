@@ -43,7 +43,6 @@ Character::~Character()
 void Character::Init(int tileX, int tileY)
 {
 	{
-		// Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");		// L"tileMap"
 		Map *map = GameSystem::GetInstance()->GetStage()->GetMap();
 
 		// 캐릭터 이동 시작 지점
@@ -63,38 +62,6 @@ void Character::Init(int tileX, int tileY)
 
 	InitMove();
 
-	/*
-	{
-		State *state = new IdleState();
-		state->Init(this);
-		_stateMap[eStateType::ET_IDLE] = state;
-	}
-
-	{
-		State *state = new MoveState();
-		state->Init(this);
-		_stateMap[eStateType::ET_MOVE] = state;
-	}
-
-	{
-		State *state = new AttackState();
-		state->Init(this);
-		_stateMap[eStateType::ET_ATTACK] = state;
-	}
-
-	{
-		State *state = new DefenseState();
-		state->Init(this);
-		_stateMap[eStateType::EF_DEFENSE] = state;
-	}
-
-	{
-		State *state = new DeadState();
-		state->Init(this);
-		_stateMap[eStateType::ET_DEAD] = state;
-	}
-	*/
-
 	InitState();
 
 	ChangeState(eStateType::ET_IDLE);
@@ -112,7 +79,6 @@ void Character::Init(int tileX, int tileY)
 void Character::Init()
 {
 	{
-		// Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");		// L"tileMap"
 		Map *map = GameSystem::GetInstance()->GetStage()->GetMap();
 
 		// 캐릭터 이동 시작 지점
@@ -131,38 +97,6 @@ void Character::Init()
 	}
 
 	InitMove();
-
-	/*
-	{
-		State *state = new IdleState();
-		state->Init(this);
-		_stateMap[eStateType::ET_IDLE] = state;
-	}
-
-	{
-		State *state = new MoveState();
-		state->Init(this);
-		_stateMap[eStateType::ET_MOVE] = state;
-	}
-
-	{
-		State *state = new AttackState();
-		state->Init(this);
-		_stateMap[eStateType::ET_ATTACK] = state;
-	}
-
-	{
-		State *state = new DefenseState();
-		state->Init(this);
-		_stateMap[eStateType::EF_DEFENSE] = state;
-	}
-
-	{
-		State *state = new DeadState();
-		state->Init(this);
-		_stateMap[eStateType::ET_DEAD] = state;
-	}
-	*/
 
 	InitState();
 
@@ -189,17 +123,10 @@ void Character::Deinit()
 		it++;
 	}
 	_stateMap.clear();
-
-	// _state->Deinit();
 }
 
 void Character::Update(float deltaTime)
 {
-	/*
-	if (false == _isLive)
-		return;
-		*/
-
 	UpdateAttackCoolTime(deltaTime);
 	_state->Update(deltaTime);
 
@@ -208,11 +135,6 @@ void Character::Update(float deltaTime)
 
 void Character::Render()
 {
-	/*
-	if (false == _isLive)
-		return;
-		*/
-
 	_state->Render();
 
 	// Font Test
@@ -263,7 +185,6 @@ void Character::InitMove()
 
 void Character::MoveStart(int newTileX, int newTileY)
 {
-	// Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");
 	Map *map = GameSystem::GetInstance()->GetStage()->GetMap();
 
 	map->ResetTileComponent(_tileX, _tileY, this);
@@ -321,7 +242,6 @@ Component *Character::Collision(std::list<Component*> &collisonList)
 
 void Character::MoveStop()
 {
-	// Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");
 	Map *map = GameSystem::GetInstance()->GetStage()->GetMap();
 
 	_x = map->GetPositionX(_tileX, _tileY);
@@ -378,10 +298,7 @@ void Character::ResetAttackCoolTime()
 
 void Character::UpdateText()
 {
-	// int coolTime = (int)(_attackCoolTimeDuration * 60.0f);
-
 	WCHAR text[256];
-
 
 	switch (GetType())
 	{

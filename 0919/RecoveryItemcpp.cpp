@@ -8,7 +8,6 @@
 
 RecoveryItem::RecoveryItem(std::wstring name, std::wstring scriptFileName, std::wstring textureFileName) : Component(name)
 {
-	// _posX = _posY = 0.0f;
 	_type = eComponentType::CT_ITEM;
 	_sprite = NULL;
 
@@ -23,7 +22,6 @@ RecoveryItem::~RecoveryItem()
 
 void RecoveryItem::Init()
 {
-	// Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");		// L"tileMap"
 	Map *map = GameSystem::GetInstance()->GetStage()->GetMap();
 
 	_tileX = rand() % (map->GetWidth() - 1) + 1;
@@ -108,7 +106,6 @@ void RecoveryItem::RaceiveMessage(const sComponentMsgParam msgParam)
 		case eComponentType::CT_MONSTER:
 		case eComponentType::CT_PLAYER:
 			((Character*)sender)->IncreaseHP(500);
-			// Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");
 			Map *map = GameSystem::GetInstance()->GetStage()->GetMap();
 			map->ResetTileComponent(_tileX, _tileY, this);
 			_isLive = false;

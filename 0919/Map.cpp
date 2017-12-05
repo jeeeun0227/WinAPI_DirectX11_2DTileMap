@@ -175,24 +175,6 @@ void Map::Deinit()
 
 void Map::Update(float deltaTime)
 {
-	/*
-	for (int y = 0; y < _height; y++)
-	{
-		for (int x = 0; x < _width; x++)
-		{
-			_tileMap[y][x]->MoveDeltaPosition(_deltaX, _deltaY);
-			_tileMap[y][x]->Update(deltaTime);
-		}
-	}
-
-	if (NULL != _viewer)
-	{
-		float deltaX = _viewer->GetMoveDeltaX() * deltaTime;
-		float deltaY = _viewer->GetMoveDeltaY() * deltaTime;
-		Scroll(-deltaX, -deltaY);
-	}
-	*/
-
 	int midX = GameSystem::GetInstance()->GetClientWidth() / 2;
 	int midY = GameSystem::GetInstance()->GetClientHeight() / 2;
 

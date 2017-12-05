@@ -60,7 +60,6 @@ GameSystem::GameSystem()
 
 GameSystem::~GameSystem()
 {
-	// _stage->Deinit();
 	delete _stage;
 
 	RELEASE_COM(_sprite);
@@ -232,12 +231,6 @@ int GameSystem::Update()
 
 			if (SecondPerFrame <= _frameDuration)
 			{
-				/*
-				wchar_t timeCheck[256];
-				swprintf(timeCheck, L"delta time : %f\n", _deltaTime);
-				OutputDebugString(timeCheck);
-				*/
-
 				_frameDuration = 0.0f;
 			}
 

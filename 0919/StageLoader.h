@@ -5,19 +5,21 @@
 class Component;
 class Stage;
 
-class Part
+class StageLoader
 {
 public:
-	Part(Stage *stage);
-	~Part();
+	StageLoader(Stage *stage);
+	~StageLoader();
 
-private:
-	std::wstring _name;
-	int _lifeNpcCount;
+protected:
 	Stage *_stage;
 
+	std::wstring _name;
+	
+	int _lifeNpcCount;
+
 public:
+	virtual void CreateComponents(std::wstring mapName);
+
 	Component *CreateLifeNPC(std::wstring scriptName, std::wstring textureFilename);
-	void SetName(std::wstring name);
-	void CreateComponents(int count);
 };

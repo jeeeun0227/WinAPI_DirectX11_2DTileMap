@@ -59,7 +59,6 @@ Component *ComponentSystem::FindComponent(std::wstring  name)
 
 Component *ComponentSystem::FindComponentInRange(Component *MapComponent, Component *chaser, int range, std::vector<eComponentType> compareTypeList)
 {
-	// Map *map = (Map*)FindComponent(L"tileMap");
 	Map *map = (Map*)MapComponent;
 
 	int minTileX = chaser->GetTileX() - range;

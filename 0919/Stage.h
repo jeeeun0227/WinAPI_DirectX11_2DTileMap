@@ -2,13 +2,17 @@
 
 #include <windows.h>
 #include <list>
+#include <map>
 
 class Component;
 class Map;
-class Part;
+class StageLoader;
 
 class Stage
 {
+private:
+	std::list<Component*> _componentList;
+
 public:
 	Stage();
 	~Stage();
@@ -21,24 +25,32 @@ public:
 	void Relese();
 	void Reset();
 
-	void CreateLifeNPC(Component *component);
-	void DestoryLifeNPC(int tileX, int tileY, Component *tileCharacter);
-	void CheckDestroyLifeNPC(Component *component);
-	void UpdateRemoveComponentList();
-	void UpdateBaseComponentList();
-
-	void AddStageComponent(Component *component);
-
+	// StageLoader
 private:
-	std::list<Component*> _componentList;
-	std::list<Component*> _removeComponentList;
-	std::list<Component*> _createBaseComponentList;
+	std::map<std::wstring, StageLoader*> _loaderMap;
+	StageLoader *_loader;
 
-	Part *_part;
+public:
+	void AddStageComponent(Component *component);
+	StageLoader *GetStageLoader(std::wstring name);
 
 	// Load Map
 private:
 	Map *_map;
+
 public:
 	Map *GetMap() { return _map; }
+	void SetMap(Map *map) { _map = map; }
+
+private:
+	std::list<Component*> _removeComponentList;
+	std::list<Component*> _createBaseComponentList;
+
+public:
+	void CreateLifeNPC(Component *component);
+	void DestoryLifeNPC(int tileX, int tileY, Component *tileCharacter);
+
+	void UpdateRemoveComponentList();
+	void UpdateBaseComponentList();
+	void CheckDestroyLifeNPC(Component *component);
 };

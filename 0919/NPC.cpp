@@ -11,8 +11,6 @@ NPC::NPC(std::wstring name, std::wstring scriptName, std::wstring textureFilenam
 {
 	_type = eComponentType::CT_NPC;
 
-	// _hp = 50;
-
 	_attackPoint = 10;
 }
 
@@ -23,7 +21,6 @@ NPC::~NPC()
 
 void NPC::UpdateAI()
 {
-	// Map *map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"tileMap");
 	Map *map = GameSystem::GetInstance()->GetStage()->GetMap();
 
 	std::vector<eComponentType> compareTypeList;
