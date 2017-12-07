@@ -38,6 +38,7 @@ void Stage::Init(std::wstring mapName)
 {
 	_loaderMap[L"Default"] = new DefaultStageLoader(this);
 	_loaderMap[L"Map3"] = new LifeStageLoader(this);
+	_loaderMap[L"Map4"] = new PathFinderStageLoader(this);
 
 	_componentList.clear();
 
