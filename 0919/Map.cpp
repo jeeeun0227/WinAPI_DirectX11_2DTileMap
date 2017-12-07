@@ -54,6 +54,7 @@ void Map::Init()
 	// Load Map Script (first floor)
 	{
 		int line = 0;
+		int row = 0;
 		char record[1024 * 8];
 
 		std::ifstream infile(layer01Name);
@@ -89,13 +90,14 @@ void Map::Init()
 						TileCell *tileCell = new TileCell();
 						WCHAR componentName[256];
 						wsprintf(componentName, L"map_layer01_%d_%d", line, x);
-						TileObject *tileObject = new TileObject(componentName, _spriteList[index]);
+						TileObject *tileObject = new TileObject(componentName, _spriteList[index], x, row);
 						tileObject->SetCanMove(true);
 						tileCell->AddComponent(tileObject, true);
 						rowList.push_back(tileCell);
 						token = strtok(NULL, ",");
 					}
 					_tileMap.push_back(rowList);
+					row++;
 				}
 				break;
 			}
@@ -146,7 +148,7 @@ void Map::Init()
 							}
 							else
 							{
-								TileObject *tileObject = new TileObject(componentName, _spriteList[index]);
+								TileObject *tileObject = new TileObject(componentName, _spriteList[index], x, row);
 								tileCell->AddComponent(tileObject, true);
 							}
 						}
@@ -303,7 +305,7 @@ void Map::InitViewer(Component *viewer)
 
 	_startX = (-_viewer->GetTileX() * _tileSize) + midX - _tileSize / 2;
 	_startY = (-_viewer->GetTileY() * _tileSize) + midY - _tileSize / 2;
-
+	
 	float posX = _startX;
 	float posY = _startY;
 

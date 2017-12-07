@@ -7,7 +7,7 @@ class Sprite;
 class TileObject : public Component
 {
 public:
-	TileObject(std::wstring name, Sprite *sprite);
+	TileObject(std::wstring name, Sprite *sprite, int tileX, int tileY);
 	virtual ~TileObject();
 
 public:

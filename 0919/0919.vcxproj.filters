@@ -138,6 +138,12 @@
     <ClCompile Include="DefaultStageLoader.cpp">
       <Filter>소스 파일\Stage</Filter>
     </ClCompile>
+    <ClCompile Include="PathFinderStageLoader.cpp">
+      <Filter>소스 파일\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="PathFinderPlayer.cpp">
+      <Filter>소스 파일\Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameSystem.h">
@@ -231,6 +237,12 @@
       <Filter>소스 파일\Stage</Filter>
     </ClInclude>
     <ClInclude Include="LifeStageLoader.h">
+      <Filter>소스 파일\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="PathFinderStageLoader.h">
+      <Filter>소스 파일\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="PathFinderPlayer.h">
       <Filter>소스 파일\Stage</Filter>
     </ClInclude>
   </ItemGroup>

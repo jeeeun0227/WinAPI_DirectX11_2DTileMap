@@ -178,6 +178,8 @@
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MoveState.cpp" />
     <ClCompile Include="NPC.cpp" />
+    <ClCompile Include="PathFinderPlayer.cpp" />
+    <ClCompile Include="PathFinderStageLoader.cpp" />
     <ClCompile Include="StageLoader.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RecoveryItemcpp.cpp" />
@@ -211,6 +213,8 @@
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MoveState.h" />
     <ClInclude Include="NPC.h" />
+    <ClInclude Include="PathFinderPlayer.h" />
+    <ClInclude Include="PathFinderStageLoader.h" />
     <ClInclude Include="StageLoader.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RecoveryItem.h" />

@@ -116,6 +116,8 @@ public:
 	eDirection GetDirection() { return _currentDirection; }
 	virtual Component *Collision(std::list<Component*> &collisonList);
 
+	void InitTilePosition(int tileX, int tileY);
+
 	// Attack
 protected:
 	Component *_target;

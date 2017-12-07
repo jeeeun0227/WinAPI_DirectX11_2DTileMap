@@ -8,10 +8,10 @@
 #include <vector>
 
 LifeTileObject::LifeTileObject(int tileX, int tileY, std::wstring name, Sprite *sprite) :
-	TileObject(name, sprite)
+	TileObject(name, sprite, tileX, tileY)
 {
-	_tileX = tileX;
-	_tileY = tileY;
+	// _tileX = tileX;
+	// _tileY = tileY;
 }
 
 LifeTileObject::~LifeTileObject()

@@ -10,6 +10,7 @@
 #include "StageLoader.h"
 #include "DefaultStageLoader.h"
 #include "LifeStageLoader.h"
+#include "PathFinderStageLoader.h"
 
 Stage::Stage()
 {
@@ -44,11 +45,6 @@ void Stage::Init(std::wstring mapName)
 
 	_loader = GetStageLoader(mapName);
 	_loader->CreateComponents(mapName);
-
-	for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
-	{
-		(*it)->Init();
-	}
 }
 
 void Stage::Deinit()
@@ -130,13 +126,17 @@ void Stage::UpdateBaseComponentList()
 		
 		LifeNpc *npc = (LifeNpc*)(_loader->CreateLifeNPC(L"npc", L"Npc_Sprite_01"));
 
-		npc->Init(baseComponent->GetTileX(), baseComponent->GetTileY());
+		// npc->Init(baseComponent->GetTileX(), baseComponent->GetTileY());
+		// npc->Init();
+
+		npc->InitTilePosition(baseComponent->GetTileX(), baseComponent->GetTileY());
 	}
 	_createBaseComponentList.clear();
 }
 
 void Stage::AddStageComponent(Component *component)
 {
+	component->Init();
 	_componentList.push_back(component);
 }
 

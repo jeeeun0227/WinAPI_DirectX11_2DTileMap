@@ -385,3 +385,18 @@ void Character::ReplaceState(eStateType changeType, State* replaceState)
 	state->Init(this);
 	_stateMap[changeType] = state;
 }
+
+void Character::InitTilePosition(int tileX, int tileY)
+{
+		Map *map = GameSystem::GetInstance()->GetStage()->GetMap();
+
+		map->ResetTileComponent(_tileX, _tileY, this);
+
+		// 캐릭터 이동 시작 지점
+		_tileX = tileX;
+		_tileY = tileY;
+
+		_x = map->GetPositionX(_tileX, _tileY);
+		_y = map->GetPositionY(_tileX, _tileY);
+		map->SetTileComponent(_tileX, _tileY, this, false);
+}
