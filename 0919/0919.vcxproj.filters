@@ -43,6 +43,12 @@
     <Filter Include="소스 파일\Stage">
       <UniqueIdentifier>{b55fd472-4d19-4202-aeaf-b0e8facaaf87}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Stage\LifeGame">
+      <UniqueIdentifier>{bbbb9c5e-6f0d-442f-8249-c8f9cc78ee26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Stage\PathFind">
+      <UniqueIdentifier>{aaf293ed-5f0e-4110-9ec2-f2b31a6dfed2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -129,20 +135,26 @@
     <ClCompile Include="LifePlayer.cpp">
       <Filter>소스 파일\Game\Character</Filter>
     </ClCompile>
-    <ClCompile Include="StageLoader.cpp">
-      <Filter>소스 파일\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="LifeStageLoader.cpp">
-      <Filter>소스 파일\Stage</Filter>
-    </ClCompile>
     <ClCompile Include="DefaultStageLoader.cpp">
       <Filter>소스 파일\Stage</Filter>
     </ClCompile>
-    <ClCompile Include="PathFinderStageLoader.cpp">
+    <ClCompile Include="LifeStageLoader.cpp">
+      <Filter>소스 파일\Stage\LifeGame</Filter>
+    </ClCompile>
+    <ClCompile Include="StageLoader.cpp">
       <Filter>소스 파일\Stage</Filter>
     </ClCompile>
+    <ClCompile Include="PathFinderMonster.cpp">
+      <Filter>소스 파일\Stage\PathFind</Filter>
+    </ClCompile>
     <ClCompile Include="PathFinderPlayer.cpp">
-      <Filter>소스 파일\Stage</Filter>
+      <Filter>소스 파일\Stage\PathFind</Filter>
+    </ClCompile>
+    <ClCompile Include="PathFinderStageLoader.cpp">
+      <Filter>소스 파일\Stage\PathFind</Filter>
+    </ClCompile>
+    <ClCompile Include="PathFindingState.cpp">
+      <Filter>소스 파일\Stage\PathFind</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -230,20 +242,26 @@
     <ClInclude Include="LifePlayer.h">
       <Filter>소스 파일\Game\Character</Filter>
     </ClInclude>
-    <ClInclude Include="StageLoader.h">
-      <Filter>소스 파일\Stage</Filter>
-    </ClInclude>
     <ClInclude Include="DefaultStageLoader.h">
       <Filter>소스 파일\Stage</Filter>
     </ClInclude>
     <ClInclude Include="LifeStageLoader.h">
+      <Filter>소스 파일\Stage\LifeGame</Filter>
+    </ClInclude>
+    <ClInclude Include="StageLoader.h">
       <Filter>소스 파일\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="PathFinderStageLoader.h">
-      <Filter>소스 파일\Stage</Filter>
+    <ClInclude Include="PathFinderMonster.h">
+      <Filter>소스 파일\Stage\PathFind</Filter>
     </ClInclude>
     <ClInclude Include="PathFinderPlayer.h">
-      <Filter>소스 파일\Stage</Filter>
+      <Filter>소스 파일\Stage\PathFind</Filter>
+    </ClInclude>
+    <ClInclude Include="PathFinderStageLoader.h">
+      <Filter>소스 파일\Stage\PathFind</Filter>
+    </ClInclude>
+    <ClInclude Include="PathFindingState.h">
+      <Filter>소스 파일\Stage\PathFind</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

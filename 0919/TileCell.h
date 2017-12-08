@@ -7,7 +7,7 @@ class Component;
 class TileCell
 {
 public:
-	TileCell();
+	TileCell(int tileX, int tileY);
 	~TileCell(); 
 
 	void Deinit();
@@ -38,4 +38,20 @@ private:
 
 	std::list<Component *>_componentList;
 	std::list<Component *>_renderList;
+
+	// PathFinding
+private:
+	bool _isPathFindingMark;
+	TileCell *_prePathFindingCell;
+
+	int _tileX;
+	int _tileY;
+
+public:
+	void InitPathFinding();
+	bool IsPathFindingMark() { return _isPathFindingMark; }
+	void PathFinded() { _isPathFindingMark = true; }
+
+	int GetTileX() { return _tileX; }
+	int GetTileY() { return _tileY; }
 };

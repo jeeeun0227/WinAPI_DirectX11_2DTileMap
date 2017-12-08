@@ -60,4 +60,8 @@ public:
 	int GetHeight();
 
 	std::list<Component*> GetTileComponentList(int tileX, int tileY);
+
+	// PathFinding
+public:
+	TileCell *GetTileCell(int tileX, int tileY);
 };

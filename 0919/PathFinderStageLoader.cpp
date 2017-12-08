@@ -1,9 +1,12 @@
 #include "PathFinderStageLoader.h"
 #include "Stage.h"
 #include "Map.h"
+#include "Monster.h"
 #include "PathFinderPlayer.h"
+#include "PathFinderMonster.h"
 
-PathFinderStageLoader::PathFinderStageLoader(Stage *stage) : StageLoader(stage)
+PathFinderStageLoader::PathFinderStageLoader(Stage *stage) 
+	: StageLoader(stage)
 {
 
 }
@@ -18,6 +21,8 @@ void PathFinderStageLoader::CreateComponents(std::wstring mapName)
 	StageLoader::CreateComponents(mapName);
 	
 	// 1개의 몬스터 생성
+	Monster *monster = new PathFinderMonster(L"PathFinderMonster", L"monster", L"monster");
+	_stage->AddStageComponent(monster);
 
 	// 1개의 플레이어 생성 ( 추후 길찾기 전용 플레이어 )
 	Player *player = new PathFinderPlayer(L"player", L"player", L"Player_Sprite_00");

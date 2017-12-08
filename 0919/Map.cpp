@@ -87,7 +87,7 @@ void Map::Init()
 					for (int x = 0; x < _width; x++)
 					{
 						int index = atoi(token);
-						TileCell *tileCell = new TileCell();
+						TileCell *tileCell = new TileCell(x, row);
 						WCHAR componentName[256];
 						wsprintf(componentName, L"map_layer01_%d_%d", line, x);
 						TileObject *tileObject = new TileObject(componentName, _spriteList[index], x, row);
@@ -348,4 +348,9 @@ int Map::GetHeight()
 std::list<Component*> Map::GetTileComponentList(int tileX, int tileY)
 {
 	return _tileMap[tileY][tileX]->GetComponentList();
+}
+
+TileCell *Map::GetTileCell(int tileX, int tileY)
+{
+	return _tileMap[tileY][tileX];
 }

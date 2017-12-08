@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Monster.h"
 #include "RecoveryItem.h"
+#include "PathFinderMonster.h"
 
 DefaultStageLoader::DefaultStageLoader(Stage* stage) : StageLoader(stage)
 {

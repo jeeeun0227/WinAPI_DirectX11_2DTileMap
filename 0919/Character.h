@@ -7,6 +7,7 @@
 #include <map>
 
 #include "Component.h"
+#include "TileCell.h"
 
 enum eDirection
 {
@@ -25,6 +26,7 @@ enum eStateType
 	EF_DEFENSE,
 	ET_DEAD,
 	ET_NONE,
+	ET_PATHFINDING
 };
 
 class Sprite;
@@ -32,6 +34,7 @@ class State;
 class AttackState;
 class Font;
 class Map;
+class TileCell;
 
 class Character : public Component
 {
@@ -152,6 +155,15 @@ public:
 	// Font
 protected:
 	Font *_font;
+
 public:
 	virtual void UpdateText();
+
+	// PathFinding
+protected:
+	TileCell *_targetTileCell;
+
+public:
+	TileCell *GetTargetCell() { return _targetTileCell; }
+	void SetTargetTileCell(TileCell *tileCell);
 };

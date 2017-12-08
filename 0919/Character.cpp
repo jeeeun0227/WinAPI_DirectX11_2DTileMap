@@ -400,3 +400,9 @@ void Character::InitTilePosition(int tileX, int tileY)
 		_y = map->GetPositionY(_tileX, _tileY);
 		map->SetTileComponent(_tileX, _tileY, this, false);
 }
+
+void Character::SetTargetTileCell(TileCell *tileCell)
+{
+	_targetTileCell = tileCell;
+	_state->NextState(eStateType::ET_PATHFINDING);
+}

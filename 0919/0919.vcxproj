@@ -24,7 +24,7 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>My0919</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
-    <ProjectName>1207</ProjectName>
+    <ProjectName>1208</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -178,8 +178,10 @@
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MoveState.cpp" />
     <ClCompile Include="NPC.cpp" />
+    <ClCompile Include="PathFinderMonster.cpp" />
     <ClCompile Include="PathFinderPlayer.cpp" />
     <ClCompile Include="PathFinderStageLoader.cpp" />
+    <ClCompile Include="PathFindingState.cpp" />
     <ClCompile Include="StageLoader.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RecoveryItemcpp.cpp" />
@@ -213,8 +215,10 @@
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MoveState.h" />
     <ClInclude Include="NPC.h" />
+    <ClInclude Include="PathFinderMonster.h" />
     <ClInclude Include="PathFinderPlayer.h" />
     <ClInclude Include="PathFinderStageLoader.h" />
+    <ClInclude Include="PathFindingState.h" />
     <ClInclude Include="StageLoader.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RecoveryItem.h" />

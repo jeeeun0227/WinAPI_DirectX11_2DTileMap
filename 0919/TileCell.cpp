@@ -2,10 +2,13 @@
 #include "Sprite.h"
 #include "Component.h"
 
-TileCell::TileCell()
+TileCell::TileCell(int tileX, int tileY)
 {
 	_posX = _posY = 0.0f;
 	_componentList.clear();
+
+	_tileX = tileX;
+	_tileY = tileY;
 }
 
 TileCell::~TileCell()
@@ -128,4 +131,10 @@ bool TileCell::GetTileCollisonList(std::list<Component*> &collisonList)
 		return true;
 	else
 		return false;
+}
+
+void TileCell::InitPathFinding()
+{
+	_isPathFindingMark = false;
+	_prePathFindingCell = NULL;
 }
