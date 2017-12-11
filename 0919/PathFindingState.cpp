@@ -4,6 +4,7 @@
 #include "Map.h"
 #include "TileCell.h"
 #include "Character.h"
+#include "GlobalType.h"
 
 PathFindingState::PathFindingState()
 {
@@ -41,11 +42,44 @@ void PathFindingState::Update(float deltaTime)
 		{
 			tileCell->PathFinded();
 
+			{
+				wchar_t log[256];
+				wsprintf(log, L"pos : %d %d to %d %d\n", tileCell->GetTileX(), tileCell->GetTileY(),
+					_targetTileCell->GetTileX(), _targetTileCell->GetTileY());
+				OutputDebugString(log);
+			}			
+
 			// 목표 타일이면 종료
 			if (tileCell->GetTileX() == _targetTileCell->GetTileX() && 
 				tileCell->GetTileY() == _targetTileCell->GetTileY())
 			{
+				OutputDebugString(L"-- Find Goal!! --\n");
 				_nextState = eStateType::ET_IDLE;
+				return;
+			}
+
+			for (int direction = 0; direction < eDirection::NONE; direction++)
+			{
+				TilePosition currentTilePos;
+				currentTilePos.x = tileCell->GetTileX();
+				currentTilePos.y = tileCell->GetTileY();
+				TilePosition nextTilePos = GetNextTilePosition(currentTilePos, (eDirection)direction);
+
+				Map *map = GameSystem::GetInstance()->GetStage()->GetMap();
+				TileCell *nextTileCell = map->GetTileCell(nextTilePos);
+
+				if (
+					(true == map->CanMoveTileMap(nextTilePos) && false == nextTileCell->IsPathFindingMark())
+					|| 
+					(nextTileCell->GetTileX() == _targetTileCell->GetTileX() && nextTileCell->GetTileY() == _targetTileCell->GetTileY())
+					)
+				{
+					if (NULL == nextTileCell->GetPrevPathFindingCell())
+					{
+						nextTileCell->SetPrevPathFindingCell(tileCell);
+						_pathFindingTileQueue.push(nextTileCell);
+					}
+				}
 			}
 		}
 	}

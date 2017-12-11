@@ -296,6 +296,11 @@ bool Map::CanMoveTileMap(int tileX, int tileY)
 	return _tileMap[tileY][tileX]->CanMove();
 }
 
+bool Map::CanMoveTileMap(TilePosition nextTilePos)
+{
+	return CanMoveTileMap(nextTilePos.x, nextTilePos.y);
+}
+
 void Map::InitViewer(Component *viewer)
 {
 	_viewer = viewer;
@@ -353,4 +358,9 @@ std::list<Component*> Map::GetTileComponentList(int tileX, int tileY)
 TileCell *Map::GetTileCell(int tileX, int tileY)
 {
 	return _tileMap[tileY][tileX];
+}
+
+TileCell *Map::GetTileCell(TilePosition nextTilePos)
+{
+	return GetTileCell(nextTilePos.x, nextTilePos.y);
 }

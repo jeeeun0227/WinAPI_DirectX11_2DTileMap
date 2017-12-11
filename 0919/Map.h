@@ -5,6 +5,7 @@
 #include <list>
 
 #include "Component.h"
+#include "GlobalType.h"
 
 class Sprite;
 class TileCell;
@@ -51,6 +52,7 @@ public:
 	void ResetTileComponent(int tileX, int tileY, Component *component);
 
 	bool CanMoveTileMap(int tileX, int tileY);
+	bool CanMoveTileMap(TilePosition nextTilePos);
 
 	void InitViewer(Component *viewer);
 
@@ -64,4 +66,5 @@ public:
 	// PathFinding
 public:
 	TileCell *GetTileCell(int tileX, int tileY);
+	TileCell *GetTileCell(TilePosition nextTilePos);
 };

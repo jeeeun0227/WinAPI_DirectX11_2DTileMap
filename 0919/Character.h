@@ -8,15 +8,7 @@
 
 #include "Component.h"
 #include "TileCell.h"
-
-enum eDirection
-{
-	LEFT,
-	RIGHT,
-	UP,
-	DOWN,
-	NONE
-};
+#include "GlobalType.h"
 
 enum eStateType
 {
@@ -87,7 +79,7 @@ private:
 	std::map<eStateType, State*> _stateMap;
 
 public:
-	void InitState();
+	virtual void InitState();
 	void ReplaceState(eStateType changeType, State* replaceState);
 	void ChangeState(eStateType stateType);
 

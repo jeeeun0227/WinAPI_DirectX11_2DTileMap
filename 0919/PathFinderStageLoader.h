@@ -10,4 +10,8 @@ public:
 
 public:
 	void CreateComponents(std::wstring mapName);
+
+private:
+	int _midTileX;
+	int _midTileY;
 };

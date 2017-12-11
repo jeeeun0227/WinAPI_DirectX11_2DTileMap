@@ -58,6 +58,12 @@ void MoveState::Start()
 
 	Map *map = GameSystem::GetInstance()->GetStage()->GetMap();
 
+	TilePosition currentTilePos;
+	currentTilePos.x = _character->GetTileX();
+	currentTilePos.y = _character->GetTileY();
+	TilePosition nextTilePos = GetNextTilePosition(currentTilePos, _character->GetDirection());
+
+	/*
 	int newTileX = _character->GetTileX();
 	int newTileY = _character->GetTileY();
 
@@ -79,9 +85,10 @@ void MoveState::Start()
 		newTileY++;
 		break;
 	}
+	*/
 
 	std::list<Component*> collisonList;
-	bool canMove = map->GetTileCollisonList(newTileX, newTileY, collisonList);
+	bool canMove = map->GetTileCollisonList(nextTilePos.x, nextTilePos.y, collisonList);
 	if (false == canMove)
 	{
 		Component *target = _character->Collision(collisonList);
@@ -100,7 +107,7 @@ void MoveState::Start()
 	}
 	else
 	{
-		_character->MoveStart(newTileX, newTileY);
+		_character->MoveStart(nextTilePos.x, nextTilePos.y);
 		_character->MoveStop();
 		_movingDuration = 0.0f;
 	}

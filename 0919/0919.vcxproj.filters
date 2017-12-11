@@ -156,6 +156,9 @@
     <ClCompile Include="PathFindingState.cpp">
       <Filter>소스 파일\Stage\PathFind</Filter>
     </ClCompile>
+    <ClCompile Include="GlobalType.cpp">
+      <Filter>소스 파일\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameSystem.h">
@@ -262,6 +265,9 @@
     </ClInclude>
     <ClInclude Include="PathFindingState.h">
       <Filter>소스 파일\Stage\PathFind</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalType.h">
+      <Filter>소스 파일\System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

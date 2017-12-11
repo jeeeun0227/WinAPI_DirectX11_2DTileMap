@@ -42,7 +42,7 @@ private:
 	// PathFinding
 private:
 	bool _isPathFindingMark;
-	TileCell *_prePathFindingCell;
+	TileCell *_prevPathFindingCell;
 
 	int _tileX;
 	int _tileY;
@@ -51,6 +51,9 @@ public:
 	void InitPathFinding();
 	bool IsPathFindingMark() { return _isPathFindingMark; }
 	void PathFinded() { _isPathFindingMark = true; }
+
+	TileCell *GetPrevPathFindingCell() { return _prevPathFindingCell; }
+	void SetPrevPathFindingCell(TileCell *tileCell) { _prevPathFindingCell = tileCell; }
 
 	int GetTileX() { return _tileX; }
 	int GetTileY() { return _tileY; }
