@@ -54,6 +54,33 @@ void PathFindingState::Update(float deltaTime)
 				tileCell->GetTileY() == _targetTileCell->GetTileY())
 			{
 				OutputDebugString(L"-- Find Goal!! --\n");
+
+				std::list<Component*> componentList = tileCell->GetComponentList();
+				for (std::list<Component*>::iterator it = componentList.begin(); it != componentList.end(); it++)
+				{
+					if (eComponentType::CT_MONSTER == (*it)->GetType())
+					{
+						Character *monster = (Character*)(*it);
+
+						if (tileCell->GetTileX() < tileCell->GetPrevPathFindingCell()->GetTileX())
+						{
+							monster->SetDirection(eDirection::RIGHT);
+						}
+						else if (tileCell->GetTileX() > tileCell->GetPrevPathFindingCell()->GetTileX())
+						{
+							monster->SetDirection(eDirection::LEFT);
+						}
+						if (tileCell->GetTileY() < tileCell->GetPrevPathFindingCell()->GetTileY())
+						{
+							monster->SetDirection(eDirection::DOWN);
+						}
+						else if (tileCell->GetTileY() > tileCell->GetPrevPathFindingCell()->GetTileY())
+						{
+							monster->SetDirection(eDirection::UP);
+						}
+					}
+				}
+
 				_nextState = eStateType::ET_IDLE;
 				return;
 			}
@@ -78,6 +105,16 @@ void PathFindingState::Update(float deltaTime)
 					{
 						nextTileCell->SetPrevPathFindingCell(tileCell);
 						_pathFindingTileQueue.push(nextTileCell);
+
+						if (
+							// (nextTileCell->GetTileX() != _targetTileCell->GetTileX() || nextTileCell->GetTileY() != _targetTileCell->GetTileY())
+							!(nextTileCell->GetTileX() == _targetTileCell->GetTileX() && nextTileCell->GetTileY() == _targetTileCell->GetTileY())
+							&&
+							!(nextTileCell->GetTileX() == _character->GetTileX() && nextTileCell->GetTileY() == _character->GetTileY())
+							)
+						{
+							GameSystem::GetInstance()->GetStage()->CreatePathFindingNPC(nextTileCell);
+						}
 					}
 				}
 			}
@@ -113,4 +150,9 @@ void PathFindingState::Start()
 void PathFindingState::Stop()
 {
 	State::Stop();
+
+	while (0 != _pathFindingTileQueue.size())
+	{
+		_pathFindingTileQueue.pop();
+	}
 }

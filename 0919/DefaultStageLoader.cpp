@@ -26,7 +26,7 @@ void DefaultStageLoader::CreateComponents(std::wstring mapName)
 	{
 		WCHAR name[256];
 		wsprintf(name, L"npc_%d", i);
-		NPC *_npc = new NPC(L"npc", L"npc", L"Npc_Sprite_01");
+		NPC *_npc = new NPC(L"npc", L"npc", L"Npc_Sprite_00");
 		_stage->AddStageComponent(_npc);
 	}
 
@@ -35,7 +35,7 @@ void DefaultStageLoader::CreateComponents(std::wstring mapName)
 	{
 		WCHAR name[256];
 		wsprintf(name, L"npc_%d", i);
-		Monster *_monster = new Monster(name, L"monster", L"monster");
+		Monster *_monster = new Monster(name, L"monster", L"Monster_Sprite_00");
 		_stage->AddStageComponent(_monster);
 	}
 

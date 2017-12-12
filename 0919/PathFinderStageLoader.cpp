@@ -24,7 +24,7 @@ void PathFinderStageLoader::CreateComponents(std::wstring mapName)
 	StageLoader::CreateComponents(mapName);
 	
 	// 1개의 몬스터 생성
-	Monster *monster = new PathFinderMonster(L"PathFinderMonster", L"monster", L"monster");
+	Monster *monster = new PathFinderMonster(L"PathFinderMonster", L"monster", L"Monster_Sprite_00");
 	_stage->AddStageComponent(monster);
 
 	// 1개의 플레이어 생성 ( 추후 길찾기 전용 플레이어 )

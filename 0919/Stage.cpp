@@ -124,10 +124,7 @@ void Stage::UpdateBaseComponentList()
 	{
 		Component *baseComponent = (*it);
 		
-		LifeNpc *npc = (LifeNpc*)(_loader->CreateLifeNPC(L"npc", L"Npc_Sprite_01"));
-
-		// npc->Init(baseComponent->GetTileX(), baseComponent->GetTileY());
-		// npc->Init();
+		LifeNpc *npc = (LifeNpc*)(_loader->CreateLifeNPC(L"npc", L"Npc_Sprite_00"));
 
 		npc->InitTilePosition(baseComponent->GetTileX(), baseComponent->GetTileY());
 	}
@@ -149,4 +146,31 @@ StageLoader *Stage::GetStageLoader(std::wstring name)
 		return it->second;
 	}
 	return _loaderMap[L"Default"];
+}
+
+void Stage::CreatePathFindingNPC(TileCell *tileCell)
+{
+	LifeNpc *npc = (LifeNpc*)(_loader->CreateLifeNPC(L"npc", L"Npc_Sprite_00"));
+	npc->InitTilePosition(tileCell->GetTileX(), tileCell->GetTileY());
+
+	// tileCell : 현재 위치
+	// tileCell -> GetPrevPathFindingCell() : 이전 위치
+	// npc->SetDirection(); : 캐릭터가 바라보는 방향을 세팅한다.
+
+	if (tileCell->GetTileX() < tileCell->GetPrevPathFindingCell()->GetTileX())
+	{
+		npc->SetDirection(eDirection::RIGHT);
+	}
+	else if(tileCell->GetTileX() > tileCell->GetPrevPathFindingCell()->GetTileX())
+	{
+		npc->SetDirection(eDirection::LEFT);
+	}
+	if (tileCell->GetTileY() < tileCell->GetPrevPathFindingCell()->GetTileY())
+	{
+		npc->SetDirection(eDirection::DOWN);
+	}
+	else if (tileCell->GetTileY() > tileCell->GetPrevPathFindingCell()->GetTileY())
+	{
+		npc->SetDirection(eDirection::UP);
+	}
 }

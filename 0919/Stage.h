@@ -4,6 +4,8 @@
 #include <list>
 #include <map>
 
+#include "TileCell.h"
+
 class Component;
 class Map;
 class StageLoader;
@@ -53,4 +55,9 @@ public:
 	void UpdateRemoveComponentList();
 	void UpdateBaseComponentList();
 	void CheckDestroyLifeNPC(Component *component);
+
+
+	// Path Finding
+public:
+	void CreatePathFindingNPC(TileCell *tileCell);
 };

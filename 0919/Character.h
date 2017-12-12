@@ -109,6 +109,7 @@ public:
 	float GetY() { return _y; }
 
 	eDirection GetDirection() { return _currentDirection; }
+	void SetDirection(eDirection direction) { _currentDirection = direction; }
 	virtual Component *Collision(std::list<Component*> &collisonList);
 
 	void InitTilePosition(int tileX, int tileY);

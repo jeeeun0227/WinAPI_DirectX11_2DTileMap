@@ -1,4 +1,4 @@
 [
-{"texture":"chracter_sprite.png","x":0,"y":0,"width":32,"height":32,"framedelay":0.2},
-{"texture":"chracter_sprite.png","x":64,"y":0,"width":32,"height":32,"framedelay":0.2}
+{"texture":"Monster_Sprite_00.png","x":0,"y":0,"width":32,"height":32,"framedelay":0.2},
+{"texture":"Monster_Sprite_00.png","x":64,"y":0,"width":32,"height":32,"framedelay":0.2}
 ]
