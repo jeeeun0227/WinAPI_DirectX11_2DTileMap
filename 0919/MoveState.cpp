@@ -63,30 +63,6 @@ void MoveState::Start()
 	currentTilePos.y = _character->GetTileY();
 	TilePosition nextTilePos = GetNextTilePosition(currentTilePos, _character->GetDirection());
 
-	/*
-	int newTileX = _character->GetTileX();
-	int newTileY = _character->GetTileY();
-
-	switch (_character->GetDirection())
-	{
-	case eDirection::LEFT:
-		newTileX--;
-		break;
-
-	case eDirection::RIGHT:
-		newTileX++;
-		break;
-
-	case eDirection::UP:
-		newTileY--;
-		break;
-
-	case eDirection::DOWN:
-		newTileY++;
-		break;
-	}
-	*/
-
 	std::list<Component*> collisonList;
 	bool canMove = map->GetTileCollisonList(nextTilePos.x, nextTilePos.y, collisonList);
 	if (false == canMove)

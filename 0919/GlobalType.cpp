@@ -3,11 +3,6 @@
 TilePosition GetNextTilePosition(TilePosition currentTilePos, eDirection direction)
 {
 	TilePosition tilePosition = currentTilePos;
-	
-	/*
-	int newTileX = _character->currentTilePos;
-	int newTileY = _character->GetTileY();
-	*/
 
 	switch (direction)
 	{

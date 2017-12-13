@@ -5,6 +5,7 @@
 #include <vector>
 #include <list>
 #include <map>
+#include <stack>
 
 #include "Component.h"
 #include "TileCell.h"
@@ -155,8 +156,12 @@ public:
 	// PathFinding
 protected:
 	TileCell *_targetTileCell;
+	std::stack<TileCell*> _pathTileCellStack;
 
 public:
 	TileCell *GetTargetCell() { return _targetTileCell; }
 	void SetTargetTileCell(TileCell *tileCell);
+
+	std::stack<TileCell*> GetPathTileCellStack() { return _pathTileCellStack; }
+	void PushPathTileCell(TileCell *tileCell) { _pathTileCellStack.push(tileCell); }
 };

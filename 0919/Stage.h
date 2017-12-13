@@ -60,4 +60,5 @@ public:
 	// Path Finding
 public:
 	void CreatePathFindingNPC(TileCell *tileCell);
+	void CreatePathFindingMark(TileCell *tileCell);
 };
