@@ -9,6 +9,8 @@ TileCell::TileCell(int tileX, int tileY)
 
 	_tileX = tileX;
 	_tileY = tileY;
+
+	_distanceWeight = 1.0f;
 }
 
 TileCell::~TileCell()
@@ -137,4 +139,6 @@ void TileCell::InitPathFinding()
 {
 	_isPathFindingMark = false;
 	_prevPathFindingCell = NULL;
+
+	_distanceFromStart = 0.0f;
 }

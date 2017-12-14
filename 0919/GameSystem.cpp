@@ -254,6 +254,7 @@ int GameSystem::Update()
 
 		// Stage 교체 테스트
 		{
+			// F1키를 누르면 일반 몬스터 죽이기 RPG 게임이 실행된다.
 			if (IsKeyDown(VK_F1))
 			{
 				ComponentSystem::GetInstance()->ClearMessageQueue();
@@ -262,6 +263,7 @@ int GameSystem::Update()
 				_stage->Init(L"Map2");
 			}
 
+			// F2키를 누르면 인생 게임이 실행된다.
 			if (IsKeyDown(VK_F2))
 			{
 				ComponentSystem::GetInstance()->ClearMessageQueue();
@@ -270,6 +272,7 @@ int GameSystem::Update()
 				_stage->Init(L"Map3");
 			}
 
+			// F3키를 누르면 길찾기 게임이 실행된다.
 			if (IsKeyDown(VK_F3))
 			{
 				ComponentSystem::GetInstance()->ClearMessageQueue();

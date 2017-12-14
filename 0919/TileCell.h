@@ -44,6 +44,9 @@ private:
 	bool _isPathFindingMark;
 	TileCell *_prevPathFindingCell;
 
+	float _distanceFromStart;		// 계산된 값을 저장하기 위한 변수
+	float _distanceWeight;		// 고정된 값, 맵을 로딩할때 세팅한다.
+
 	int _tileX;
 	int _tileY;
 
@@ -57,4 +60,8 @@ public:
 
 	int GetTileX() { return _tileX; }
 	int GetTileY() { return _tileY; }
+
+	float GetDistanceFromStart() { return _distanceFromStart; }
+	float GetDistanceWeight() { return _distanceWeight; }
+	void SetDistanceFromStart(float distance) { _distanceFromStart = distance; }
 };

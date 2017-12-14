@@ -85,7 +85,7 @@ void PathFindingState::UpdatePathFinding()
 	if (0 != _pathFindingTileQueue.size())
 	{
 		// 첫번째 노드를 꺼내서 검사
-		TileCell * tileCell = _pathFindingTileQueue.front();
+		TileCell * tileCell = _pathFindingTileQueue.top();
 		_pathFindingTileQueue.pop();
 		if (false == tileCell->IsPathFindingMark())
 		{
@@ -93,7 +93,7 @@ void PathFindingState::UpdatePathFinding()
 
 			{
 				wchar_t log[256];
-				wsprintf(log, L"pos : %d %d to %d %d\n", tileCell->GetTileX(), tileCell->GetTileY(),
+				wsprintf(log, L"position : %d %d / destination : %d %d\n", tileCell->GetTileX(), tileCell->GetTileY(),
 					_targetTileCell->GetTileX(), _targetTileCell->GetTileY());
 				OutputDebugString(log);
 			}
@@ -151,8 +151,11 @@ void PathFindingState::UpdatePathFinding()
 					(nextTileCell->GetTileX() == _targetTileCell->GetTileX() && nextTileCell->GetTileY() == _targetTileCell->GetTileY())
 					)
 				{
+					float distanceFromStart = tileCell->GetDistanceFromStart() + tileCell->GetDistanceWeight();
+
 					if (NULL == nextTileCell->GetPrevPathFindingCell())
 					{
+						nextTileCell->SetDistanceFromStart(distanceFromStart);
 						nextTileCell->SetPrevPathFindingCell(tileCell);
 						_pathFindingTileQueue.push(nextTileCell);
 
@@ -163,8 +166,18 @@ void PathFindingState::UpdatePathFinding()
 							!(nextTileCell->GetTileX() == _character->GetTileX() && nextTileCell->GetTileY() == _character->GetTileY())
 							)
 						{
-							GameSystem::GetInstance()->GetStage()->CreatePathFindingNPC(nextTileCell);
+							// GameSystem::GetInstance()->GetStage()->CreatePathFindingNPC(nextTileCell);
 							// ↑ 주석을 풀어주면 타일 검사하는 것을 시각적으로 볼 수 있다.
+						}
+					}
+					else
+					{
+						if (distanceFromStart < nextTileCell->GetDistanceFromStart())
+						{
+							// 다시 검사
+							nextTileCell->SetDistanceFromStart(distanceFromStart);
+							nextTileCell->SetPrevPathFindingCell(tileCell);
+							_pathFindingTileQueue.push(nextTileCell);
 						}
 					}
 				}
@@ -181,7 +194,7 @@ void PathFindingState::UpdateBuildPath()
 		if (_reverseTileCell->GetTileX() != _targetTileCell->GetTileX() ||
 			_reverseTileCell->GetTileY() != _targetTileCell->GetTileY())
 		{
-			GameSystem::GetInstance()->GetStage()->CreatePathFindingMark(_reverseTileCell);
+			// GameSystem::GetInstance()->GetStage()->CreatePathFindingMark(_reverseTileCell);
 			// ↑ 주석을 풀어주면 타일 검사하는 것을 시각적으로 볼 수 있다.
 			_character->PushPathTileCell(_reverseTileCell);
 		}

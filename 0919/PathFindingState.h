@@ -28,8 +28,17 @@ public:
 		BUILD_PATH,
 	};
 
+	struct compare
+	{
+		bool operator()(TileCell* a, TileCell* b)
+		{
+			return a->GetDistanceFromStart() > b->GetDistanceFromStart();
+		}
+	};
+
 private:
-	std::queue<TileCell*> _pathFindingTileQueue;
+	// std::queue<TileCell*> _pathFindingTileQueue;
+	std::priority_queue<TileCell*, std::vector<TileCell*>, compare> _pathFindingTileQueue;		// 우선순위 큐
 	TileCell *_targetTileCell;
 	TileCell *_reverseTileCell;
 	eUpdateState _updateState;

@@ -152,6 +152,7 @@ void Stage::CreatePathFindingNPC(TileCell *tileCell)
 {
 	LifeNpc *npc = (LifeNpc*)(_loader->CreateLifeNPC(L"npc", L"Npc_Sprite_00"));
 	npc->InitTilePosition(tileCell->GetTileX(), tileCell->GetTileY());
+	npc->SetCanMove(true);
 
 	_componentList.remove(npc);
 	tileCell->AddComponent(npc, true);
@@ -183,6 +184,7 @@ void Stage::CreatePathFindingMark(TileCell *tileCell)
 {
 	LifeNpc *npc = (LifeNpc*)(_loader->CreateLifeNPC(L"player", L"Player_Sprite_00"));
 	npc->InitTilePosition(tileCell->GetTileX(), tileCell->GetTileY());
+	npc->SetCanMove(true);
 
 	_componentList.remove(npc);
 	tileCell->AddComponent(npc, true);

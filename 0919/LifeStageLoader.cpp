@@ -17,7 +17,7 @@ void LifeStageLoader::CreateComponents(std::wstring mapName)
 
 	for (int i = 0; i < 100; i++)
 	{
-		CreateLifeNPC(L"npc", L"char_sprite_01");
+		CreateLifeNPC(L"npc", L"Npc_Sprite_00");
 	}
 
 	LifePlayer* player = new LifePlayer(L"player", L"player", L"Player_Sprite_00");
