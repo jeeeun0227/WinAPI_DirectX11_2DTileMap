@@ -32,7 +32,8 @@ public:
 	{
 		bool operator()(TileCell* a, TileCell* b)
 		{
-			return a->GetDistanceFromStart() > b->GetDistanceFromStart();
+			// return a->GetDistanceFromStart() > b->GetDistanceFromStart();
+			return a->GetHeuristic() > b->GetHeuristic();
 		}
 	};
 
@@ -45,4 +46,6 @@ private:
 
 	void UpdatePathFinding();
 	void UpdateBuildPath();
+
+	float CalcSimpleHeuristic(TileCell *tileCell, TileCell *nextTileCell, TileCell *targetTileCell);
 };

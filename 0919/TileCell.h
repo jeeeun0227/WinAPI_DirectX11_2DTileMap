@@ -50,6 +50,8 @@ private:
 	int _tileX;
 	int _tileY;
 
+	float _heuristic;
+
 public:
 	void InitPathFinding();
 	bool IsPathFindingMark() { return _isPathFindingMark; }
@@ -64,4 +66,7 @@ public:
 	float GetDistanceFromStart() { return _distanceFromStart; }
 	float GetDistanceWeight() { return _distanceWeight; }
 	void SetDistanceFromStart(float distance) { _distanceFromStart = distance; }
+
+	void SetHeuristic(float heuristic) { _heuristic = heuristic; }
+	float GetHeuristic() { return _heuristic; }
 };

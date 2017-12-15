@@ -27,4 +27,12 @@ private:
 	Sprite *_sprite;
 	float _posX; 
 	float _posY;
+
+	// Distance Weight
+public:
+	void SetDistanceWeight(float weight) { _distanceWeight = weight; }
+	float GetDistanceWeight() { return _distanceWeight; }
+
+private:
+	float _distanceWeight;
 };

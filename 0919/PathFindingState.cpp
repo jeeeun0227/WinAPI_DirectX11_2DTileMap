@@ -152,10 +152,13 @@ void PathFindingState::UpdatePathFinding()
 					)
 				{
 					float distanceFromStart = tileCell->GetDistanceFromStart() + tileCell->GetDistanceWeight();
+					// float heuristic = distanceFromStart;
+					float heuristic = CalcSimpleHeuristic(tileCell, nextTileCell, _targetTileCell);
 
 					if (NULL == nextTileCell->GetPrevPathFindingCell())
 					{
 						nextTileCell->SetDistanceFromStart(distanceFromStart);
+						nextTileCell->SetHeuristic(heuristic);
 						nextTileCell->SetPrevPathFindingCell(tileCell);
 						_pathFindingTileQueue.push(nextTileCell);
 
@@ -166,10 +169,11 @@ void PathFindingState::UpdatePathFinding()
 							!(nextTileCell->GetTileX() == _character->GetTileX() && nextTileCell->GetTileY() == _character->GetTileY())
 							)
 						{
-							// GameSystem::GetInstance()->GetStage()->CreatePathFindingNPC(nextTileCell);
+							GameSystem::GetInstance()->GetStage()->CreatePathFindingNPC(nextTileCell);
 							// ↑ 주석을 풀어주면 타일 검사하는 것을 시각적으로 볼 수 있다.
 						}
 					}
+					/*
 					else
 					{
 						if (distanceFromStart < nextTileCell->GetDistanceFromStart())
@@ -180,6 +184,7 @@ void PathFindingState::UpdatePathFinding()
 							_pathFindingTileQueue.push(nextTileCell);
 						}
 					}
+					*/
 				}
 			}
 		}
@@ -194,7 +199,7 @@ void PathFindingState::UpdateBuildPath()
 		if (_reverseTileCell->GetTileX() != _targetTileCell->GetTileX() ||
 			_reverseTileCell->GetTileY() != _targetTileCell->GetTileY())
 		{
-			// GameSystem::GetInstance()->GetStage()->CreatePathFindingMark(_reverseTileCell);
+			GameSystem::GetInstance()->GetStage()->CreatePathFindingMark(_reverseTileCell);
 			// ↑ 주석을 풀어주면 타일 검사하는 것을 시각적으로 볼 수 있다.
 			_character->PushPathTileCell(_reverseTileCell);
 		}
@@ -206,3 +211,51 @@ void PathFindingState::UpdateBuildPath()
 	}
 }
 
+float PathFindingState::CalcSimpleHeuristic(TileCell *tileCell, TileCell *nextTileCell, TileCell *targetTileCell)
+{
+	float heuristic = 0.0f;
+
+	int diffFromCurrent = 0;
+	int diffFromNext = 0;
+
+	// x : 발견적 값을 갱신
+	{
+		diffFromCurrent = tileCell->GetTileX() - targetTileCell->GetTileX();
+		if (diffFromCurrent < 0)
+			diffFromCurrent = -diffFromCurrent;
+
+		diffFromNext = nextTileCell->GetTileX() - targetTileCell->GetTileX();
+		if (diffFromNext < 0)
+			diffFromNext = -diffFromNext;
+
+		if (diffFromNext < diffFromCurrent)
+		{
+			heuristic -= 1.0f;
+		}
+		else if (diffFromNext > diffFromCurrent)
+		{
+			heuristic += 1.0f;
+		}
+	}
+
+	// y : 발견적 값을 누적 갱신
+	{
+		diffFromCurrent = tileCell->GetTileY() - targetTileCell->GetTileY();
+		if (diffFromCurrent < 0)
+			diffFromCurrent = -diffFromCurrent;
+
+		diffFromNext = nextTileCell->GetTileY() - targetTileCell->GetTileY();
+		if (diffFromNext < 0)
+			diffFromNext = -diffFromNext;
+
+		if (diffFromNext < diffFromCurrent)
+		{
+			heuristic -= 1.0f;
+		}
+		else if (diffFromNext > diffFromCurrent)
+		{
+			heuristic += 1.0f;
+		}
+	}
+	return heuristic;
+}

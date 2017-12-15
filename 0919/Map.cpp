@@ -91,6 +91,16 @@ void Map::Init()
 						WCHAR componentName[256];
 						wsprintf(componentName, L"map_layer01_%d_%d", line, x);
 						TileObject *tileObject = new TileObject(componentName, _spriteList[index], x, row);
+						
+						// for test
+						switch (index)
+						{
+						case 70:		// 속도 가중 타일
+							// 1.5f;
+							tileObject->SetDistanceWeight(1.5f);
+							break;
+						}
+
 						tileObject->SetCanMove(true);
 						tileCell->AddComponent(tileObject, true);
 						rowList.push_back(tileCell);
