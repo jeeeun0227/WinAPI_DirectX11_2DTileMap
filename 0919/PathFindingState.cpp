@@ -152,8 +152,11 @@ void PathFindingState::UpdatePathFinding()
 					)
 				{
 					float distanceFromStart = tileCell->GetDistanceFromStart() + tileCell->GetDistanceWeight();
+
 					// float heuristic = distanceFromStart;
-					float heuristic = CalcSimpleHeuristic(tileCell, nextTileCell, _targetTileCell);
+					// float heuristic = CalcSimpleHeuristic(tileCell, nextTileCell, _targetTileCell);		// 만약 몬스터가 계속 움직이는 상황이라면 CalcSimpleHeuristic을 사용하는 것이 좋다.
+					// float heuristic = CalcComplexHeuristic(nextTileCell, _targetTileCell);
+					float heuristic = CalcAStarHeuristic(distanceFromStart, nextTileCell, _targetTileCell);
 
 					if (NULL == nextTileCell->GetPrevPathFindingCell())
 					{
@@ -258,4 +261,20 @@ float PathFindingState::CalcSimpleHeuristic(TileCell *tileCell, TileCell *nextTi
 		}
 	}
 	return heuristic;
+}
+
+float PathFindingState::CalcComplexHeuristic(TileCell *nextTileCell, TileCell *targetTileCell)
+{
+	int distanceW = nextTileCell->GetTileX() - targetTileCell->GetTileX();
+	int distanceH = nextTileCell->GetTileY() - targetTileCell->GetTileY();
+
+	distanceW = distanceW * distanceW;
+	distanceH = distanceH * distanceH;
+	
+	return (float)((double)distanceW + (double)distanceH);
+}
+
+float PathFindingState::CalcAStarHeuristic(float distanceFromStart, TileCell *nextTileCell, TileCell *targetTileCell)
+{
+	return distanceFromStart + CalcComplexHeuristic(nextTileCell, targetTileCell);
 }

@@ -48,4 +48,6 @@ private:
 	void UpdateBuildPath();
 
 	float CalcSimpleHeuristic(TileCell *tileCell, TileCell *nextTileCell, TileCell *targetTileCell);
+	float CalcComplexHeuristic(TileCell *nextTileCell, TileCell *targetTileCell);
+	float CalcAStarHeuristic(float distanceFromStart, TileCell *nextTileCell, TileCell *targetTileCell);
 };

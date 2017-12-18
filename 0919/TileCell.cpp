@@ -147,5 +147,6 @@ void TileCell::InitPathFinding()
 	_prevPathFindingCell = NULL;
 
 	_distanceFromStart = 0.0f;
+	_distanceWeight = 1.0f;
 	_heuristic = 0.0f;
 }
