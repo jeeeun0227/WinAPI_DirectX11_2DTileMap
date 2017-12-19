@@ -81,6 +81,8 @@ void PathFindingMoveState::Update(float deltaTime)
 void PathFindingMoveState::Stop()
 {
 	State::Stop();
+	_character->GetPathTileCellStack();
+	_character->ClearPathTileCellStack();
 }
 
 void PathFindingMoveState::Start()

@@ -59,7 +59,7 @@ vector<string> ResourceManager::LoadScript(std::wstring  scriptFileName)
 
 	vector<string> scriptTextList;
 
-	char record[1000];
+	char record[1100];
 
 	ifstream infile(scriptFileName);
 

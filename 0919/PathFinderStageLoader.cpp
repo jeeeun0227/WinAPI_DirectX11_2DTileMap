@@ -31,8 +31,10 @@ void PathFinderStageLoader::CreateComponents(std::wstring mapName)
 	Player *player = new PathFinderPlayer(L"player", L"player", L"Player_Sprite_00");
 	_stage->AddStageComponent(player);
 
+	/*
 	TileCell *targetCell = _stage->GetMap()->GetTileCell(monster->GetTileX(), monster->GetTileY());
 	player->SetTargetTileCell(targetCell);
+	*/
 
 	// 뷰어를 플레이어가 아닌, 맵 중간에 타일 오브젝트로 세팅
 	_midTileX = _stage->GetMap()->GetWidth() / 2;

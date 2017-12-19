@@ -17,8 +17,21 @@
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+	int mouseX;
+	int mouseY;
+
 	switch (msg)
 	{
+	case WM_LBUTTONDOWN:
+		mouseX = LOWORD(lParam);
+		mouseY = HIWORD(lParam);
+		GameSystem::GetInstance()->MouseDown(mouseX, mouseY);
+		return 0;
+
+	case WM_LBUTTONUP:
+		GameSystem::GetInstance()->MouseUp();
+		return 0;
+
 	case WM_KEYDOWN:
 		GameSystem::GetInstance()->KeyDown(wParam);
 
@@ -37,9 +50,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		PostQuitMessage(0);
 		return 0;
 
+		/*
 	case WM_LBUTTONDOWN:
 		MessageBox(0, L"Hello World!", L"Hello", MB_OK);
 		return 0;
+		*/
 	}
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
@@ -56,6 +71,8 @@ GameSystem *GameSystem::GetInstance()
 GameSystem::GameSystem()
 {
 	_isFULLScreen = false;
+
+	_isMouseDown = false;
 }
 
 GameSystem::~GameSystem()
@@ -168,7 +185,9 @@ bool GameSystem::InitSystem(HINSTANCE hInstance, int nCmdShow)
 		style = WS_OVERLAPPEDWINDOW;
 	}
 
-	_hWnd = CreateWindow(L"Base", L"Title", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, 0, 0, hInstance, 0);
+	_hWnd = CreateWindow(L"Base", L"Title", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1280, 800, 0, 0, hInstance, 0);
+	// 1280 : 출력 화면의 가로
+	// 700 ~ 800 : 출력 화면의 세로
 
 	if (false == _isFULLScreen)
 	{
@@ -350,4 +369,12 @@ void GameSystem::KeyUp(unsigned int KeyCode)
 bool GameSystem::IsKeyDown(unsigned int KeyCode)
 {
 	return (eKeyState::KEY_DOWN == _keyState[KeyCode]);
+}
+
+void GameSystem::MouseDown(int mouseX, int mouseY)
+{
+	_isMouseDown = true;
+
+	_mouseX = mouseX;
+	_mouseY = mouseY;
 }

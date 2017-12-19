@@ -58,11 +58,21 @@ public:
 private:
 	eKeyState _keyState[256];
 
+	bool _isMouseDown;
+	int _mouseX;
+	int _mouseY;
+
 public:
 	void InitInput();
 	void KeyDown(unsigned int KeyCode);
 	void KeyUp(unsigned int KeyCode);
 	bool IsKeyDown(unsigned int KeyCode);
+
+	void MouseDown(int mouseX, int mouseY);
+	void MouseUp() { _isMouseDown = false; }
+	bool IsMouseDown() { return _isMouseDown; }
+	int GetMouseX() { return _mouseX; }
+	int GetMouseY() { return _mouseY; }
 
 	// Direct3D
 private:

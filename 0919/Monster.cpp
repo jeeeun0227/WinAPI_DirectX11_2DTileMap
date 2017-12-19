@@ -10,8 +10,8 @@ Monster::Monster(std::wstring name, std::wstring scriptName, std::wstring textur
 {
 	_type = eComponentType::CT_MONSTER;
 
-	int speed = (rand() % 1500) + 1000;		// 기호에 따라 수정
-	_moveTime = (float)speed / 1000.0f;		// 고정
+	int speed = (rand() % 1500) + 1100;		// 기호에 따라 수정
+	_moveTime = (float)speed / 1100.0f;		// 고정
 	
 	_attackPoint = 20;		// 공격력 재정의
 	_hp = 150;		// 체력 재정의
