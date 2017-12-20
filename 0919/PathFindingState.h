@@ -43,7 +43,7 @@ public:
 		}
 	};
 
-private:
+protected:
 	// std::queue<TileCell*> _pathFindingTileQueue;
 	std::priority_queue<sPathCommand, std::vector<sPathCommand>, compare> _pathFindingTileQueue;		// 우선순위 큐
 	TileCell *_targetTileCell;

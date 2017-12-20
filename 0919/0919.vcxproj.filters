@@ -162,6 +162,9 @@
     <ClCompile Include="PathFindingMoveState.cpp">
       <Filter>소스 파일\Game\Character\State</Filter>
     </ClCompile>
+    <ClCompile Include="PathFindingImmediateState.cpp">
+      <Filter>소스 파일\Stage\PathFind</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameSystem.h">
@@ -274,6 +277,9 @@
     </ClInclude>
     <ClInclude Include="PathFindingMoveState.h">
       <Filter>소스 파일\Game\Character\State</Filter>
+    </ClInclude>
+    <ClInclude Include="PathFindingImmediateState.h">
+      <Filter>소스 파일\Stage\PathFind</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

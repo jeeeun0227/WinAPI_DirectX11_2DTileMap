@@ -24,7 +24,7 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>My0919</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
-    <ProjectName>1219</ProjectName>
+    <ProjectName>1220</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -182,6 +182,7 @@
     <ClCompile Include="PathFinderMonster.cpp" />
     <ClCompile Include="PathFinderPlayer.cpp" />
     <ClCompile Include="PathFinderStageLoader.cpp" />
+    <ClCompile Include="PathFindingImmediateState.cpp" />
     <ClCompile Include="PathFindingMoveState.cpp" />
     <ClCompile Include="PathFindingState.cpp" />
     <ClCompile Include="StageLoader.cpp" />
@@ -221,6 +222,7 @@
     <ClInclude Include="PathFinderMonster.h" />
     <ClInclude Include="PathFinderPlayer.h" />
     <ClInclude Include="PathFinderStageLoader.h" />
+    <ClInclude Include="PathFindingImmediateState.h" />
     <ClInclude Include="PathFindingMoveState.h" />
     <ClInclude Include="PathFindingState.h" />
     <ClInclude Include="StageLoader.h" />

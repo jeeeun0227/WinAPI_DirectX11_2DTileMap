@@ -176,6 +176,7 @@ void PathFindingState::UpdatePathFinding()
 						newCommand.tileCell = nextTileCell;
 						_pathFindingTileQueue.push(newCommand);
 
+						/*
 						if (
 							// (nextTileCell->GetTileX() != _targetTileCell->GetTileX() || nextTileCell->GetTileY() != _targetTileCell->GetTileY())
 							!(nextTileCell->GetTileX() == _targetTileCell->GetTileX() && nextTileCell->GetTileY() == _targetTileCell->GetTileY())
@@ -186,6 +187,7 @@ void PathFindingState::UpdatePathFinding()
 							GameSystem::GetInstance()->GetStage()->CreatePathFindingNPC(nextTileCell);
 							// ↑ 주석을 풀어주면 타일 검사하는 것을 시각적으로 볼 수 있다.
 						}
+						*/
 					}
 					else
 					{
@@ -224,7 +226,7 @@ void PathFindingState::UpdateBuildPath()
 			_character->PushPathTileCell(_reverseTileCell);
 		}
 		*/
-		GameSystem::GetInstance()->GetStage()->CreatePathFindingMark(_reverseTileCell);
+		// GameSystem::GetInstance()->GetStage()->CreatePathFindingMark(_reverseTileCell);
 		_character->PushPathTileCell(_reverseTileCell);
 		_reverseTileCell = _reverseTileCell->GetPrevPathFindingCell();
 	}
